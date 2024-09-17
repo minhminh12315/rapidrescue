@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { Route, Routes } from "react-router-dom";
+import Login from './Pages/Login/Login'
+import Register from './Pages/Register/Register'
 import axios from 'axios';
-import './App.css';
 
 function App() {
   const [data, setData] = useState(null);
@@ -20,18 +22,14 @@ function App() {
     };
 
     fetchData();
-  }, []); 
+  }, []);
 
   return (
     <div className="App">
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-      {data && (
-        <div>
-          <h1>{data.message}</h1>
-          <p>Status: {data.status}</p>
-        </div>
-      )}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </div>
   );
 }
