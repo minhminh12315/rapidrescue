@@ -1,0 +1,283 @@
+.about-container {
+    padding: 2rem;
+    background-color: #f2f3fa;
+
+    .icon-title {
+        color: #001789;
+    }
+
+    .intro-icon {
+        font-family: 'icomoon';
+        font-size: 1.5rem;
+        color: #ee296a;
+        margin-bottom: 1rem;
+
+        .icon-heartbeat::before {
+            content: '\e908';
+        }
+    }
+
+    .about-intro {
+        display: flex;
+        justify-content: center;
+        gap: 20%;
+        align-items: center;
+        margin-bottom: 2rem;
+
+        .intro-content {
+            margin-bottom: 1rem;
+
+            .intro-title {
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: #333;
+                margin: 0.5rem 0;
+                line-height: 1.3;
+            }
+
+            .intro-subtitle {
+                font-size: 1rem;
+                font-weight: normal;
+                color: #666;
+            }
+        }
+
+        .about-description {
+            .description-text {
+                font-size: 1rem;
+                font-weight: normal;
+                color: #666;
+                margin-top: 90px;
+            }
+        }
+    }
+
+    .icon-gallery {
+        display: flex;
+        gap: 1rem;
+        text-align: center;
+        justify-content: center;
+
+        .icon-gallery-item {
+            position: relative;
+            padding-right: 1rem;
+
+            &::after {
+                content: '';
+                position: absolute;
+                right: 0;
+                top: 0;
+                height: 95%;
+                width: 0.5px;
+                background-color: #545454;
+                transform: translateX(50%);
+                z-index: 1;
+            }
+
+            &:hover .icon-item::before {
+                background-color: red;
+                transform: scaleX(1);
+            }
+
+            &:hover .icon-item .icon::before {
+                color: white;
+
+            }
+        }
+
+        .icon-item {
+            font-family: 'icomoon';
+            font-size: 5rem;
+            position: relative;
+            transition: transform 0.3s ease;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: transparent;
+                transform: scaleX(0);
+                transform-origin: center;
+                transition: background-color 2s ease, transform 0.3s ease;
+            }
+
+            .icon {
+                position: relative;
+            }
+
+            .icon-medal::before {
+                content: '\e912';
+            }
+
+            .icon-safety::before {
+                content: '\e913';
+            }
+
+            .icon-health-insurance::before {
+                content: '\e914';
+            }
+
+            .icon-money-exchange::before {
+                content: '\e915';
+            }
+        }
+
+
+
+        .icon-description {
+            color: #545454;
+        }
+
+        .icon {
+            color: #ee296a;
+        }
+    }
+
+    .team-container {
+        text-align: center;
+    }
+
+    .team-gallery {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        justify-items: center;
+        margin-top: 2rem;
+        text-align: center;
+
+        .team-member {
+            position: relative;
+            overflow: hidden;
+            background-color: white;
+
+            img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, filter 0.3s ease;
+                position: relative;
+                z-index: 1;
+                transform-origin: center;
+            }
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 82%;
+                background-color: #ee296a;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                z-index: 2;
+                pointer-events: none;
+            }
+
+            &:hover img {
+                transform: scale(1.05);
+            }
+
+            &:hover::before {
+                opacity: 0.6;
+            }
+        }
+    }
+
+    .overlay-title {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: #ffffff;
+        box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.05), inset 0px -2px 0px 0px rgba(238, 41, 106, 0.004);
+        padding: 33px 0px 40px;
+        z-index: 2;
+        transform: perspective(400px) rotateX(90deg);
+        transform-origin: center;
+        transition: all 500ms linear;
+        transition-delay: 0.1s;
+        opacity: 0;
+        visibility: hidden;
+        font-size: 1.2rem;
+        text-align: center;
+        color: #333;
+
+        a {
+            text-decoration: none;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        li {
+            position: relative;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 50px;
+            height: 50px;
+            background: #f2f3fa;
+            border-radius: 50%;
+            transition: all 200ms linear;
+            transition-delay: 0.1s;
+            z-index: 1;
+        }
+
+        .social-links li::before {
+            content: '';
+            position: absolute; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ddd; 
+            border-radius: 50%; 
+            transition: all 0.3s ease; 
+            z-index: -1; 
+            transform: scale(0);
+            transform-origin: center; 
+        }
+        
+        .social-links li:hover::before {
+            background-color: #ee296a; 
+            transform: scale(1); 
+        }
+        
+    }
+
+    .team-member:hover .overlay-title {
+        transform: perspective(400px) rotateX(0deg);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    @media (max-width: 995px) {
+        .team-gallery {
+            grid-template-columns: 1fr;
+        }
+
+        .about-intro {
+            display: block;
+            text-align: center;
+        }
+
+        .description-text {
+            margin-top: 0 !important;
+        }
+
+        .icon-gallery {
+            display: block;
+
+            .icon-gallery-item::after {
+                display: none;
+            }
+        }
+    }
+}

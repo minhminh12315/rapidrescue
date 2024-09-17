@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Route, Routes } from "react-router-dom";
 import Login from './Pages/Login/Login'
 import Register from './Pages/Register/Register'
+import About from './Pages/About/About'
 import axios from 'axios';
 import Header from './Pages/User/Header'
 import Footer from './Pages/User/Footer'
@@ -38,6 +39,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/About" element={<About />} />
       </Routes>
       <Footer />
     </div>

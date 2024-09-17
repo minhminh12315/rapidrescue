@@ -27,12 +27,12 @@ const useLoginForm = () => {
 
     const validateForm = () => {
         const newErrors = {
-            name: formData.name.trim() === '',
+            email: formData.email.trim() === '',
             password: formData.password.trim() === '',
         };
 
         const newErrorMessages = {
-            name: formData.name.trim() === '' ? 'Name is required.' : '',
+            email: formData.email.trim() === '' ? 'Name is required.' : '',
             password: formData.password.trim() === '' ? 'Password is required.' : '',
         };
 
@@ -42,23 +42,23 @@ const useLoginForm = () => {
         return !Object.values(newErrors).some(error => error);
     };
 
-    const checkUsername = async () => {
+    const checkEmail = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/api/check-username', {
-                name: formData.name
+            const response = await axios.post('http://localhost:8000/api/check-email', {
+                email: formData.email
             });
 
             if (!response.data.exists) {
-                setErrors(prevErrors => ({ ...prevErrors, name: true }));
-                setErrorMessages(prevMessages => ({ ...prevMessages, name: 'Username does not exist.' }));
+                setErrors(prevErrors => ({ ...prevErrors, email: true }));
+                setErrorMessages(prevMessages => ({ ...prevMessages, email: 'Email does not exist.' }));
             } else {
-                setErrors(prevErrors => ({ ...prevErrors, name: false }));
-                setErrorMessages(prevMessages => ({ ...prevMessages, name: '' }));
+                setErrors(prevErrors => ({ ...prevErrors, email: false }));
+                setErrorMessages(prevMessages => ({ ...prevMessages, email: '' }));
             }
 
             return response.data.exists;
         } catch (error) {
-            console.error('Error checking username:', error);
+            console.error('Error checking email:', error);
             return false;
         }
     };
@@ -69,7 +69,7 @@ const useLoginForm = () => {
         errorMessages,
         handleChange,
         validateForm,
-        checkUsername,
+        checkEmail,
     };
 };
 

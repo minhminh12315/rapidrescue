@@ -13,7 +13,7 @@ const Login = (props) => {
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
 
-    const { formData, errors, errorMessages, handleChange, validateForm, checkUsername } = useLoginForm();
+    const { formData, errors, errorMessages, handleChange, validateForm, checkEmail } = useLoginForm();
     const [showPassword, setShowPassword] = useState(false);
     const [showForgotPasswordDialog, setShowForgotPasswordDialog] = useState(false);
     const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
@@ -26,7 +26,7 @@ const Login = (props) => {
             return;
         }
 
-        const isUsernameValid = await checkUsername();
+        const isUsernameValid = await checkEmail();
         if (!isUsernameValid) {
             console.error("Tên tài khoản không tồn tại.");
             return;
@@ -34,7 +34,7 @@ const Login = (props) => {
 
         console.log("Sign In");
         axios.post('http://localhost:8000/api/login', {
-            name: formData.name,
+            email: formData.email,
             password: formData.password
         })
             .then(response => {
@@ -95,16 +95,16 @@ const Login = (props) => {
                     </div>
                     <div className='form-body'>
                         <div className='input-group'>
-                            <label>Name</label>
+                            <label>Email</label>
                             <input
                                 type="text"
-                                name="name"
+                                name="email"
                                 onChange={handleChange}
-                                value={formData.name}
-                                className={errors.name ? 'invalid' : ''}
+                                value={formData.email}
+                                className={errors.email ? 'invalid' : ''}
                             />
-                            {errors.name && (
-                                <div className="error-message">{errorMessages.name}</div>
+                            {errors.email && (
+                                <div className="error-message">{errorMessages.email}</div>
                             )}
                         </div>
                         <div className='input-group'>

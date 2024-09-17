@@ -8,6 +8,7 @@ html {
     flex-direction: column;
     padding: 0;
     margin: 0;
+<<<<<<< HEAD
     min-height: 100vh;
     width: 100%;
     height: 100%;
@@ -41,3 +42,21 @@ ul {
         max-width: 1200px;
     }
 }
+=======
+}
+
+
+@font-face {
+    font-family: 'RimowaGrotesk-Light';
+    src: url('/fonts/RimowaGrotesk-Light.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'icomoon';
+    src: url('/fonts/icomoon.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+>>>>>>> a81adda0024d86674d7982b673b3f1989f1cf1f1
