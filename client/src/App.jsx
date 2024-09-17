@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Route, Routes } from "react-router-dom";
 import Login from './Pages/Login/Login'
 import Register from './Pages/Register/Register'
+import About from './Pages/About/About'
 import axios from 'axios';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/About" element={<About />} />
       </Routes>
     </div>
   );
