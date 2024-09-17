@@ -33,7 +33,7 @@ class AuthController extends Controller
 
             $user = User::create($fields);
 
-            $token = $user->createToken($request->name);
+            $token = $user->createToken($request->email);
 
             return response([
                 'user' => $user,
@@ -71,16 +71,16 @@ class AuthController extends Controller
         }
     }
 
-    public function checkUsername(Request $request)
+    public function checkEmail(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'email' => 'required|email',
         ]);
 
-        $name = $request->input('name');
-        $userExists = User::where('name', $name)->exists();
+        $email = $request->input('email');
+        $emailExists = User::where('email', $email)->exists();
 
-        return response()->json(['exists' => $userExists]);
+        return response()->json(['exists' => $emailExists]);
     }
 
     public function logout(Request $request)
