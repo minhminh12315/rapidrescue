@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "react-dev": "vite",
+    "react-dev": "vite --port=3000",
     "dev": "concurrently \"npm run react-dev\" \"cd ../server && php artisan serve\"",
     "build": "vite build",
     "lint": "eslint .",
