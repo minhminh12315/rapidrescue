@@ -21,12 +21,12 @@ class AuthController extends Controller
     {
         try {
             $fields = $request->validate([
-                'name' => 'required|string',
+                'first_name' => 'required|string',
+                'last_name' => 'required|string',
                 'email' => 'required|email',
                 'password' => 'required|string',
                 'password_confirmation' => 'required|string',
                 'phone' => 'required|string',
-                'address' => 'required|string',
             ]);
 
             Log::info($fields);
