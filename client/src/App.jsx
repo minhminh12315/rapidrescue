@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Login from './Pages/Login/Login'
 import Register from './Pages/Register/Register'
 import About from './Pages/About/About'
+import Mapbox from './Component/mapbox';
 import axios from 'axios';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/About" element={<About />} />
+        <Route path="/" element={<Mapbox />} />
       </Routes>
     </div>
   );
