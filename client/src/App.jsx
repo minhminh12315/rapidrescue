@@ -8,7 +8,6 @@ import axios from 'axios';
 import Header from './Pages/User/Header'
 import Footer from './Pages/User/Footer'
 import Home from './Pages/User/Home'
-import About from './Pages/User/About'
 import Contact from './Pages/User/Contact'
 
 function App() {
@@ -35,12 +34,11 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} /> */}
         <Route path='/about' element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/About" element={<About />} />
         <Route path="/" element={<Mapbox />} />
       </Routes>
       <Footer />
