@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone');
             $table->text('message');
+            $table->enum('status', ['wait', 'done'])->default('wait'); // Chỉ cho phép giá trị 'wait' hoặc 'done'
             $table->timestamps();
         });
     }

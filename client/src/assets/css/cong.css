@@ -1,3 +1,13 @@
+.wrapper-container {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+.wrapper-item {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
 /* Section 1: Title container */
 #ContactUs .titleContainer {
     height: 500px;
@@ -102,34 +112,21 @@
     margin: 0 0 13px;
 }
 
-/* Địa chỉ liên hệ */
-#ContactUs .contactAddress {
-    font-size: 16px;
-    color: #444;
-    margin-bottom: 15px;
-}
 
-/* Số điện thoại và email */
-#ContactUs .contactPhone {
-    color: #ee296a;
-}
-#ContactUs .contactEmail {
-    font-size: 16px;
-    color:#001789 ;
-}
 /* Form container styles */
 #ContactUs .formContactUsContainer {
     background-color: #F2F2F2;
-    height: 755px;
     border-radius: 1rem;
-    position: relative;
-    top: 100px;
+    margin-top: 100px; 
+    margin-bottom: 100px;
 }
-
+#ContactUs .subContainer{
+    padding-bottom: 35px;
+}
 /* Form input styles */
 #ContactUs .i1 .form-control {
     background-color: #F2F2F2;
-    font-size: 21px;
+    font-size: 18px;
     font-weight: 450;
     padding-left: 30px;
     padding-top: 10px;
@@ -149,7 +146,7 @@
     font-weight: 450;
     padding-left: 30px;
     padding-top: 10px;
-    height: 150px;
+    height: 70px;
 }
 
 /* Form layout */
@@ -164,19 +161,19 @@
     font-optical-sizing: auto;
     font-weight: bold;
     font-size: 30px;
-    color: #269bd1;
+    color:#001789 ;
     line-height: 1.2em;
 }
 #ContactUs .titleForm {
-    font-size: 60px;
+    font-size: 40px;
     font-weight: 700;
     line-height: 1.2em;
-    color: #217399;
+    color:#001789 ;
 
 }
 #ContactUs .heartIcon{
     color: red;
-    font-size: 60px;
+    font-size: 40px;
 }
 #ContactUs .redText{
     font-weight: 600;
@@ -186,10 +183,11 @@
 
 /* Submit button styles */
 #ContactUs .btnContact {
-    background-color: #269bd1;
+    background-color:#001789 ;
     font-size: 20px;
     font-weight: 700;
     color: white;
+    height: 50px;
 }
 #ContactUs .btnContact:hover {
     background-color: #000000;
@@ -198,7 +196,82 @@
     color: white;
 }
 
+
 /* Section 4: Google Map container */
 #ContactUs .section_4 {
     height: 600px;
+}
+/* Điều chỉnh cho iPhone 12 Pro với chiều rộng 390px */
+@media  (max-width: 400px) {
+    /* Section 1: Title container */
+    #ContactUs .title {
+        font-size: 40px; /* Giảm kích thước font */
+    }
+    #ContactUs .section_2 {
+        width: 100%; /* Giảm chiều rộng xuống 100% */
+    }
+
+    /* Hiệu ứng tráng gương */
+    #ContactUs .imgEmergencyContainer::before {
+        right: -85%; /* Điều chỉnh vị trí */
+        width: 60%; /* Thay đổi chiều rộng cho phù hợp với kích thước màn hình nhỏ */
+    }
+
+    /* Phần thông tin liên hệ */
+    #ContactUs .contactIcon {
+        font-size: 30px; /* Giảm kích thước icon */
+    }
+    #ContactUs .contactHeading {
+        font-size: 16px; /* Giảm kích thước font */
+    }
+    #ContactUs .contactIntro {
+        font-size: 32px; /* Giảm kích thước tiêu đề */
+    }
+    #ContactUs .contactDescription {
+        font-size: 16px; /* Giảm kích thước chữ */
+    }
+    #ContactUs .contactDetailsHeading {
+        font-size: 18px; /* Điều chỉnh tiêu đề chi tiết */
+    }
+    #ContactUs .contactAddress,
+    #ContactUs .contactPhone,
+    #ContactUs .contactEmail {
+        font-size: 14px; /* Giảm kích thước chữ cho các thông tin liên hệ */
+    }
+
+    /* Form container styles */
+    #ContactUs .formContactUsContainer {
+        height: auto; /* Đặt chiều cao auto để tránh quá tải không gian */
+        top: 50px; /* Điều chỉnh vị trí form */
+    }
+
+    /* Form input styles */
+    #ContactUs .i1 .form-control,
+    #ContactUs .i2 .form-control,
+    #ContactUs .i3 .form-control {
+        font-size: 14px; /* Giảm kích thước chữ trong form */
+        padding-left: 20px; /* Điều chỉnh padding */
+    }
+
+    /* Form titles and notes */
+    #ContactUs .subTitleForm {
+        font-size: 24px; /* Giảm kích thước tiêu đề phụ */
+    }
+    #ContactUs .titleForm {
+        font-size: 40px; /* Giảm kích thước tiêu đề chính */
+    }
+    #ContactUs .heartIcon {
+        font-size: 40px; /* Giảm kích thước icon */
+    }
+
+    /* Submit button styles */
+    #ContactUs .btnContact {
+        
+        font-size: 16px; /* Điều chỉnh kích thước chữ nút */
+    }
+
+    /* Section 4: Google Map container */
+    #ContactUs .section_4 {
+        height: 400px; /* Giảm chiều cao bản đồ để phù hợp hơn với màn hình nhỏ */
+    }
 }
