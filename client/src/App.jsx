@@ -3,12 +3,12 @@ import { Route, Routes } from "react-router-dom";
 import Login from './Pages/Login/Login'
 import Register from './Pages/Register/Register'
 import About from './Pages/About/About'
-import Mapbox from './Component/mapbox';
 import axios from 'axios';
 import Header from './Pages/User/Header'
 import Footer from './Pages/User/Footer'
 import Home from './Pages/User/Home'
 import Contact from './Pages/User/Contact'
+import AmbulanceRouting from './Component/AmbulanceRouting/AmbulanceRouting';
 
 function App() {
   const [data, setData] = useState(null);
@@ -39,7 +39,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/" element={<Mapbox />} />
+        <Route path="/" element={<AmbulanceRouting />} />
       </Routes>
       <Footer />
     </div>
