@@ -4,8 +4,8 @@ import Login from './Pages/Login/Login'
 import Register from './Pages/Register/Register'
 import About from './Pages/About/About'
 import axios from 'axios';
-import Header from './Pages/User/Header'
-import Footer from './Pages/User/Footer'
+import Header from './Component/Header'
+import Footer from './Component/Footer'
 import Home from './Pages/User/Home'
 import Contact from './Pages/User/Contact'
 import AmbulanceRouting from './Component/AmbulanceRouting/AmbulanceRouting';
