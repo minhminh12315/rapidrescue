@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Map from '../Map/Map';
 import Geocoder from '../Geocoder/Geocoder.js';
 import HospitalSelector from '../HospitalSelector/HospitalSelector';
@@ -10,19 +11,25 @@ import { getAmbulanceRoute } from '../../Utils/getAmbulanceRoute.jsx';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-
 const AmbulanceRouting = () => {
   const [mapInstance, setMapInstance] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [destination, setDestination] = useState(null);
   const [route, setRoute] = useState(null);
-  const [address, setAddress] = useState('');
-  const [isEmergency, setIsEmergency] = useState('no');
-  const [hospital, setHospital] = useState('');
-  const [phone, setPhone] = useState('');
+  
+  // Grouping similar states into an object
+  const [formData, setFormData] = useState({
+    address: '',
+    isEmergency: 'no',
+    hospital: '',
+    phone: '',
+    textareaValue: '',
+  });
+
   const [hospitalOptions, setHospitalOptions] = useState([]);
   const [destinationMarker, setDestinationMarker] = useState(null);
-  const [textareaValue, setTextareaValue] = useState('');
+
+  const location = useLocation();
 
   useEffect(() => {
     if (userLocation && destination) {
@@ -37,6 +44,7 @@ const AmbulanceRouting = () => {
   }, [mapInstance, userLocation]);
 
   const handleCheck = () => {
+    const { hospital } = formData;
     if (userLocation && hospital) {
       const selectedHospital = hospitalOptions.find(h => h.id === hospital);
       if (selectedHospital?.coordinates) {
@@ -47,40 +55,48 @@ const AmbulanceRouting = () => {
     }
   };
 
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
   return (
     <div className='mapbox-container'>
       <Map setUserLocation={setUserLocation} setMapInstance={setMapInstance} />
-      <Geocoder map={mapInstance} setDestination={setDestination} />
-      <div className='container mt-4'>
-        <div className='row'>
-          <div className='col-md-6'>
-            <EmergencyForm 
-              address={address}
-              setAddress={setAddress}
-              isEmergency={isEmergency}
-              setIsEmergency={setIsEmergency}
-              phone={phone}
-              setPhone={setPhone}
-            />
-            <HospitalSelector 
-              hospitalOptions={hospitalOptions}
-              selectedHospital={hospital}
-              setSelectedHospital={setHospital}
-            />
-            <div className="form-group">
-              <label htmlFor="myTextarea">Text Area</label>
-              <textarea 
-                className="form-control" 
-                id="myTextarea" 
-                rows="5" 
-                value={textareaValue}
-                onChange={(e) => setTextareaValue(e.target.value)}
-              />
+      {location.pathname !== '/contact' && (
+        <>
+          <Geocoder map={mapInstance} setDestination={setDestination} />
+          <div className='container mt-4'>
+            <div className='row'>
+              <div className='col-md-6'>
+                <EmergencyForm
+                  address={formData.address}
+                  setAddress={(val) => handleInputChange('address', val)}
+                  isEmergency={formData.isEmergency}
+                  setIsEmergency={(val) => handleInputChange('isEmergency', val)}
+                  phone={formData.phone}
+                  setPhone={(val) => handleInputChange('phone', val)}
+                />
+                <HospitalSelector
+                  hospitalOptions={hospitalOptions}
+                  selectedHospital={formData.hospital}
+                  setSelectedHospital={(val) => handleInputChange('hospital', val)}
+                />
+                <div className="form-group">
+                  <label htmlFor="myTextarea">Text Area</label>
+                  <textarea
+                    className="form-control"
+                    id="myTextarea"
+                    rows="5"
+                    value={formData.textareaValue}
+                    onChange={(e) => handleInputChange('textareaValue', e.target.value)}
+                  />
+                </div>
+                <RouteDisplay onCheckRoute={handleCheck} />
+              </div>
             </div>
-            <RouteDisplay onCheckRoute={handleCheck} />
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };
