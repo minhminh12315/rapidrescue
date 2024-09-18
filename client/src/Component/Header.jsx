@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
+  const navigate = useNavigate()
   return (
     <header className="main-header header-style-one">
       <div className="header-top">
@@ -41,7 +43,7 @@ const Header = () => {
                 </ul>
               </div>
               <div className="header-button-style1">
-                <Link to='/' className="btn-one" >
+                <Link to='/call-ambulance' className="btn-one" >
                   <span className="txt">Call An Ambulance</span>
                 </Link>
               </div>
@@ -81,11 +83,19 @@ const Header = () => {
                       </li>
                       <li id="menu-item-172"
                         className="">
-                        <Link to='/'>Hospital</Link>
+                        <Link to='/hospital'>Hospital</Link>
                       </li>
                       <li id="menu-item-173"
                         className="">
-                        <Link to='/'>Ambulance</Link>
+                        <Link to='/ambulance-car'>Ambulance Car</Link>
+                      </li>
+                      <li id="menu-item-173"
+                        className="">
+                        <Link to='/login'>Login</Link>
+                      </li>
+                      <li id="menu-item-173"
+                        className="">
+                        <Link to='/register'>Register</Link>
                       </li>
                     </ul>
                   </div>
