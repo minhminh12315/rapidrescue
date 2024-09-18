@@ -1,129 +1,185 @@
-import React from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const Contact = () => {
-  return (
-    <div>
-      <section className="breadcrumb-area">
-        <div className="breadcrumb-area-bg" style={{ backgroundImage: "url('https://mehedi.asiandevelopers.com/ambons/assets/images/breadcrumb/breadcrumb-1.jpg');" }}>
-        </div>
-        <div className="container">
-          <div className="row">
-            <div className="col-xl-12">
-              <div className="inner-content">
-                <div className="title">
-                  <h2> Contact</h2>
-                </div>
-                <div className="breadcrumb-menu">
-                  <ul>
-                    <li className="breadcrumb-item"><a href="../index.html">Home &nbsp;</a></li>
-                    <li className="breadcrumb-item">Contact</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="contact-info-style2-area">
-        <div className="container">
-          <div className="row text-right-rtl">
-            <div className="col-xl-6">
-              <div className="contact-info-style2__image">
-                <div className="inner">
-                  <img decoding="async"
-                    src="https://mehedi.asiandevelopers.com/ambons/assets/images/resources/contact-info-style2__image.jpg"
-                    alt="Awesome Image" />
-                </div>
-              </div>
-            </div>
-            <div className="col-xl-6">
-              <section className="main-contact-form-area " id="contact">
-                <div className="sec-title text-center p-2">
-                  <div className="icon">
-                    <span className="icon-heartbeat"></span>
-                  </div>
-                  <div className="sub-title">
-                    <h3>Send us Message</h3>
-                  </div>
-                  <h2>Write us Anytime</h2>
-                </div>
 
-                <div className="row">
-                  <div className="col-xl-12">
-                    <div className="contact-form">
-                      <div className="default-form2">
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [message, setMessage] = useState('');
+    const [errors, setErrors] = useState({});
 
-                        <div className="wpcf7 no-js" id="wpcf7-f452-p81-o1" lang="en-US" dir="ltr">
-                          <form
-                            action="https://fastwpdemo.com/newwp/ambons/contact/#wpcf7-f452-p81-o1"
-                            method="post" className="wpcf7-form init"
-                            aria-label="Contact form" novalidate="novalidate"
-                            data-status="init">
-                            <div className="row">
-                              <div className="col-xl-12">
-                                <div className="d-flex justify-content-center">
-                                  <div className="text-center mb-4">
-                                    <div className="rating">
-                                      <input type="radio" name="rating" value="5" id="5" />
-                                      <label htmlFor="5">☆</label>
-                                      <input type="radio" name="rating" value="4" id="4" />
-                                      <label htmlFor="4">☆</label>
-                                      <input type="radio" name="rating" value="3" id="3" />
-                                      <label htmlFor="3">☆</label>
-                                      <input type="radio" name="rating" value="2" id="2" />
-                                      <label htmlFor="2">☆</label>
-                                      <input type="radio" name="rating" value="1" id="1" />
-                                      <label htmlFor="1">☆</label>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="row">
-                              <div className="col-xl-12">
-                                <div className="form-group">
-                                  <div className="input-box">
-                                    <textarea cols="40" rows="8"
-                                      className="wpcf7-form-control wpcf7-textarea h-100"
-                                      placeholder="Write a Message"
-                                      name="textarea-290">
-                                    </textarea>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="row">
-                              <div className="col-xl-12 text-center">
-                                <div className="button-box">
-                                  <p><button className="btn-one" type="submit"
-                                    data-loading-text="Please wait..."><span
-                                      className="txt">send a
-                                      message</span></button>
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        // Cập nhật state tương ứng với trường dữ liệu
+        if (name === 'name') setName(value);
+        if (name === 'email') setEmail(value);
+        if (name === 'phone') setPhone(value);
+        if (name === 'message') setMessage(value);
+        // Remove the error for the specific field when the user starts typing
+        setErrors({
+            ...errors,
+            [name]: ''
+        });
+    };
+
+    const validateForm = () => {
+        const errors = {};
+        if (!name) errors.name = 'Name is required';
+        if (!email) errors.email = 'Email is required';
+        else if (!/\S+@\S+\.\S+/.test(email)) errors.email = 'Email is invalid';
+
+        if (!phone) errors.phone = 'Phone is required';
+        else if (!/^\d{10,15}$/.test(phone)) errors.phone = 'Phone number is invalid';
+
+        if (!message) errors.message = 'Message is required';
+
+        return errors;
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const validationErrors = validateForm();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+
+        // Tạo đối tượng formData từ các state riêng biệt
+        const formData = {
+            name,
+            email,
+            phone,
+            message
+        };
+         console.log(formData);
+        axios.post('http://127.0.0.1:8000/api/contact', formData)
+            .then(response => {
+                // Handle success
+                console.log(response.data);
+                alert('Message sent successfully!');
+                // Xóa các giá trị input sau khi gửi thành công
+                setName('');
+                setEmail('');
+                setPhone('');
+                setMessage('');
+                setErrors({});
+            })
+            .catch(error => {
+                // Handle error
+                console.error(error);
+                alert('Failed to send message.');
+            });
+    };
+
+    return (
+        <>
+            <section id="ContactUs">
+                <div className="section_1">
+                    <div className="titleContainer w-100 d-flex justify-content-center align-items-center">
+                        <img className="imgTitle w-100" src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/163901/Originals/911-la-gi-5.jpeg" />
+                        <div className="title">Contact Us</div>
                     </div>
-                  </div>
                 </div>
-              </section>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="google-map-area">
-        <div className="auto-container">
-          <div className="contact-page-map-outer">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.9242787880803!2d105.81644891118356!3d21.03571558745814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab145bf89bd7%3A0xd94a869b494c04b6!2zMjg1IFAuIMSQ4buZaSBD4bqlbiwgTGnhu4V1IEdpYWksIEJhIMSQw6xuaCwgSMOgIE7hu5lpIDEwMDAwMCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1726633165725!5m2!1svi!2s" width="100%" height="550" style={{ border: "0;" }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
-        </div>
-      </section>
-    </div>
-  )
+                <div className="section_2 mt-xl-5">
+                    <div className="row">
+                        <div className="col-12 col-xl-6 mt-5">
+                            <div className='imgEmergencyContainer'>
+                                <img className='imgEmergencyImage w-100' src='https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/contact-info-style2__image.jpg' />
+                            </div>
+                        </div>
+
+                        <div className="col-12 col-xl-6 mt-5">
+                            <div className='contactDetailsContainer'>
+                                <div className="contactInfo">
+                                    <i className="contactIcon bi bi-activity"></i>
+                                    <h2 className="contactHeading">Contact Us</h2>
+                                    <p className="contactIntro">Feel Free to Get in Touch with us</p>
+                                    <p className="contactDescription">Nulla quis commodo ligula. Curabitur bibendum ante at nibh lobortis, nec volutpat mauris faucibus. Praesent malesuada et tellus sed efficitur.</p>
+
+                                    <h3 className="contactDetailsHeading mt-4">Contact Details</h3>
+                                    <p className="contactAddress">66 Broklyn Golden Street.<br />New York, United States of America</p>
+                                    <h2 className="contactPhone mt-4">+1-(246)333-0089</h2>
+                                    <h4 className="contactEmail">info@example.com</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="section_3">
+                    <div className="formContactUsContainer container-xl">
+                        <div className="subTitleForm text-center pt-3">
+                            <i className="bi bi-activity heartIcon"></i>
+                        </div>
+                        <div className='text-center mt-3 redText'>Send us Message</div>
+                        <div className="titleForm text-center">Write us Anytime</div>
+
+                        <div className="formContactUs pt-5">
+                            <form onSubmit={handleSubmit}>
+                                <div className="form-group mt-4 i1">
+                                    <input 
+                                        type="text" 
+                                        name="name" 
+                                        className="form-control" 
+                                        placeholder="Full Name" 
+                                        value={name} 
+                                        onChange={handleChange} 
+                                    />
+                                    {errors.name && <div className="text-danger">{errors.name}</div>}
+                                </div>
+                                <div className="form-group mt-4 i2">
+                                    <input 
+                                        type="email" 
+                                        name="email" 
+                                        className="form-control" 
+                                        placeholder="Email Address" 
+                                        value={email} 
+                                        onChange={handleChange} 
+                                    />
+                                    {errors.email && <div className="text-danger">{errors.email}</div>}
+                                </div>
+                                <div className="form-group mt-4 i2">
+                                    <input 
+                                        type="text" 
+                                        name="phone" 
+                                        className="form-control" 
+                                        placeholder="Phone" 
+                                        value={phone} 
+                                        onChange={handleChange} 
+                                    />
+                                    {errors.phone && <div className="text-danger">{errors.phone}</div>}
+                                </div>
+                                <div className="form-group mt-4 i3">
+                                    <textarea 
+                                        name="message" 
+                                        className="form-control" 
+                                        placeholder="Your Message" 
+                                        rows="3" 
+                                        value={message} 
+                                        onChange={handleChange} 
+                                    ></textarea>
+                                    {errors.message && <div className="text-danger">{errors.message}</div>}
+                                </div>
+                                <div className="form-group mt-4">
+                                    <button type="submit" className="btn btnContact text-center form-control">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="section_4">
+                    <iframe className="mapGoogle w-100 h-100"
+                        src="https://maps.google.com/maps?ll=21.037811,105.809581&q=285 Đội Cấn&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                       ></iframe>
+                </div>
+            </section>
+        </>
+    );
 }
 
-export default Contact
+export default Contact;

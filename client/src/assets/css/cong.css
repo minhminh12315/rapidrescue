@@ -1,0 +1,204 @@
+/* Section 1: Title container */
+#ContactUs .titleContainer {
+    height: 500px;
+    position: relative;
+}
+#ContactUs .imgTitle {
+    object-fit: cover;
+    position: absolute;
+    height: 500px;
+    filter: brightness(0.7);
+}
+#ContactUs .title {
+    position: absolute;
+    z-index: 3;
+    font-size: 80px;
+    font-weight: 700;
+    color: white;
+}
+#ContactUs .section_2{
+    width: 80%;
+    margin:auto
+}
+/* Hiệu Ứng Tráng gương  */
+#ContactUs .imgEmergencyContainer {
+    width: 100%; /* Đặt kích thước vùng chứa */
+    overflow: hidden; /* Ẩn phần tràn của ảnh */
+    position: relative;
+}
+
+/* Hiệu ứng tráng gương */
+#ContactUs .imgEmergencyContainer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -75%; /* Bắt đầu từ bên phải */
+    width: 50%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5); /* Màu trắng nhẹ để tạo hiệu ứng gương */
+    transform: skewX(25deg); /* Nghiêng theo hướng ngược lại */
+    transition: all 0.7s ease-in-out; /* Tốc độ chuyển tiếp */
+    z-index: 1;
+}
+
+#ContactUs .imgEmergencyContainer:hover::before {
+    right: 125%; /* Di chuyển hiệu ứng sang bên trái */
+}
+
+#ContactUs .imgEmergencyImage {
+    transition: all 0.7s ease-in-out; /* Tốc độ chuyển tiếp */
+}
+
+#ContactUs .imgEmergencyImage:hover {
+    transform: scale(1.2); /* Phóng to ảnh khi hover */
+}
+
+/* kết Thúc Hiệu Ứng Tráng gương  */
+/* Phần thông tin liên hệ */
+#ContactUs .contactInfo {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+#ContactUs .contactDetailsContainer{
+    margin-left: 50px;
+}
+/* Biểu tượng liên hệ */
+#ContactUs .contactIcon {
+    font-size: 40px;
+    color: #ee296a;
+    display: block;
+    margin-bottom: 20px;
+}
+
+/* Tiêu đề chính */
+#ContactUs .contactHeading {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 400;
+}
+
+/* Giới thiệu thông tin liên hệ */
+#ContactUs .contactIntro {
+    color:#001789 ;
+    font-size: 46px;
+    line-height: 1.2em;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+/* Mô tả thông tin liên hệ */
+#ContactUs .contactDescription {
+    font-size: 18px;
+    line-height: 36px;
+    margin: 0;
+}
+
+/* Tiêu đề thông tin chi tiết */
+#ContactUs .contactDetailsHeading {
+    color:#001789 ;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 700;
+    margin: 0 0 13px;
+}
+
+/* Địa chỉ liên hệ */
+#ContactUs .contactAddress {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* Số điện thoại và email */
+#ContactUs .contactPhone {
+    color: #ee296a;
+}
+#ContactUs .contactEmail {
+    font-size: 16px;
+    color:#001789 ;
+}
+/* Form container styles */
+#ContactUs .formContactUsContainer {
+    background-color: #F2F2F2;
+    height: 755px;
+    border-radius: 1rem;
+    position: relative;
+    top: 100px;
+}
+
+/* Form input styles */
+#ContactUs .i1 .form-control {
+    background-color: #F2F2F2;
+    font-size: 21px;
+    font-weight: 450;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+#ContactUs .i2 .form-control {
+    background-color: #F2F2F2;
+    font-size: 18px;
+    font-weight: 450;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+#ContactUs .i3 .form-control {
+    background-color: #F2F2F2;
+    font-size: 15px;
+    font-weight: 450;
+    padding-left: 30px;
+    padding-top: 10px;
+    height: 150px;
+}
+
+/* Form layout */
+#ContactUs .formContactUs {
+    width: 90%;
+    margin: auto;
+}
+
+/* Form titles and notes */
+#ContactUs .subTitleForm {
+    font-family: "Caveat", cursive;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-size: 30px;
+    color: #269bd1;
+    line-height: 1.2em;
+}
+#ContactUs .titleForm {
+    font-size: 60px;
+    font-weight: 700;
+    line-height: 1.2em;
+    color: #217399;
+
+}
+#ContactUs .heartIcon{
+    color: red;
+    font-size: 60px;
+}
+#ContactUs .redText{
+    font-weight: 600;
+    font-size: 20px;
+
+}
+
+/* Submit button styles */
+#ContactUs .btnContact {
+    background-color: #269bd1;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+#ContactUs .btnContact:hover {
+    background-color: #000000;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+
+/* Section 4: Google Map container */
+#ContactUs .section_4 {
+    height: 600px;
+}
