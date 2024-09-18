@@ -83,7 +83,6 @@ const Footer = () => {
                     </li>
                     <li id="menu-item-1030"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-1030">
-                      <a href="contact/index.html">Contact Us</a>
                       <Link to='/contact'>Contact Us</Link>
                     </li>
                   </ul>
