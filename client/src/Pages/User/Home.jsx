@@ -98,7 +98,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className='container' style={{ "margin-top": "8rem" }}>
+      <section className='container' style={{ marginTop: "8rem" }}>
         <div className="row">
           <div className="col-xl-6">
             <div className="about-style1__image clearfix">
@@ -188,7 +188,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className='container' style={{ "margin-top": "8rem" }}>
+      <section className='container' style={{ marginTop: "8rem" }}>
         <div className="row">
           <div className="col-xl-12">
             <div className="features-style1__content">
@@ -256,7 +256,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className='container' style={{ "margin-top": "8rem" }}>
+      <section className='container' style={{ marginTop: "8rem" }}>
         <div className="sec-title  text-center">
           <div className="icon">
             <span className="icon-heartbeat"></span>

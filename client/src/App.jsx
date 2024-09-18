@@ -6,11 +6,13 @@ import Footer from './Component/Footer'
 import Home from './Pages/User/Home'
 import Contact from './Pages/User/Contact'
 import AmbulanceRouting from './Component/AmbulanceRouting/AmbulanceRouting';
+import Login from './Pages/Login/Login'
 import Register from "./Pages/Register/Register";
 import About from "./Pages/About/About";
 import UserContext from "./Context/UserContext";
 import { useNavigate } from "react-router-dom";
 import Hospital from "./Pages/Admin/Hospital";
+
 
 function App() {
 
@@ -67,6 +69,7 @@ function App() {
           <Route path="/hospital" element={<Hospital />} />
           <Route path="/call-ambulance" element={<AmbulanceRouting />} />
           <Route path="/about" element={<About />} />
+          <Route path="/map" element={<Map />} />
         </Routes>
         <Footer />
       </UserContext.Provider>
