@@ -5,17 +5,17 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   const images = [
     {
-      url: 'http://127.0.0.1:5500/wp-content/uploads/2022/02/slide-v1-1.jpg',
+      url: 'https://mehedi.asiandevelopers.com/ambons/assets/images/slides/slide-v1-1.jpg',
       title: ' Emergency Medical Services',
       subTitle: 'Your Health is our Priority'
     },
     {
-      url: 'http://127.0.0.1:5500/wp-content/uploads/2022/02/slide-v1-2.jpg',
+      url: 'https://mehedi.asiandevelopers.com/ambons/assets/images/slides/slide-v1-2.jpg',
       title: 'The Preferred Air Ambulance Company',
       subTitle: 'Your Health is our Priority'
     },
     {
-      url: 'http://127.0.0.1:5500/wp-content/uploads/2022/02/slide-v1-3.jpg',
+      url: 'https://mehedi.asiandevelopers.com/ambons/assets/images/slides/slide-v1-3.jpg',
       title: 'Emergency Medical Services ',
       subTitle: 'Your Health is our Priority'
     }
@@ -57,7 +57,7 @@ const Home = () => {
                       <div className='btn_discoverMore_wrapper'>
                         <button className='btn_discoverMore'>
                           <span className='txt'>
-                            Discover More
+                            Call An Ambulance
                           </span>
                         </button>
                       </div>
@@ -91,7 +91,7 @@ const Home = () => {
                 </div>
               </div>
               <div className="text">
-                <h2>+ 1 (246) 333-0088</h2>
+                <h2>+ 84 (828) 818-334</h2>
                 <p>Need help? Call anytime for<br /> ambulance services</p>
               </div>
             </div>
@@ -114,7 +114,7 @@ const Home = () => {
                 </div>
                 <div className="text">
                   <p>Established in</p>
-                  <h2>1987</h2>
+                  <h2>2024</h2>
                 </div>
               </div>
             </div>
@@ -192,7 +192,8 @@ const Home = () => {
         <div className="row">
           <div className="col-xl-12">
             <div className="features-style1__content">
-              <ul className='d-flex flex-xl-row flex-column'>
+              <ul>
+
                 <li>
                   <div className="single-features-style1">
 
@@ -256,97 +257,97 @@ const Home = () => {
         </div>
       </section>
       <section className='container' style={{ "margin-top": "8rem" }}>
-          <div className="sec-title  text-center">
-            <div className="icon">
-              <span className="icon-heartbeat"></span>
-            </div>
-            <div className="sub-title">
-              <h3>What We’re Offering</h3>
-            </div>
-            <h2>About Our Services</h2>
+        <div className="sec-title  text-center">
+          <div className="icon">
+            <span className="icon-heartbeat"></span>
           </div>
-          <div className="row">
-
-            <div className="col-xl-4 col-lg-4">
-              <div className="single-service-style1 wow fadeInUp"
-                data-wow-delay="100ms" data-wow-duration="1500ms">
-
-                <div className="img-holder">
-                  <img fetchpriority="high" decoding="async" width="370"
-                    height="315"
-                    src="wp-content/uploads/2022/02/service-v1-1.jpg"
-                    className="attachment-ambons_370x315 size-ambons_370x315 wp-post-image"
-                    alt=""
-                    srcset="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-1.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-1-300x255.jpg 300w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-1-270x230.jpg 270w"
-                    sizes="(max-width: 370px) 100vw, 370px" />
-                </div>
-
-                <div className="text-holder">
-                  <h3><a href="ambulance-car/index.html">Ambulance Car</a>
-                  </h3>
-                  <p>Proin ultricies rhoncus neque id dignissim. Nullam congue
-                    luna est eget auctor pretium.</p>
-                  <div className="btn-box">
-                    <a href="ambulance-car/index.html">Read More<span
-                      className="icon-right-arrow"></span></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-xl-4 col-lg-4">
-              <div className="single-service-style1 wow fadeInUp"
-                data-wow-delay="100ms" data-wow-duration="1500ms">
-
-                <div className="img-holder">
-                  <img decoding="async" width="370" height="315"
-                    src="wp-content/uploads/2022/02/service-v1-2.jpg"
-                    className="attachment-ambons_370x315 size-ambons_370x315 wp-post-image"
-                    alt=""
-                    srcset="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-2.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-2-300x255.jpg 300w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-2-270x230.jpg 270w"
-                    sizes="(max-width: 370px) 100vw, 370px" />
-                </div>
-
-                <div className="text-holder">
-                  <h3><a href="medical-flight-services/index.html">Medical
-                    Flight Services</a></h3>
-                  <p>Curabitur lectus velit, pulvinar vitae elementum vitae,
-                    pharetra in mi.</p>
-                  <div className="btn-box">
-                    <a href="medical-flight-services/index.html">Read
-                      More<span className="icon-right-arrow"></span></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-xl-4 col-lg-4">
-              <div className="single-service-style1 wow fadeInUp"
-                data-wow-delay="100ms" data-wow-duration="1500ms">
-
-                <div className="img-holder">
-                  <img decoding="async" width="370" height="315"
-                    src="wp-content/uploads/2022/02/service-v1-3.jpg"
-                    className="attachment-ambons_370x315 size-ambons_370x315 wp-post-image"
-                    alt=""
-                    srcset="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-3.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-3-300x255.jpg 300w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-3-270x230.jpg 270w"
-                    sizes="(max-width: 370px) 100vw, 370px" />
-                </div>
-
-                <div className="text-holder">
-                  <h3><a href="medical-escort/index.html">Medical Escort</a>
-                  </h3>
-                  <p>Aenean a mi mi. Sed sem eros, commodo ut lacinia ut,
-                    eleifend id ipsum.</p>
-                  <div className="btn-box">
-                    <a href="medical-escort/index.html">Read More<span
-                      className="icon-right-arrow"></span></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+          <div className="sub-title">
+            <h3>What We’re Offering</h3>
           </div>
+          <h2>About Our Services</h2>
+        </div>
+        <div className="row">
+
+          <div className="col-xl-4 col-lg-4">
+            <div className="single-service-style1 wow fadeInUp"
+              data-wow-delay="100ms" data-wow-duration="1500ms">
+
+              <div className="img-holder">
+                <img fetchpriority="high" decoding="async" width="370"
+                  height="315"
+                  src="wp-content/uploads/2022/02/service-v1-1.jpg"
+                  className="attachment-ambons_370x315 size-ambons_370x315 wp-post-image"
+                  alt=""
+                  srcset="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-1.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-1-300x255.jpg 300w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-1-270x230.jpg 270w"
+                  sizes="(max-width: 370px) 100vw, 370px" />
+              </div>
+
+              <div className="text-holder">
+                <h3><a href="ambulance-car/index.html">Ambulance Car</a>
+                </h3>
+                <p>Proin ultricies rhoncus neque id dignissim. Nullam congue
+                  luna est eget auctor pretium.</p>
+                <div className="btn-box">
+                  <a href="ambulance-car/index.html">Read More<span
+                    className="icon-right-arrow"></span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-xl-4 col-lg-4">
+            <div className="single-service-style1 wow fadeInUp"
+              data-wow-delay="100ms" data-wow-duration="1500ms">
+
+              <div className="img-holder">
+                <img decoding="async" width="370" height="315"
+                  src="wp-content/uploads/2022/02/service-v1-2.jpg"
+                  className="attachment-ambons_370x315 size-ambons_370x315 wp-post-image"
+                  alt=""
+                  srcset="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-2.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-2-300x255.jpg 300w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-2-270x230.jpg 270w"
+                  sizes="(max-width: 370px) 100vw, 370px" />
+              </div>
+
+              <div className="text-holder">
+                <h3><a href="medical-flight-services/index.html">Medical
+                  Flight Services</a></h3>
+                <p>Curabitur lectus velit, pulvinar vitae elementum vitae,
+                  pharetra in mi.</p>
+                <div className="btn-box">
+                  <a href="medical-flight-services/index.html">Read
+                    More<span className="icon-right-arrow"></span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-xl-4 col-lg-4">
+            <div className="single-service-style1 wow fadeInUp"
+              data-wow-delay="100ms" data-wow-duration="1500ms">
+
+              <div className="img-holder">
+                <img decoding="async" width="370" height="315"
+                  src="wp-content/uploads/2022/02/service-v1-3.jpg"
+                  className="attachment-ambons_370x315 size-ambons_370x315 wp-post-image"
+                  alt=""
+                  srcset="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-3.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-3-300x255.jpg 300w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-3-270x230.jpg 270w"
+                  sizes="(max-width: 370px) 100vw, 370px" />
+              </div>
+
+              <div className="text-holder">
+                <h3><a href="medical-escort/index.html">Medical Escort</a>
+                </h3>
+                <p>Aenean a mi mi. Sed sem eros, commodo ut lacinia ut,
+                  eleifend id ipsum.</p>
+                <div className="btn-box">
+                  <a href="medical-escort/index.html">Read More<span
+                    className="icon-right-arrow"></span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </section>
     </div>
   )
