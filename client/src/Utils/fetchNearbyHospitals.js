@@ -15,6 +15,7 @@ export const fetchNearbyHospitals = async (longitude, latitude, setHospitalOptio
     );
 
     const hospitals = response.data.features;
+    console.log(response);
     setHospitalOptions(hospitals.map(hospital => ({
       id: hospital.id,
       name: hospital.text,
