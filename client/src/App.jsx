@@ -45,12 +45,8 @@ function App() {
         <div className={user && user.role === "admin" ? "d-flex" : ""}>
           {user && user.role === "admin" && <AdminSidebar />}
           <Routes>
-            {user && user.role !== "admin" && (
-              <>
                 <Route path="/" element={<Home />} />
                 <Route path="/contact" element={<Contact />} />
-              </>
-            )}
 
             {!user ? (
               <>
