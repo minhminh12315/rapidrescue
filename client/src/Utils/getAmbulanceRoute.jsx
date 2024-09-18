@@ -3,7 +3,6 @@ import * as turf from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
 import ReactDOMServer from 'react-dom/server';
 import { FaAmbulance } from 'react-icons/fa'; 
-import { FaRegHospital } from "react-icons/fa";
 
 
 export const getAmbulanceRoute = async (start, end, setRoute, mapInstance, setDestinationMarker) => {

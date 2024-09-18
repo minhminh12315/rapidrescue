@@ -69,7 +69,6 @@ function App() {
           <Route path="/hospital" element={<Hospital />} />
           <Route path="/call-ambulance" element={<AmbulanceRouting />} />
           <Route path="/about" element={<About />} />
-          <Route path="/map" element={<Map />} />
         </Routes>
         <Footer />
       </UserContext.Provider>
