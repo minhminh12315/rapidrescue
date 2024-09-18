@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Map from '../Map/Map';
-import Geocoder from '../Geocoder/Geocoder';
+import Geocoder from '../Geocoder/Geocoder.js';
 import HospitalSelector from '../HospitalSelector/HospitalSelector';
 import EmergencyForm from '../EmergencyForm/EmergencyForm';
 import RouteDisplay from '../RouteDisplay/RouteDisplay';
 import mapboxgl from 'mapbox-gl';
-
-import { fetchNearbyHospitals } from '../../Utils/fetchNearbyHospitals';
-import { getAmbulanceRoute } from '../../Utils/getAmbulanceRoute';
+import { fetchNearbyHospitals } from '../../Utils/fetchNearbyHospitals.js';
+import { getAmbulanceRoute } from '../../Utils/getAmbulanceRoute.jsx';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 

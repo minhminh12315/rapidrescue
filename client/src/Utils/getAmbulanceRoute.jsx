@@ -1,11 +1,15 @@
 import axios from 'axios';
 import * as turf from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
+import ReactDOMServer from 'react-dom/server';
+import { FaAmbulance } from 'react-icons/fa'; // Import biểu tượng trực tiếp
+import { FaRegHospital } from "react-icons/fa";
+
 
 export const getAmbulanceRoute = async (start, end, setRoute, mapInstance, setDestinationMarker) => {
   try {
     if (!Array.isArray(start) || !Array.isArray(end)) {
-      throw new Error('Invalid coordinates.');
+      throw new Error('Tọa độ không hợp lệ.');
     }
 
     const response = await axios.get(
@@ -20,7 +24,7 @@ export const getAmbulanceRoute = async (start, end, setRoute, mapInstance, setDe
     );
 
     if (response.data.routes.length === 0) {
-      throw new Error('No routes found.');
+      throw new Error('Không tìm thấy lộ trình.');
     }
 
     const route = response.data.routes[0].geometry;
@@ -52,9 +56,17 @@ export const getAmbulanceRoute = async (start, end, setRoute, mapInstance, setDe
     }
 
     if (setDestinationMarker) {
-      const newMarker = new mapboxgl.Marker({ color: '#0000ff' })
+      // Chuyển đổi biểu tượng React thành chuỗi HTML
+      const iconHtml = ReactDOMServer.renderToString(<FaAmbulance color="red" size="24px" />);
+
+      // Tạo một phần tử DOM mới để sử dụng làm marker
+      const el = document.createElement('div');
+      el.innerHTML = iconHtml;
+      el.style.fontSize = '24px'; // Điều chỉnh kích thước nếu cần
+
+      const newMarker = new mapboxgl.Marker(el)
         .setLngLat(end)
-        .setPopup(new mapboxgl.Popup().setText('Destination'))
+        .setPopup(new mapboxgl.Popup().setText('Điểm đến'))
         .addTo(mapInstance);
 
       setDestinationMarker(newMarker);
@@ -67,6 +79,6 @@ export const getAmbulanceRoute = async (start, end, setRoute, mapInstance, setDe
     });
 
   } catch (error) {
-    console.error('Error getting ambulance route:', error.message);
+    console.error('Lỗi khi lấy lộ trình cấp cứu:', error.message);
   }
 };

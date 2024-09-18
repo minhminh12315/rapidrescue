@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Feedback;
 use App\Http\Requests\StoreFeedbackRequest;
 use App\Http\Requests\UpdateFeedbackRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class FeedbackController extends Controller
 {
@@ -27,9 +29,11 @@ class FeedbackController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFeedbackRequest $request)
+    public function store(Request $request)
     {
-        //
+        Log::info($request->all());
+
+        $fields = $request->all();
     }
 
     /**
