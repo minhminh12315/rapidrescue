@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="footer-area">
 
       <div className="footer-area-shape float-bob"
-        style={{ 'background-image': 'url(wp-content/uploads/2022/03/shape-2.png);' }}>
+        style={{ backgroundImage: 'url(wp-content/uploads/2022/03/shape-2.png)' }}>
       </div>
 
       <div className="footer">
@@ -83,7 +83,6 @@ const Footer = () => {
                     </li>
                     <li id="menu-item-1030"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-1030">
-                      <a href="contact/index.html">Contact Us</a>
                       <Link to='/contact'>Contact Us</Link>
                     </li>
                   </ul>

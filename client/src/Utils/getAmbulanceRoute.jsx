@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as turf from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
 import ReactDOMServer from 'react-dom/server';
-import { FaAmbulance } from 'react-icons/fa'; // Import biểu tượng trực tiếp
+import { FaAmbulance } from 'react-icons/fa'; 
 import { FaRegHospital } from "react-icons/fa";
 
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Hospital;
 use App\Http\Requests\StoreHospitalRequest;
 use App\Http\Requests\UpdateHospitalRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HospitalController extends Controller
 {
@@ -13,7 +15,16 @@ class HospitalController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $hospitals = Hospital::all();
+            Log::info($hospitals);
+            return response($hospitals, 200);
+        } catch (\Exception $e) {
+            return response([
+                'error' => 'There was an error fetching the hospitals.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -27,9 +38,30 @@ class HospitalController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreHospitalRequest $request)
+    public function store(Request $request)
     {
-        //
+        Log::info($request->all());
+
+        try {
+            $fields = $request->validate([
+                'name' => 'required|string',
+                'address' => 'required|string',
+                'phone' => 'required|string',
+            ]);
+        
+            $hospital = Hospital::create([
+                'name' => $fields['name'],
+                'address' => $fields['address'],
+                'phone' => $fields['phone'],
+            ]);
+        
+            return response($hospital, 201);
+        } catch (\Exception $e) {
+            return response([
+                'error' => 'There was an error creating the hospital.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

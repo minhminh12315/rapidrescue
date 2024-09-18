@@ -33,6 +33,7 @@ const Register = () => {
       })
       .then((response) => {
         console.log("Register successful:", response.data);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         navigate("/");
       })
       .catch((error) => {
