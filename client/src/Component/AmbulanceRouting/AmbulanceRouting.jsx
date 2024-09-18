@@ -17,7 +17,6 @@ const AmbulanceRouting = () => {
   const [destination, setDestination] = useState(null);
   const [route, setRoute] = useState(null);
   
-  // Grouping similar states into an object
   const [formData, setFormData] = useState({
     address: '',
     isEmergency: 'no',

@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="footer-area">
 
       <div className="footer-area-shape float-bob"
-        style={{ 'background-image': 'url(wp-content/uploads/2022/03/shape-2.png);' }}>
+        style={{ backgroundImage: 'url(wp-content/uploads/2022/03/shape-2.png)' }}>
       </div>
 
       <div className="footer">

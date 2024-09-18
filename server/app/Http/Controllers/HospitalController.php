@@ -15,7 +15,15 @@ class HospitalController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $hospitals = Hospital::all();
+            return response()->json($hospitals);
+        } catch (\Exception $e) {
+            return response([
+                'error' => 'There was an error fetching hospitals.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
