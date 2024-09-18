@@ -15,7 +15,7 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/check-email', [AuthController::class, 'checkEmail'])->name('check-email');
 
 Route::post('/store-hospital', [HospitalController::class, 'store'])->name('store.hospital');
-Route::get('/hospitals', [HospitalController::class, 'index']);
+Route::get('/get-hospitals', [HospitalController::class, 'index'])->name('get.hospitals');
 
 
 Route::post('/contact', [FeedbackController::class, 'store']);
