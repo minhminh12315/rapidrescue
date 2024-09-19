@@ -9,7 +9,7 @@ export const fetchNearbyHospitals = async (longitude, latitude, setHospitalOptio
     let minDistance = Infinity;
     let nearestHospital = null;
 
-    const res = await axios.get("http://localhost:8000/api/hospitals");
+    const res = await axios.get("http://localhost:8000/api/get-hospitals");
     let hostpitals = res.data;
     // add lat long to all object hospital
     hostpitals.forEach((el,i) => {

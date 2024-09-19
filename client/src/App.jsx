@@ -41,24 +41,6 @@ function App() {
   return (
     <div className="App">
       <UserContext.Provider value={{ user, setUser }}>
-<<<<<<< HEAD
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<Contact />} />
-          {user ? (
-            <button onClick={submitLogout()}>Log out</button>
-          ) : (
-            <>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-            </>
-          )}
-          <Route path="/hospital" element={<Hospital />} />
-          <Route path="/call-ambulance" element={<AmbulanceRouting />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-=======
         {user && user.role === "admin" ? <AdminHeader /> : <Header />}
         <div className={user && user.role === "admin" ? "d-flex" : ""}>
           {user && user.role === "admin" && <AdminSidebar />}
@@ -93,7 +75,6 @@ function App() {
             <Route path="/call-ambulance" element={<AmbulanceRouting />} />
           </Routes>
         </div>
->>>>>>> 6cb9845415c700fea938bf5c4471816e4c5dff00
         <Footer />
       </UserContext.Provider>
     </div>

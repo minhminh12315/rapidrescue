@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import AmbulanceRouting from '../../Component/AmbulanceRouting/AmbulanceRouting';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Swal from 'sweetalert2';
@@ -208,7 +207,7 @@ const Contact = () => {
                 </div>
 
                 <div className="section_4">
-                    <AmbulanceRouting/>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.101988018343!2d105.82005117922476!3d21.02860483065242!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab743f0f8e6f%3A0x1de980c60e459b76!2sMinistry%20of%20Health%20(MOH)!5e0!3m2!1sen!2s!4v1726723710535!5m2!1sen!2s" width="100%" height="100%"/>
                 </div>
             </section>
         </>
