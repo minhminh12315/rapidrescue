@@ -17,10 +17,11 @@ class HospitalController extends Controller
     {
         try {
             $hospitals = Hospital::all();
-            return response()->json($hospitals);
+            Log::info($hospitals);
+            return response($hospitals, 200);
         } catch (\Exception $e) {
             return response([
-                'error' => 'There was an error fetching hospitals.',
+                'error' => 'There was an error fetching the hospitals.',
                 'message' => $e->getMessage()
             ], 500);
         }

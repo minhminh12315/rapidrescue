@@ -31,9 +31,22 @@ class FeedbackController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info($request->all());
+         // Ghi log để kiểm tra dữ liệu gửi từ React
+         Log::info($request->all());
 
-        $fields = $request->all();
+         // Validate dữ liệu đầu vào
+         $validatedData = $request->validate([
+             'name' => 'required|string|max:255',
+             'email' => 'required|email|max:255',
+             'phone' => 'nullable|string|max:20',
+             'message' => 'required|string',
+         ]);
+
+         // Lưu vào cơ sở dữ liệu
+         $feedback = Feedback::create($validatedData);
+
+         // Trả về phản hồi sau khi lưu thành công
+         return response()->json(['message' => 'Feedback saved successfully!', 'data' => $feedback], 201);
     }
 
     /**

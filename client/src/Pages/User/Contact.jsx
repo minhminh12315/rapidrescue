@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import AmbulanceRouting from '../../Component/AmbulanceRouting/AmbulanceRouting';
 import axios from 'axios';
-
+import ReCAPTCHA from 'react-google-recaptcha';
+import Swal from 'sweetalert2';
 const Contact = () => {
-
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [message, setMessage] = useState('');
     const [errors, setErrors] = useState({});
+    const [captchaToken, setCaptchaToken] = useState('');
+    const recaptchaRef = useRef(null);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -18,6 +21,7 @@ const Contact = () => {
         if (name === 'email') setEmail(value);
         if (name === 'phone') setPhone(value);
         if (name === 'message') setMessage(value);
+
         // Remove the error for the specific field when the user starts typing
         setErrors({
             ...errors,
@@ -35,8 +39,13 @@ const Contact = () => {
         else if (!/^\d{10,15}$/.test(phone)) errors.phone = 'Phone number is invalid';
 
         if (!message) errors.message = 'Message is required';
+        if (!captchaToken) errors.captcha = 'Please complete the CAPTCHA';
 
         return errors;
+    };
+
+    const handleCaptchaChange = (value) => {
+        setCaptchaToken(value);
     };
 
     const handleSubmit = (e) => {
@@ -48,29 +57,40 @@ const Contact = () => {
             return;
         }
 
-        // Tạo đối tượng formData từ các state riêng biệt
         const formData = {
             name,
             email,
             phone,
-            message
+            message,
+            captchaToken  // Bao gồm token reCAPTCHA
         };
-         console.log(formData);
+
         axios.post('http://127.0.0.1:8000/api/contact', formData)
             .then(response => {
-                // Handle success
-                console.log(response.data);
-                alert('Message sent successfully!');
-                // Xóa các giá trị input sau khi gửi thành công
+                
+                // Thông báo thành công bằng SweetAlert2
+                Swal.fire({
+                    title: 'Message Sent!',
+                    text: 'Your message has been sent successfully.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+
+                ÁDF
+                ÁDFASFD
                 setName('');
                 setEmail('');
                 setPhone('');
                 setMessage('');
                 setErrors({});
+                setCaptchaToken(''); // Reset captcha token
+                // Reset lại CAPTCHA
+                if (recaptchaRef.current) {
+                    recaptchaRef.current.reset();
+                }
             })
             .catch(error => {
-                // Handle error
-                console.error(error);
+                console.error(error.response.data);
                 alert('Failed to send message.');
             });
     };
@@ -80,7 +100,7 @@ const Contact = () => {
             <section id="ContactUs">
                 <div className="section_1">
                     <div className="titleContainer w-100 d-flex justify-content-center align-items-center">
-                        <img className="imgTitle w-100" src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/163901/Originals/911-la-gi-5.jpeg" />
+                        <img className="imgTitle w-100" src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/163901/Originals/911-la-gi-5.jpeg" alt="Contact Us" />
                         <div className="title">Contact Us</div>
                     </div>
                 </div>
@@ -89,7 +109,7 @@ const Contact = () => {
                     <div className="row">
                         <div className="col-12 col-xl-6 mt-5">
                             <div className='imgEmergencyContainer'>
-                                <img className='imgEmergencyImage w-100' src='https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/contact-info-style2__image.jpg' />
+                                <img className='imgEmergencyImage w-100' src='https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/contact-info-style2__image.jpg' alt="Emergency" />
                             </div>
                         </div>
 
@@ -104,7 +124,7 @@ const Contact = () => {
                                     <h3 className="contactDetailsHeading mt-4">Contact Details</h3>
                                     <p className="contactAddress">66 Broklyn Golden Street.<br />New York, United States of America</p>
                                     <h2 className="contactPhone mt-4">+1-(246)333-0089</h2>
-                                    <h4 className="contactEmail">info@example.com</h4>
+                                    <h4 className="contactEmail mt-3">info@example.com</h4>
                                 </div>
                             </div>
                         </div>
@@ -121,7 +141,7 @@ const Contact = () => {
 
                         <div className="formContactUs pt-5">
                             <form onSubmit={handleSubmit}>
-                                <div className="form-group mt-4 i1">
+                                <div className="form-group i1">
                                     <input 
                                         type="text" 
                                         name="name" 
@@ -130,9 +150,9 @@ const Contact = () => {
                                         value={name} 
                                         onChange={handleChange} 
                                     />
-                                    {errors.name && <div className="text-danger">{errors.name}</div>}
+                                    {errors.name && <div className="text-danger fs-6">{errors.name}</div>}
                                 </div>
-                                <div className="form-group mt-4 i2">
+                                <div className="form-group i2">
                                     <input 
                                         type="email" 
                                         name="email" 
@@ -141,9 +161,9 @@ const Contact = () => {
                                         value={email} 
                                         onChange={handleChange} 
                                     />
-                                    {errors.email && <div className="text-danger">{errors.email}</div>}
+                                    {errors.email && <div className="text-danger fs-6">{errors.email}</div>}
                                 </div>
-                                <div className="form-group mt-4 i2">
+                                <div className="form-group i2">
                                     <input 
                                         type="text" 
                                         name="phone" 
@@ -152,9 +172,9 @@ const Contact = () => {
                                         value={phone} 
                                         onChange={handleChange} 
                                     />
-                                    {errors.phone && <div className="text-danger">{errors.phone}</div>}
+                                    {errors.phone && <div className="text-danger fs-6">{errors.phone}</div>}
                                 </div>
-                                <div className="form-group mt-4 i3">
+                                <div className="form-group i3">
                                     <textarea 
                                         name="message" 
                                         className="form-control" 
@@ -163,10 +183,24 @@ const Contact = () => {
                                         value={message} 
                                         onChange={handleChange} 
                                     ></textarea>
-                                    {errors.message && <div className="text-danger">{errors.message}</div>}
+                                    {errors.message && <div className="text-danger fs-6">{errors.message}</div>}
                                 </div>
-                                <div className="form-group mt-4">
-                                    <button type="submit" className="btn btnContact text-center form-control">Submit</button>
+                                <div className="form-group">
+                                    <ReCAPTCHA
+                                        sitekey="6Lflb0cqAAAAAL8tqWL-Tgfo6gNAtsC2hEfRliDh"
+                                        onChange={handleCaptchaChange}
+                                        ref={recaptchaRef}
+                                    />
+                                </div>
+                                
+                                <div className="form-group subContainer">
+                                    <button type="submit" className="btn btnContact text-center form-control">
+                                        <div className='wrapper-container'>
+                                            <div className='wrapper-item'>
+                                                Submit
+                                            </div>
+                                        </div>
+                                    </button>
                                 </div>
                             </form>
                         </div>
