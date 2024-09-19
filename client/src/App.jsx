@@ -22,6 +22,8 @@ import AdminText from "./Pages/Admin/AdminText";
 import AdminUser from "./Pages/Admin/AdminUser";
 import AdminSidebar from "./Pages/Admin/AdminSidebar";
 import Map from "./Component/Map/Map";
+import Mapbox from "./Test/Mapbox";
+
 
 function App() {
   const navigate = useNavigate();
@@ -73,6 +75,7 @@ function App() {
             <Route path="/map" element={<Map />} />
 
             <Route path="/call-ambulance" element={<AmbulanceRouting />} />
+            <Route path="/Mapbox" element={<Mapbox/>}/>
           </Routes>
         </div>
         <Footer />
