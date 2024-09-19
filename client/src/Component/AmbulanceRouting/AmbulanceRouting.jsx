@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import Map from '../Map/Map';
-import Geocoder from '../Geocoder/Geocoder.js';
+import Geocoder from '../Geocoder/Geocoder';
 import HospitalSelector from '../HospitalSelector/HospitalSelector';
 import EmergencyForm from '../EmergencyForm/EmergencyForm';
 import RouteDisplay from '../RouteDisplay/RouteDisplay';
 import mapboxgl from 'mapbox-gl';
-import { fetchNearbyHospitals } from '../../Utils/fetchNearbyHospitals.js';
-import { getAmbulanceRoute } from '../../Utils/getAmbulanceRoute.jsx';
+import { fetchNearbyHospitals } from '../../Utils/fetchNearbyHospitals';
+import { getAmbulanceRoute } from '../../Utils/getAmbulanceRoute';
+import { useLocation } from 'react-router-dom';
+
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -17,7 +18,6 @@ const AmbulanceRouting = () => {
   const [destination, setDestination] = useState(null);
   const [nearestHospital, setNearestHospital] = useState(null);
   const [route, setRoute] = useState(null);
-
   const [formData, setFormData] = useState({
     address: '',
     isEmergency: 'no',
@@ -28,12 +28,13 @@ const AmbulanceRouting = () => {
 
   const [hospitalOptions, setHospitalOptions] = useState([]);
   const [destinationMarker, setDestinationMarker] = useState(null);
+  const [markers, setMarkers] = useState([]);
 
   const location = useLocation();
 
   useEffect(() => {
     if (userLocation && destination) {
-      getAmbulanceRoute(userLocation, destination, setRoute, mapInstance, setDestinationMarker);
+      getAmbulanceRoute(userLocation, destination, setRoute, mapInstance, setDestinationMarker, clearMarkers);
     }
   }, [userLocation, destination, mapInstance]);
 
@@ -43,18 +44,12 @@ const AmbulanceRouting = () => {
     }
   }, [mapInstance, userLocation]);
 
- 
   useEffect(() => {
     if (formData.hospital && hospitalOptions.length > 0) {
-
       const selectedHospital = hospitalOptions.find(hospital => String(hospital.id) === formData.hospital);
-
-      // console.log('selectedHospital:', selectedHospital);
       setNearestHospital(selectedHospital || null);
     }
   }, [formData.hospital, hospitalOptions]);
-
-
 
   const handleCheck = () => {
     if (userLocation && nearestHospital) {
@@ -62,8 +57,7 @@ const AmbulanceRouting = () => {
         nearestHospital.coordinates[1],
         nearestHospital.coordinates[0],
       ]
-      // console.log(nearCoord);
-      getAmbulanceRoute(userLocation, nearCoord, setRoute, mapInstance, setDestinationMarker);
+      getAmbulanceRoute(userLocation, nearCoord, setRoute, mapInstance, setDestinationMarker, clearMarkers);
     } else {
       console.error('User location or hospital coordinates not set.');
     }
@@ -71,6 +65,12 @@ const AmbulanceRouting = () => {
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const clearMarkers = () => {
+     console.log('Clearing markers...');
+    markers.forEach(marker => marker.remove());
+    setMarkers([]);
   };
 
   return (
@@ -91,12 +91,9 @@ const AmbulanceRouting = () => {
                   setPhone={(val) => handleInputChange('phone', val)}
                 />
                 <HospitalSelector
-
                   hospitalOptions={hospitalOptions}
                   selectedHospital={formData.hospital}
-                  setSelectedHospital={(val) => {
-                    handleInputChange('hospital', val)
-                  }}
+                  setSelectedHospital={(val) => handleInputChange('hospital', val)}
                 />
                 <div className="form-group">
                   <label htmlFor="myTextarea">Text Area</label>
