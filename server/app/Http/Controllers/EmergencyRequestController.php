@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EmergencyRequest;
 use App\Http\Requests\StoreEmergencyRequestRequest;
 use App\Http\Requests\UpdateEmergencyRequestRequest;
+use Illuminate\Http\Request;
 
 class EmergencyRequestController extends Controller
 {
@@ -27,9 +28,27 @@ class EmergencyRequestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEmergencyRequestRequest $request)
+    public function store(Request $request)
     {
-        //
+        try {
+            $fields = $request->validate([
+                'user_id' => '', // neu co dang nhap thi lay user_id
+                'hospital_id' => 'required', // id benh vien
+                'phone' => 'required', // so dien thoai
+                'type' => 'required', // 1: urgent, 2: non-gent
+                'ambulance_id' => 'required',   // id xe cua benh vien
+            ]);
+        
+            $emergencyRequest = EmergencyRequest::create($fields);
+        
+            return response($emergencyRequest, 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error creating emergency request',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

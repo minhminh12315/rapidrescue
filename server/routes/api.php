@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmergencyRequestController;
 use App\Http\Controllers\HospitalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,9 @@ Route::get('/get-drivers', [UserController::class, 'getDrivers']);         // L�
 Route::post('/store-driver', [UserController::class, 'storeDriver']);      // Tạo tài xế mới
 Route::put('/update-driver/{id}', [UserController::class, 'updateDriver']); // Cập nhật thông tin tài xế
 Route::delete('/delete-driver/{id}', [UserController::class, 'deleteDriver']); // Xóa tài xế
+
+// Call Ambulance
+Route::post('/store-call-ambulance', [EmergencyRequestController::class, 'store']); // Gọi xe cấp cứu
 
 Route::get('/get-text', [TextController::class, 'index']);
 
