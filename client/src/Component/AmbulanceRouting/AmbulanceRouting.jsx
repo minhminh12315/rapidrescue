@@ -15,8 +15,9 @@ const AmbulanceRouting = () => {
   const [mapInstance, setMapInstance] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [destination, setDestination] = useState(null);
+  const [nearestHospital, setNearestHospital] = useState(null);
   const [route, setRoute] = useState(null);
-  
+
   const [formData, setFormData] = useState({
     address: '',
     isEmergency: 'no',
@@ -38,17 +39,31 @@ const AmbulanceRouting = () => {
 
   useEffect(() => {
     if (mapInstance) {
-      fetchNearbyHospitals(userLocation[0], userLocation[1], setHospitalOptions);
+      fetchNearbyHospitals(userLocation[0], userLocation[1], setHospitalOptions, setNearestHospital);
     }
   }, [mapInstance, userLocation]);
 
+ 
+  useEffect(() => {
+    if (formData.hospital && hospitalOptions.length > 0) {
+
+      const selectedHospital = hospitalOptions.find(hospital => String(hospital.id) === formData.hospital);
+
+      // console.log('selectedHospital:', selectedHospital);
+      setNearestHospital(selectedHospital || null);
+    }
+  }, [formData.hospital, hospitalOptions]);
+
+
+
   const handleCheck = () => {
-    const { hospital } = formData;
-    if (userLocation && hospital) {
-      const selectedHospital = hospitalOptions.find(h => h.id === hospital);
-      if (selectedHospital?.coordinates) {
-        getAmbulanceRoute(userLocation, selectedHospital.coordinates, setRoute, mapInstance, setDestinationMarker);
-      }
+    if (userLocation && nearestHospital) {
+      let nearCoord = [
+        nearestHospital.coordinates[1],
+        nearestHospital.coordinates[0],
+      ]
+      // console.log(nearCoord);
+      getAmbulanceRoute(userLocation, nearCoord, setRoute, mapInstance, setDestinationMarker);
     } else {
       console.error('User location or hospital coordinates not set.');
     }
@@ -76,9 +91,12 @@ const AmbulanceRouting = () => {
                   setPhone={(val) => handleInputChange('phone', val)}
                 />
                 <HospitalSelector
+
                   hospitalOptions={hospitalOptions}
                   selectedHospital={formData.hospital}
-                  setSelectedHospital={(val) => handleInputChange('hospital', val)}
+                  setSelectedHospital={(val) => {
+                    handleInputChange('hospital', val)
+                  }}
                 />
                 <div className="form-group">
                   <label htmlFor="myTextarea">Text Area</label>

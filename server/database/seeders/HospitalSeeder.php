@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class HospitalSeeder extends Seeder
 {
@@ -14,33 +13,16 @@ class HospitalSeeder extends Seeder
     public function run(): void
     {
         DB::table('hospitals')->insert([
-            ['name' => 'Bệnh viện Bạch Mai', 'address' => '21.0134, 105.8324', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Đa khoa Hà Nội', 'address' => '21.0375, 105.8123', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện 108', 'address' => '21.0358, 105.8405', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Đại học Y Hà Nội', 'address' => '21.0072, 105.8419', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Thanh Nhàn', 'address' => '21.0023, 105.8494', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện K Trung ương', 'address' => '21.0441, 105.8321', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Việt Đức', 'address' => '21.0137, 105.8432', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Nhi Trung ương', 'address' => '21.0356, 105.8309', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Xanh Pôn', 'address' => '21.0167, 105.8411', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Tim Hà Nội', 'address' => '21.0142, 105.8300', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Y học cổ truyền Trung ương', 'address' => '21.0204, 105.8329', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Da liễu Trung ương', 'address' => '21.0325, 105.8215', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Lao và Bệnh phổi Trung ương', 'address' => '21.0047, 105.8152', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Phụ sản Hà Nội', 'address' => '21.0271, 105.8327', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Tâm thần Trung ương I', 'address' => '21.0395, 105.7969', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Nội tiết Trung ương', 'address' => '21.0292, 105.8179', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Mắt Trung ương', 'address' => '21.0185, 105.8320', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Trung ương Quân đội 354', 'address' => '21.0107, 105.8529', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Bộ Công an', 'address' => '21.0370, 105.8354', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Bộ Quốc phòng', 'address' => '21.0210, 105.8147', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Đa khoa Đức Giang', 'address' => '21.0702, 105.8904', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Đa khoa Nam Thăng Long', 'address' => '21.0485, 105.7696', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Đa khoa Bắc Thăng Long', 'address' => '21.0270, 105.7881', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Bệnh Nhiệt đới Trung ương', 'address' => '21.0271, 105.8327', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Mắt Hà Nội', 'address' => '21.0275, 105.8328', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Y học cổ truyền Hà Nội', 'address' => '21.0267, 105.8346', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bệnh viện Tâm thần Hà Nội', 'address' => '21.0193, 105.8308', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Bệnh viện Bạch Mai', 'address' => '21.0278, 105.8342', 'phone' => '', 'created_at' => now(), 'updated_at' => now()],  // Hà Nội
+            ['name' => 'Bệnh viện Đa khoa Hà Nội', 'address' => '16.0471, 108.2068', 'phone' => '', 'created_at' => now(), 'updated_at' => now()], // Đà Nẵng
+            ['name' => 'Bệnh viện 108', 'address' => '10.7626, 106.6602', 'phone' => '', 'created_at' => now(), 'updated_at' => now()], // Hồ Chí Minh
+            ['name' => 'Bệnh viện Đại học Y Hà Nội', 'address' => '22.3996, 103.4669', 'phone' => '', 'created_at' => now(), 'updated_at' => now()], // Lào Cai
+            ['name' => 'Bệnh viện Thanh Nhàn', 'address' => '13.7597, 109.2192', 'phone' => '', 'created_at' => now(), 'updated_at' => now()], // Quy Nhơn
+            ['name' => 'Bệnh viện K Trung ương', 'address' => '11.9317, 108.4428', 'phone' => '', 'created_at' => now(), 'updated_at' => now()], // Đà Lạt
+            ['name' => 'Bệnh viện Việt Đức', 'address' => '20.8560, 106.6822', 'phone' => '', 'created_at' => now(), 'updated_at' => now()], // Hải Phòng
+            ['name' => 'Bệnh viện Nhi Trung ương', 'address' => '9.9347, 106.3439', 'phone' => '', 'created_at' => now(), 'updated_at' => now()], // Vĩnh Long
+            ['name' => 'Bệnh viện Xanh Pôn', 'address' => '15.1160, 108.8076', 'phone' => '', 'created_at' => now(), 'updated_at' => now()], // Quảng Nam
+            ['name' => 'Bệnh viện Tim Hà Nội', 'address' => '10.0452, 105.7469', 'phone' => '', 'created_at' => now(), 'updated_at' => now()], // Cần Thơ
         ]);
     }
 }

@@ -15,14 +15,21 @@ const Map = ({ setUserLocation, setMapInstance }) => {
       zoom: 9,
     });
 
-    // Lấy vị trí người dùng nếu được cho phép
+    mapInstance.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    mapInstance.addControl(new mapboxgl.FullscreenControl(), 'top-right');
+    mapInstance.addControl(new mapboxgl.GeolocateControl({ 
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    }), 'top-right');
+
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
       setUserLocation([longitude, latitude]);
       mapInstance.setCenter([longitude, latitude]);
       mapInstance.setZoom(14);
 
-      // Thêm marker để hiển thị vị trí người dùng
       new mapboxgl.Marker({ color: '#ff0000' })
         .setLngLat([longitude, latitude])
         .setPopup(new mapboxgl.Popup().setText('You are here'))

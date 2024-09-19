@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AmbulanceRouting from '../../Component/AmbulanceRouting/AmbulanceRouting';
 import axios from 'axios';
 
 const Contact = () => {
@@ -173,9 +174,7 @@ const Contact = () => {
                 </div>
 
                 <div className="section_4">
-                    <iframe className="mapGoogle w-100 h-100"
-                        src="https://maps.google.com/maps?ll=21.037811,105.809581&q=285 Đội Cấn&t=&z=14&ie=UTF8&iwloc=&output=embed"
-                       ></iframe>
+                    <AmbulanceRouting/>
                 </div>
             </section>
         </>

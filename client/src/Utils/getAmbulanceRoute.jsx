@@ -1,9 +1,6 @@
 import axios from 'axios';
 import * as turf from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
-import ReactDOMServer from 'react-dom/server';
-import { FaAmbulance } from 'react-icons/fa'; 
-
 
 export const getAmbulanceRoute = async (start, end, setRoute, mapInstance, setDestinationMarker) => {
   try {
@@ -55,13 +52,17 @@ export const getAmbulanceRoute = async (start, end, setRoute, mapInstance, setDe
     }
 
     if (setDestinationMarker) {
-      // Chuyển đổi biểu tượng React thành chuỗi HTML
-      const iconHtml = ReactDOMServer.renderToString(<FaAmbulance color="red" size="24px" />);
-
-      // Tạo một phần tử DOM mới để sử dụng làm marker
+      // Tạo một phần tử DOM mới với hình tròn màu xanh
       const el = document.createElement('div');
-      el.innerHTML = iconHtml;
-      el.style.fontSize = '24px'; // Điều chỉnh kích thước nếu cần
+      el.style.width = '24px';
+      el.style.height = '24px';
+      el.style.backgroundColor = '#007cbf'; // Màu xanh của Mapbox
+      el.style.borderRadius = '50%'; // Hình tròn
+      el.style.border = '2px solid #ffffff'; // Viền trắng (tuỳ chọn)
+      el.style.cursor = 'pointer'; // Con trỏ chuột dạng pointer khi hover
+      el.style.display = 'flex';
+      el.style.alignItems = 'center';
+      el.style.justifyContent = 'center';
 
       const newMarker = new mapboxgl.Marker(el)
         .setLngLat(end)
