@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./Register.scss";
 import { login } from "../../assets/index.js";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useResgiterForm from "../../Hooks/LoginResgiter/useResgiterForm.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import UserContext from "../../Context/UserContext.js";
 const Register = () => {
   const navigate = useNavigate();
 
+  const { user, setUser } = useContext(UserContext);
   const { formData, errors, errorMessages, handleChange, validateForm } =
     useResgiterForm();
 
@@ -34,6 +35,7 @@ const Register = () => {
       .then((response) => {
         console.log("Register successful:", response.data);
         localStorage.setItem("user", JSON.stringify(response.data.user));
+        setUser(response.data.user);
         navigate("/");
       })
       .catch((error) => {
