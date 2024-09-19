@@ -123,8 +123,8 @@ const Mapbox = () => {
             const route = response.data.routes[0];
             return {
                 geometry: route.geometry,
-                duration: route.duration, // Thời gian dự kiến tính bằng giây
-                distance: route.distance  // Khoảng cách tính bằng mét
+                duration: route.duration, 
+                distance: route.distance  
             };
         } catch (error) {
             console.error('Lỗi khi gọi Directions API:', error);
@@ -136,7 +136,6 @@ const Mapbox = () => {
         if (start && end && mapRef.current) {
             const map = mapRef.current;
     
-            // Xóa các layers và sources cũ
             if (map.getLayer('route')) {
                 map.removeLayer('route');
                 map.removeSource('route');
@@ -150,10 +149,9 @@ const Mapbox = () => {
             const routeData = await getRoute(start, end);
             if (routeData && routeData.geometry) {
                 const routeGeometry = routeData.geometry;
-                const duration = routeData.duration / 60; // Thời gian dự kiến tính bằng phút
-                const distance = routeData.distance / 1000; // Khoảng cách tính bằng km
+                const duration = routeData.duration / 60; 
+                const distance = routeData.distance / 1000;
     
-                // Thêm tuyến đường vào bản đồ
                 map.addSource('route', {
                     type: 'geojson',
                     data: {
@@ -177,11 +175,10 @@ const Mapbox = () => {
                     },
                     paint: {
                         'line-color': '#4285F4',
-                        'line-width': 8
+                        'line-width': 5
                     }
                 });
     
-                // Thêm marker cuối
                 map.addSource('end-marker', {
                     type: 'geojson',
                     data: {
@@ -209,37 +206,30 @@ const Mapbox = () => {
                     }
                 });
     
-                // Sử dụng fitBounds để phóng to hoặc thu nhỏ bản đồ bao quanh tuyến đường
                 const bounds = new mapboxgl.LngLatBounds();
                 bounds.extend(start);
                 bounds.extend(end);
                 map.fitBounds(bounds, {
-                    padding: 100
+                    padding: 80
                 });
     
-                // Xóa popup cũ nếu tồn tại
                 if (popupRef.current) {
                     popupRef.current.remove();
                 }
     
-                // Tính khoảng cách từ start đến end bằng Turf.js
                 const line = turf.lineString([start, end]);
                 const totalDistance = turf.length(line, { units: 'kilometers' });
     
-                // Tìm điểm giữa tuyến đường (tính khoảng cách / 2)
                 const halfwayPoint = turf.along(line, totalDistance / 2, { units: 'kilometers' });
                 const halfwayCoords = halfwayPoint.geometry.coordinates;
     
-                // Thêm popup mới tại điểm giữa tuyến đường, bên cạnh tuyến đường
                 const newPopup = new mapboxgl.Popup({
-                    offset: [20, 0]  // Điều chỉnh offset để popup xuất hiện bên cạnh tuyến đường
+                    offset: [20, 0] 
                 })
-                    .setLngLat(halfwayCoords)  // Đặt popup ở điểm giữa của tuyến đường
-                    .setHTML(`<strong>Distance: ${totalDistance.toFixed(2)} km<br>Estimated Time: ${Math.round(duration)} min</strong>`)
+                    .setLngLat(halfwayCoords)  
+                    .setHTML(`<p>Distance: ${totalDistance.toFixed(2)} km<br>Estimated Time: ${Math.round(duration)} min</p>`)
                     .addTo(map);
-    
-                // Lưu popup hiện tại vào popupRef
-                popupRef.current = newPopup;
+                    popupRef.current = newPopup;
             }
         }
     };

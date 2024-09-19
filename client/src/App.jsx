@@ -145,6 +145,8 @@ function App() {
                     path="/call-ambulance"
                     element={<AmbulanceRouting />}
                   />
+                  <Route path="/test" element={<Mapbox />} />
+
                   <Route path="/about" element={<About />} />
                 </Routes>
               </div>
