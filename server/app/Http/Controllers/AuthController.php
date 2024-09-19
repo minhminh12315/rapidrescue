@@ -10,13 +10,15 @@ use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
-    public function profile(Request $request)
+    public function index(Request $request)
     {
-        Log::info(Auth::user());
+        $user = User::all();
+        Log::info($user);
         return response()->json([
-            'user' => Auth::user(),
+            'users' => $user,
         ]);
     }
+    
     public function register(Request $request)
     {
         try {

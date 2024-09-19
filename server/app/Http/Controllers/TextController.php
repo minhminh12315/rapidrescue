@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Text;
 use App\Http\Requests\StoreTextRequest;
 use App\Http\Requests\UpdateTextRequest;
+use Illuminate\Support\Facades\Log;
 
 class TextController extends Controller
 {
@@ -13,7 +14,9 @@ class TextController extends Controller
      */
     public function index()
     {
-        //
+        $texts = Text::all();
+        return response()->json($texts, 200);
+
     }
 
     /**

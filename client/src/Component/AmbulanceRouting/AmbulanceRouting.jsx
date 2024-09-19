@@ -45,6 +45,10 @@ const AmbulanceRouting = () => {
   }, [mapInstance, userLocation]);
 
   useEffect(() => {
+    console.log(hospitalOptions);
+  }, [hospitalOptions]);
+
+  useEffect(() => {
     if (formData.hospital && hospitalOptions.length > 0) {
       const selectedHospital = hospitalOptions.find(hospital => String(hospital.id) === formData.hospital);
       setNearestHospital(selectedHospital || null);
