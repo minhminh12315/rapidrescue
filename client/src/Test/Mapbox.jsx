@@ -150,7 +150,7 @@ const Mapbox = () => {
             if (routeData && routeData.geometry) {
                 const routeGeometry = routeData.geometry;
                 const duration = routeData.duration / 60; 
-                const distance = routeData.distance / 1000;
+                // const distance = routeData.distance / 1000;
     
                 map.addSource('route', {
                     type: 'geojson',
@@ -224,7 +224,7 @@ const Mapbox = () => {
                 const halfwayCoords = halfwayPoint.geometry.coordinates;
     
                 const newPopup = new mapboxgl.Popup({
-                    offset: [20, 0] 
+                    offset: [0, 0] 
                 })
                     .setLngLat(halfwayCoords)  
                     .setHTML(`<p>Distance: ${totalDistance.toFixed(2)} km<br>Estimated Time: ${Math.round(duration)} min</p>`)
@@ -249,7 +249,7 @@ const Mapbox = () => {
         <div>
             <div
                 ref={mapContainerRef}
-                style={{ width: '100%', height: '400px' }}
+                style={{ width: '100%', height: '70vh' }}
             />
             <div className="emergency-form">
                 <div className="mb-3">
