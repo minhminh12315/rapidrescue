@@ -72,6 +72,7 @@ if ($('.mobile-menu').length) {
     //Menu Toggle Btn
     $('.mobile-nav-toggler').on('click', function () {
         $('body').addClass('mobile-menu-visible');
+        console.log('menu toggle');
     });
 
     //Menu Toggle Btn

@@ -8,6 +8,13 @@ const Header = () => {
 
   const { user, setUser } = useContext(UserContext);
 
+  const handleMobileMenuToggle = () => {
+    document.body.classList.toggle('mobile-menu-visible')
+  };
+  const closeMobileMenuToggle =() => {
+    document.body.classList.remove('mobile-menu-visible')
+  };
+
   return (
     <header className="main-header header-style-one">
       <div className="header-top">
@@ -68,7 +75,7 @@ const Header = () => {
           <div className="d-flex flex-row justify-content-center align-items-center">
             <div className="header-left">
               <div className="nav-outer style1 clearfix">
-                <div className="mobile-nav-toggler">
+                <div className="mobile-nav-toggler" onClick={handleMobileMenuToggle}>
                   <div className="inner">
                     <span className="icon-bar"></span>
                     <span className="icon-bar"></span>
@@ -154,11 +161,34 @@ const Header = () => {
                     <Link to="/contact">Contact</Link>
                   </li>
                   <li id="menu-item-172" className="">
-                    <Link to="/">Hospital</Link>
+                    <Link to="/hospital">Hospital</Link>
                   </li>
                   <li id="menu-item-173" className="">
-                    <Link to="/">Ambulance</Link>
+                    <Link to="/ambulance-car">Ambulance Car</Link>
                   </li>
+                  {user ? (
+                    <li id="menu-item-173" className="">
+                      <Link
+                        to="/login"
+                        onClick={() => {
+                          setUser(null);
+                          localStorage.removeItem("user");
+                          navigate("/login");
+                        }}
+                      >
+                        Logout
+                      </Link>
+                    </li>
+                  ) : (
+                    <>
+                      <li id="menu-item-173" className="">
+                        <Link to="/login">Login</Link>
+                      </li>
+                      <li id="menu-item-173" className="">
+                        <Link to="/register">Register</Link>
+                      </li>{" "}
+                    </>
+                  )}
                 </ul>
               </nav>
             </div>
@@ -167,20 +197,66 @@ const Header = () => {
       </div>
 
       <div className="mobile-menu">
-        <div className="menu-backdrop"></div>
-        <div className="close-btn">
+        <div className="menu-backdrop" onClick={closeMobileMenuToggle}></div>
+        <div className="close-btn" onClick={closeMobileMenuToggle}>
           <span className="icon fa fa-times-circle"></span>
         </div>
         <nav className="menu-box">
           <div className="nav-logo">
             <a href="index.html" title="Ambons">
               <img
-                src="wp-content/uploads/2022/04/light-logos.png"
+                src="https://mehedi.asiandevelopers.com/ambons/assets/images/footer/footer-logo.png"
                 alt="logo"
               />
             </a>
           </div>
-          <div className="menu-outer"></div>
+          <div className="menu-outer">
+            <div
+              className="collapse navbar-collapse show clearfix"
+              id="navbarSupportedContent"
+            >
+              <ul className="navigation clearfix m-0 ">
+                <li id="menu-item-128" className="">
+                  <a href="/">Home</a>
+                </li>
+                <li id="menu-item-167" className=" ">
+                  <a href="/About">About</a>
+                </li>
+                <li id="menu-item-171" className="">
+                  <a href="/contact">Contact</a>
+                </li>
+                <li id="menu-item-172" className="">
+                  <a href="/hospital">Hospital</a>
+                </li>
+                <li id="menu-item-173" className="">
+                  <a href="/ambulance-car">Ambulance Car</a>
+                </li>
+                {user ? (
+                  <li id="menu-item-173" className="">
+                    <Link
+                      to="/login"
+                      onClick={() => {
+                        setUser(null);
+                        localStorage.removeItem("user");
+                        navigate("/login");
+                      }}
+                    >
+                      Logout
+                    </Link>
+                  </li>
+                ) : (
+                  <>
+                    <li id="menu-item-173" className="">
+                      <a href="/login">Login</a>
+                    </li>
+                    <li id="menu-item-173" className="">
+                      <a href="/register">Register</a>
+                    </li>{" "}
+                  </>
+                )}
+              </ul>
+            </div>
+          </div>
           <div className="social-links">
             <ul className="clearfix">
               <li>

@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('ambulances', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('image');
             $table->string('address');
             $table->string('type');
-            $table->decimal('price', 8, 2);
+            $table->decimal('price', 10, 2);
             $table->timestamps();
         });
     }

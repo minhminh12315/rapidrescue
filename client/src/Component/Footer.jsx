@@ -9,7 +9,7 @@ const Footer = () => {
         style={{ backgroundImage: 'url(wp-content/uploads/2022/03/shape-2.png)' }}>
       </div>
 
-      <div className="footer">
+      <div className="pt-5">
         <div className="container">
           <div className="row text-right-rtl">
             <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">

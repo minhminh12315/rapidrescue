@@ -117,9 +117,8 @@ const AdminDriver = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h1 className="mb-4">Driver Management</h1>
-
+    <div className="container mt-4">
+      <h4 className="mb-4 ">Driver Management</h4>
       <InputGroup className="mb-3">
         <FormControl
           placeholder="Search by name"
@@ -129,9 +128,11 @@ const AdminDriver = () => {
         />
       </InputGroup>
 
-      <Button className="mb-3" onClick={() => setShowModal(true)}>
-        Create Driver
-      </Button>
+      <div className="btns-box">
+        <a className="btn-one mb-5" onClick={() => setShowModal(true)}>
+          <span className="txt text-light">Create Driver</span>
+        </a>
+      </div>
 
       <DataTable
         columns={columns}
@@ -198,12 +199,12 @@ const AdminDriver = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <button class="btn btn-outline-dark waves-effect waves-light" variant="secondary" onClick={() => setShowModal(false)}>
             Cancel
-          </Button>
-          <Button variant="primary" onClick={handleCreateDriver}>
-            Save
-          </Button>
+          </button>
+          <button class="btn btn-primary btn-animation waves-effect waves-light" data-text="Save" variant="primary" onClick={handleCreateDriver}>
+            <span>Save</span>
+          </button>
         </Modal.Footer>
       </Modal>
     </div>
