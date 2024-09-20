@@ -4,12 +4,12 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import './Map.scss';
 
 const Map = ({ setUserLocation, setMapInstance }) => {
-  const mapContainerRef = useRef(null); // Sử dụng ref để quản lý DOM element
+  const mapContainerRef = useRef(null); 
 
   useEffect(() => {
     // Tạo map chỉ khi container đã sẵn sàng
     const mapInstance = new mapboxgl.Map({
-      container: mapContainerRef.current, // Sử dụng ref thay vì id
+      container: mapContainerRef.current, 
       style: 'mapbox://styles/mapbox/streets-v12',
       center: [-74.5, 40],
       zoom: 9,

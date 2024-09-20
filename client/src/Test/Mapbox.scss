@@ -1,0 +1,28 @@
+.map-controls {
+    position: absolute;
+    top: 70%;
+    right: 10px;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    gap: 15px;
+}
+
+.map-controls button {
+    display: block;
+    margin-bottom: 5px;
+    padding: 8px 12px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.map-controls button:hover {
+    background-color: #0056b3;
+}
+
+.mapboxgl-ctrl-attrib-inner {
+    display: none;
+}
