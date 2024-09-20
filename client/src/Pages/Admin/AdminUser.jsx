@@ -19,6 +19,9 @@ const AdminUser = () => {
 
   const roles = ["admin", "customer", "driver", "emt"];
 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [idToDelete, setIdToDelete] = useState(null);
+
   const columns = [
     {
       name: "ID",
@@ -63,20 +66,11 @@ const AdminUser = () => {
     {
       name: "Actions",
       cell: (row) => (
-        <div>
-          <button
-            className="btn btn-primary btn-sm me-2"
-            onClick={() => handleEdit(row)}
-          >
-            Edit
-          </button>
-          <button
-            className="btn btn-danger btn-sm"
-            onClick={() => handleDelete(row.id)}
-          >
-            Delete
-          </button>
+        <div className="d-flex flex-row gap-2">
+          <button type="button" onClick={() => handleEdit(row.id)} class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-edit-line"></i></button>
+          <button type="button" onClick={() => handleShowDeleteModal(row.id)} class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>
         </div>
+
       ),
     },
   ];
@@ -119,7 +113,7 @@ const AdminUser = () => {
     try {
       const response = await axios.get("http://localhost:8000/api/get-user");
       console.log("Response from API:", response.data); // Log dữ liệu trả về
-  
+
       // Kiểm tra xem response.data có phải là một mảng hay không
       if (Array.isArray(response.data.users)) {
         setUsers(response.data.users);
@@ -127,7 +121,7 @@ const AdminUser = () => {
       } else {
         console.error("Expected an array but received:", response.data.users);
       }
-  
+
       setLoading(false);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -137,7 +131,9 @@ const AdminUser = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/delete-user/${id}`);
+      await axios.delete(`http://localhost:8000/api/delete-user/${idToDelete}`);
+      setIdToDelete(null);
+      setShowDeleteModal(false);
       fetchUsers(); // Refresh the data after deletion
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -154,10 +150,20 @@ const AdminUser = () => {
       console.error("Error creating user:", error);
     }
   };
+  const handleShowDeleteModal = (id) => {
+    setShowDeleteModal(true);
+    setIdToDelete(id);
+  }
 
   return (
     <div className="container mt-5">
-      <h1 className="mb-4">User Management</h1>
+      <div className="d-flex flex-row justify-content-between align-items-center mb-4">
+        <h4>User Management</h4>
+        {/* Create User Button */}
+        <button className="btn-one" onClick={() => setShowModal(true)}>
+          <span className="txt">Create Driver</span>
+        </button>
+      </div>
 
       {/* Search Input */}
       <InputGroup className="mb-3">
@@ -169,10 +175,6 @@ const AdminUser = () => {
         />
       </InputGroup>
 
-      {/* Create User Button */}
-      <Button className="mb-3" onClick={() => setShowModal(true)}>
-        Create User
-      </Button>
 
       {/* Data Table */}
       <DataTable
@@ -252,11 +254,27 @@ const AdminUser = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <button class="btn btn-outline-dark waves-effect waves-light" variant="secondary" onClick={() => setShowModal(false)}>
+            Cancel
+          </button>
+          <button class="btn btn-primary btn-animation waves-effect waves-light" data-text="Save" variant="primary" onClick={handleCreateUser}>
+            <span>Save</span>
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+        <Modal.Header closeButton className="pb-3">
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete this USER?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleCreateUser}>
-            Save
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>

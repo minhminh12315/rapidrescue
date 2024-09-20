@@ -5,55 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form, FormControl, InputGroup } from "react-bootstrap";
 import ImageContext from "../../Context/ImageContext";
 
-const columns = [
-  {
-    name: "ID",
-    selector: (row) => row.id,
-    sortable: true,
-  },
-  {
-    name: "Title",
-    selector: (row) => row.title,
-    sortable: true,
-  },
-  {
-    name: "Image",
-    cell: (row) => (
-      <img
-      src={`http://localhost:8000/storage/${row.path}`} // Đường dẫn đến ảnh
-      alt={row.title}
-      style={{ width: '100px', height: 'auto' }} // Đặt kích thước ảnh
-    />
-    ),
-  },
-  {
-    name: "Description",
-    selector: (row) => row.description,
-  },
-  {
-    name: "Type",
-    selector: (row) => row.type,
-  },
-  {
-    name: "Actions",
-    cell: (row) => (
-      <div>
-        <button
-          className="btn btn-primary btn-sm me-2"
-          onClick={() => handleEdit(row)}
-        >
-          Edit
-        </button>
-        <button
-          className="btn btn-danger btn-sm"
-          onClick={() => handleDelete(row.id)}
-        >
-          Delete
-        </button>
-      </div>
-    ),
-  },
-];
+
 
 const AdminImage = () => {
   const { images, setImages } = useContext(ImageContext);
@@ -67,6 +19,49 @@ const AdminImage = () => {
   });
   const [filteredImages, setFilteredImages] = useState([]);
   const [search, setSearch] = useState("");
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [idToDelete, setIdToDelete] = useState(null);
+
+  const columns = [
+    {
+      name: "ID",
+      selector: (row) => row.id,
+      sortable: true,
+    },
+    {
+      name: "Title",
+      selector: (row) => row.title,
+      sortable: true,
+    },
+    {
+      name: "Image",
+      cell: (row) => (
+        <img
+          src={`http://localhost:8000/storage/${row.path}`} // Đường dẫn đến ảnh
+          alt={row.title}
+          style={{ width: '100px', height: 'auto' }} // Đặt kích thước ảnh
+        />
+      ),
+    },
+    {
+      name: "Description",
+      selector: (row) => row.description,
+    },
+    {
+      name: "Type",
+      selector: (row) => row.type,
+    },
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div className="d-flex flex-row gap-2">
+          <button type="button" onClick={() => handleEdit(row.id)} class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-edit-line"></i></button>
+          <button type="button" onClick={() => handleShowDeleteModal(row.id)} class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>
+        </div>
+      ),
+    },
+  ];
 
   useEffect(() => {
     fetchImages();
@@ -106,7 +101,9 @@ const AdminImage = () => {
   // Handle Delete
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/delete-image/${id}`);
+      await axios.delete(`http://localhost:8000/api/delete-image/${idToDelete}`);
+      setIdToDelete(null);
+      setShowDeleteModal(false);
       fetchImages(); // Refresh the data after deletion
     } catch (error) {
       console.error("Error deleting image:", error);
@@ -133,10 +130,19 @@ const AdminImage = () => {
       console.error("Error creating image:", error);
     }
   };
+  const handleShowDeleteModal = (id) => {
+    setShowDeleteModal(true);
+    setIdToDelete(id);
+  }
 
   return (
-    <div className="container mt-5">
-      <h1 className="mb-4">Image Management</h1>
+    <div className="container mt-4">
+      <div className="d-flex flex-row justify-content-between align-items-center mb-4">
+        <h4>Image Management</h4>
+        <button className="btn-one" onClick={() => setShowModal(true)}>
+          <span className="txt">Create Driver</span>
+        </button>
+      </div>
       <InputGroup className="mb-3">
         <FormControl
           placeholder="Search by title"
@@ -146,9 +152,7 @@ const AdminImage = () => {
         />
       </InputGroup>
       {/* Create Image Button */}
-      <a className="btn-one" onClick={() => setShowModal(true)}>
-        <span className="txt text-light">Create Image</span>
-      </a>
+
 
       {/* Data Table */}
       <DataTable
@@ -229,8 +233,25 @@ const AdminImage = () => {
           <button class="btn btn-outline-dark waves-effect waves-light" variant="secondary" onClick={() => setShowModal(false)}>
             Cancel
           </button>
-          <Button class="btn btn-primary btn-animation waves-effect waves-light" data-text="Save" variant="primary" onClick={handleCreateImage}>
+          <button class="btn btn-primary btn-animation waves-effect waves-light" data-text="Save" variant="primary" onClick={handleCreateImage}>
             <span>Save</span>
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal For Delete Driver */}
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+        <Modal.Header closeButton className="pb-3">
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete this IMAGE?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>

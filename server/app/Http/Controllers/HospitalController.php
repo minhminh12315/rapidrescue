@@ -48,13 +48,13 @@ class HospitalController extends Controller
                 'address' => 'required|string',
                 'phone' => 'required|string',
             ]);
-        
+
             $hospital = Hospital::create([
                 'name' => $fields['name'],
                 'address' => $fields['address'],
                 'phone' => $fields['phone'],
             ]);
-        
+
             return response($hospital, 201);
         } catch (\Exception $e) {
             return response([
@@ -93,6 +93,19 @@ class HospitalController extends Controller
      */
     public function destroy(Hospital $hospital)
     {
-        //
+        
+    }
+    public function deleteHospital($id)
+    {
+        try {
+            $hospital = Hospital::find($id);
+            $hospital->delete();
+            return response(['message' => 'Hospital deleted successfully.'], 200);
+        } catch (\Exception $e) {
+            return response([
+                'error' => 'There was an error deleting the hospital.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 }

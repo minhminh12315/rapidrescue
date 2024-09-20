@@ -65,4 +65,14 @@ class AmbulanceController extends Controller
     {
         //
     }
+    
+    public function deleteAmbulance($id){
+        try {
+            $ambulance = Ambulance::find($id);
+            $ambulance->delete();
+            return response()->json(['message' => 'Text deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error deleting text'], 500);
+        }
+    }
 }

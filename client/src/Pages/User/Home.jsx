@@ -62,7 +62,7 @@ const Home = () => {
                         </button>
                       </div>
                     </div>
-                    <div className='carousel_custom_controls'>
+                    <div className='carousel_custom_controls d-lg-block d-none'>
                       <button onClick={prevSlide} className="btn_prev">
                         <span className="material-symbols-outlined">
                           arrow_back
@@ -149,7 +149,7 @@ const Home = () => {
                   <div className="col-xl-6">
 
                     <div className="single-text-box">
-                      <h3><span className="material-symbols-outlined">
+                      <h3 className='d-flex flex-row align-items-center justify-content-start gap-2'><span className="material-symbols-outlined">
                         arrow_right_alt
                       </span>Help
                         us Save a Life</h3>
@@ -162,7 +162,7 @@ const Home = () => {
                   <div className="col-xl-6">
 
                     <div className="single-text-box">
-                      <h3><span className="material-symbols-outlined">
+                      <h3 className='d-flex flex-row align-items-center justify-content-start gap-2'><span className="material-symbols-outlined">
                         arrow_right_alt
                       </span>Join
                         our Big Family</h3>

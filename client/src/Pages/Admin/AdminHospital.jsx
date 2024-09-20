@@ -4,45 +4,7 @@ import DataTable from "react-data-table-component";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form, FormControl, InputGroup } from "react-bootstrap";
 
-const columns = [
-  {
-    name: "ID",
-    selector: (row) => row.id,
-    sortable: true,
-  },
-  {
-    name: "Name",
-    selector: (row) => row.name,
-    sortable: true,
-  },
-  {
-    name: "Address",
-    selector: (row) => row.address,
-  },
-  {
-    name: "Phone",
-    selector: (row) => row.phone,
-  },
-  {
-    name: "Actions",
-    cell: (row) => (
-      <div>
-        <button
-          className="btn btn-primary btn-sm me-2"
-          onClick={() => handleEdit(row)}
-        >
-          Edit
-        </button>
-        <button
-          className="btn btn-danger btn-sm"
-          onClick={() => handleDelete(row.id)}
-        >
-          Delete
-        </button>
-      </div>
-    ),
-  },
-];
+
 
 const AdminHospital = () => {
   const [hospitals, setHospitals] = useState([]);
@@ -53,6 +15,37 @@ const AdminHospital = () => {
     address: "",
     phone: "",
   });
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [idToDelete, setIdToDelete] = useState(null);
+  const columns = [
+    {
+      name: "ID",
+      selector: (row) => row.id,
+      sortable: true,
+    },
+    {
+      name: "Name",
+      selector: (row) => row.name,
+      sortable: true,
+    },
+    {
+      name: "Address",
+      selector: (row) => row.address,
+    },
+    {
+      name: "Phone",
+      selector: (row) => row.phone,
+    },
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div className="d-flex flex-row gap-2">
+          <button type="button" onClick={() => handleEdit(row.id)} class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-edit-line"></i></button>
+          <button type="button" onClick={() => handleShowDeleteModal(row.id)} class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>
+        </div>
+      ),
+    },
+  ];
   const [filteredHospitals, setFilteredHospitals] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -96,8 +89,11 @@ const AdminHospital = () => {
 
   // Handle Delete
   const handleDelete = async (id) => {
+    console.log('Delete')
     try {
-      await axios.delete(`http://localhost:8000/api/delete-hospital/${id}`);
+      await axios.delete(`http://localhost:8000/api/delete-hospital/${idToDelete}`);
+      setIdToDelete(null);
+      setShowDeleteModal(false);
       fetchHospitals(); // Refresh the data after deletion
     } catch (error) {
       console.error("Error deleting hospital:", error);
@@ -115,10 +111,20 @@ const AdminHospital = () => {
     }
   };
 
+  const handleShowDeleteModal = (id) => {
+    setShowDeleteModal(true);
+    setIdToDelete(id);
+  }
   return (
     <div className="container mt-5">
-      <h1 className="mb-4">Hospital Management</h1>
-      <InputGroup className="mb-3">
+      <div className="d-flex flex-row justify-content-between align-items-center mb-4">
+        <h1 className="">Hospital Management</h1>
+        <button className="btn-one" onClick={() => setShowModal(true)}>
+          <span className="txt">Create Hospital</span>
+        </button>
+
+      </div>
+      <InputGroup className="mb-5">
         <FormControl
           placeholder="Search by name"
           aria-label="Search by name"
@@ -127,9 +133,6 @@ const AdminHospital = () => {
         />
       </InputGroup>
       {/* Create Hospital Button */}
-      <Button className="mb-3" onClick={() => setShowModal(true)}>
-        Create Hospital
-      </Button>
 
       {/* Data Table */}
       <DataTable
@@ -197,14 +200,33 @@ const AdminHospital = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <button class="btn btn-outline-dark waves-effect waves-light" variant="secondary" onClick={() => setShowModal(false)}>
+            <span>Cancel</span>
+          </button>
+          <button class="btn btn-primary btn-animation waves-effect waves-light" data-text="Save" variant="primary" onClick={handleCreateHospital}>
+            <span>Save</span>
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal For Delete Hospital */}
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+        <Modal.Header closeButton className="pb-3">
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete this HOSPITAL?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleCreateHospital}>
-            Save
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>
+
+
     </div>
   );
 };

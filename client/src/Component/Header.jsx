@@ -11,9 +11,10 @@ const Header = () => {
   const handleMobileMenuToggle = () => {
     document.body.classList.toggle('mobile-menu-visible')
   };
-  const closeMobileMenuToggle =() => {
+  const closeMobileMenuToggle = () => {
     document.body.classList.remove('mobile-menu-visible')
   };
+  // console.log(user)
 
   return (
     <header className="main-header header-style-one">
@@ -104,17 +105,24 @@ const Header = () => {
                         <Link to="/ambulance-car">Ambulance Car</Link>
                       </li>
                       {user ? (
-                        <li id="menu-item-173" className="">
+                        <li id="menu-item-173" className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-173 dropdown">
                           <Link
-                            to="/login"
-                            onClick={() => {
-                              setUser(null);
-                              localStorage.removeItem("user");
-                              navigate("/login");
-                            }}
+                            data-toggle="dropdown1"
+                            class="hvr-underline-from-left1" aria-expanded="false" data-scroll
+                            data-options="easing: easeOutQuart"
                           >
-                            Logout
+                            {user.first_name + " " + user.last_name}
                           </Link>
+                          <ul class="submenu">
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-136">
+                              <Link to="/login"
+                                onClick={() => {
+                                  setUser(null);
+                                  localStorage.removeItem("user");
+                                  navigate("/login");
+                                }}><i className="ri-logout-box-line"></i>LOG OUT</Link>
+                            </li>
+                          </ul>
                         </li>
                       ) : (
                         <>
@@ -167,17 +175,24 @@ const Header = () => {
                     <Link to="/ambulance-car">Ambulance Car</Link>
                   </li>
                   {user ? (
-                    <li id="menu-item-173" className="">
+                    <li id="menu-item-173" className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-173 dropdown">
                       <Link
-                        to="/login"
-                        onClick={() => {
-                          setUser(null);
-                          localStorage.removeItem("user");
-                          navigate("/login");
-                        }}
+                        data-toggle="dropdown1"
+                        class="hvr-underline-from-left1" aria-expanded="false" data-scroll
+                        data-options="easing: easeOutQuart"
                       >
-                        Logout
+                        {user.first_name + " " + user.last_name}
                       </Link>
+                      <ul class="submenu">
+                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-136">
+                          <Link to="/login"
+                            onClick={() => {
+                              setUser(null);
+                              localStorage.removeItem("user");
+                              navigate("/login");
+                            }}><i className="ri-logout-box-line"></i>LOG OUT</Link>
+                        </li>
+                      </ul>
                     </li>
                   ) : (
                     <>
@@ -232,9 +247,9 @@ const Header = () => {
                   <a href="/ambulance-car">Ambulance Car</a>
                 </li>
                 {user ? (
-                  <li id="menu-item-173" className="">
-                    <Link
-                      to="/login"
+                  <li id="menu-item-173" className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-173 dropdown">
+                    <a
+                      href="/login"
                       onClick={() => {
                         setUser(null);
                         localStorage.removeItem("user");
@@ -242,7 +257,10 @@ const Header = () => {
                       }}
                     >
                       Logout
-                    </Link>
+                    </a>
+                    <ul>
+                      <li>LOG OUT</li>
+                    </ul>
                   </li>
                 ) : (
                   <>
