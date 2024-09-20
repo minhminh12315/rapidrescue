@@ -42,7 +42,6 @@ const AdminSidebar = () => {
             <li className='nav-item'><Link className='nav-link menu-link' to="/admin-user"><i className="ri-user-line"></i>Users</Link></li>
             <li className='nav-item'><Link className='nav-link menu-link' to="/admin-driver"><i className=" ri-steering-2-line"></i>Driver</Link></li>
             <li className='nav-item'><Link className='nav-link menu-link' to="/admin-image"><i className="ri-image-line"></i>Image</Link></li>
-            <li className='nav-item'><Link className='nav-link menu-link' to="/admin-video"><i className="ri-video-line"></i>Video</Link></li>
             <li className='nav-item'><Link className='nav-link menu-link' to="/admin-text"><i className="ri-text"></i>Text</Link></li>
             <li className='nav-item'><Link className='nav-link menu-link' to="/admin-hospital"><i className="ri-hospital-line"></i>Hospitals</Link></li>
             <li className='nav-item'><Link className='nav-link menu-link' to="/admin-ambulance-car"><i className=' ri-truck-line'></i>Ambulance Cars</Link></li>

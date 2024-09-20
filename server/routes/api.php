@@ -34,18 +34,16 @@ Route::put('/update-driver/{id}', [UserController::class, 'updateDriver']); // C
 Route::delete('/delete-driver/{id}', [UserController::class, 'deleteDriver']); // Xóa tài xế
 
 // Call Ambulance
-Route::post('/store-call-ambulance', [EmergencyRequestController::class, 'store']);
 Route::post('/emergency-requests', [EmergencyRequestController::class, 'store']);
 
 // đổ dữ liệu theo id
 Route::get('/get-ambulance', [AmbulanceController::class, 'index']);
 
+// Text
 Route::get('/get-text', [TextController::class, 'index']);
 
 Route::get('/get-image', [ImageController::class, 'index']);
 Route::post('/store-image', [ImageController::class, 'store']);
-
-Route::get('/get-video', [VideoController::class, 'index']);
 
 Route::post('/contact', [ContactController::class, 'store']);
 
