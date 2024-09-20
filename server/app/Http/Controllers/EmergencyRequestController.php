@@ -32,15 +32,15 @@ class EmergencyRequestController extends Controller
     {
         try {
             $fields = $request->validate([
-                'user_id' => '', // neu co dang nhap thi lay user_id
-                'hospital_id' => 'required', // id benh vien
-                'phone' => 'required', // so dien thoai
-                'type' => 'required', // 1: urgent, 2: non-gent
-                'ambulance_id' => 'required',   // id xe cua benh vien
+                'user_id' => '', // nếu có đăng nhập thì lấy user_id
+                'hospital_id' => 'required', // ID bệnh viện
+                'phone' => 'required', // Số điện thoại
+                'type' => 'required', // 1: urgent, 2: non-urgent
+                'ambulance_id' => 'required', // ID xe của bệnh viện
             ]);
-        
+    
             $emergencyRequest = EmergencyRequest::create($fields);
-        
+    
             return response($emergencyRequest, 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -50,6 +50,7 @@ class EmergencyRequestController extends Controller
             ], 500);
         }
     }
+    
 
     /**
      * Display the specified resource.

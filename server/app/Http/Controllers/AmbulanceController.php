@@ -13,7 +13,9 @@ class AmbulanceController extends Controller
      */
     public function index()
     {
-        //
+        $ambulances = Ambulance::all();
+
+        return response() -> json($ambulances, 200);
     }
 
     /**

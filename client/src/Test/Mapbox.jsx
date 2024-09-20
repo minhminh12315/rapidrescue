@@ -23,6 +23,9 @@ const Mapbox = () => {
         textareaValue: ''
     });
     const [hospitals, setHospitals] = useState([]);
+    const [ambulances, setAmbulances] = useState([]);
+
+
     const [destination, setDestination] = useState(null);
     const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
@@ -39,8 +42,21 @@ const Mapbox = () => {
             }
         };
 
+        const fetchAmbulances = async () => {
+            try {
+                const res = await axios.get("http://localhost:8000/api/get-ambulance");
+                // console.log(res);
+                setAmbulances(res.data);
+            } catch (error) {
+                console.error('Lỗi khi fetch dữ liệu xe cứu thương:', error);
+            }
+        };
+
         fetchHospitals();
+        fetchAmbulances();
     }, []);
+
+
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -95,17 +111,25 @@ const Mapbox = () => {
         }));
     };
 
-    const handleHospitalChange = (e) => {
-        const selectedHospitalName = e.target.value;
-        const selectedHospital = hospitals.find(h => h.name === selectedHospitalName);
-        if (selectedHospital) {
-            const [latitude, longitude] = selectedHospital.address.split(',').map(Number);
-            setDestination([longitude, latitude]);
+    const handleHospitalChange = (e, type) => {
+        const selectedValue = e.target.value;
+
+        if (type === 'hospital') {
+            const selectedHospital = hospitals.find(h => h.name === selectedValue);
+            if (selectedHospital) {
+                const [latitude, longitude] = selectedHospital.address.split(',').map(Number);
+                setDestination([longitude, latitude]);
+            }
+            setFormData(prevState => ({
+                ...prevState,
+                hospital: selectedValue,
+            }));
+        } else if (type === 'car') {
+            setFormData(prevState => ({
+                ...prevState,
+                car: selectedValue,
+            }));
         }
-        setFormData(prevState => ({
-            ...prevState,
-            hospital: selectedHospitalName
-        }));
     };
 
     const getRoute = async (start, end) => {
@@ -227,15 +251,41 @@ const Mapbox = () => {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        if (!formData.hospital || !formData.car) {
+            console.error('Vui lòng chọn bệnh viện và xe cứu thương trước');
+            return;
+        }
+
+        // Lấy ID bệnh viện đã chọn
+        const selectedHospital = hospitals.find(h => h.name === formData.hospital);
+        if (!selectedHospital) {
+            console.error('Bệnh viện không hợp lệ');
+            return;
+        }
+
+        const requestData = {
+            user_id: localStorage.getItem('user') || null,
+            hospital_id: selectedHospital.id,
+            phone: formData.phone,
+            type: formData.emergency === 'yes' ? 'urgent' : 'non-urgent',
+            ambulance_id: formData.car,
+        };
+
         if (userLocation && destination) {
-            drawRoute(userLocation, destination);
-        } else {
-            console.error('Vui lòng chọn bệnh viện trước');
+            await drawRoute(userLocation, destination);
+        }
+
+        try {
+            const response = await axios.post('http://localhost:8000/api/emergency-requests', requestData);
+            console.log('Dữ liệu đã được lưu:', response.data);
+        } catch (error) {
+            console.error('Lỗi khi gửi yêu cầu:', error.response?.data || error.message);
         }
 
         console.log('Dữ liệu form:', formData);
     };
+
 
     const changeMapStyle = (styleUrl) => {
         if (mapRef.current) {
@@ -245,10 +295,7 @@ const Mapbox = () => {
 
     return (
         <div>
-            <div
-                ref={mapContainerRef}
-                style={{ width: '100%', height: '70vh', position: 'relative' }}
-            />
+            <div ref={mapContainerRef} style={{ width: '100%', height: '70vh', position: 'relative' }} />
             <div className="map-controls">
                 <button onClick={() => changeMapStyle('mapbox://styles/mapbox/streets-v11')}>Streets</button>
                 <button onClick={() => changeMapStyle('mapbox://styles/mapbox/outdoors-v11')}>Outdoors</button>
@@ -282,7 +329,6 @@ const Mapbox = () => {
                                     <option value="no">Not Emergency</option>
                                 </select>
                             </div>
-                           
                             <div className="mb-3">
                                 <label htmlFor="phone" className="form-label">Phone</label>
                                 <input
@@ -299,7 +345,7 @@ const Mapbox = () => {
                                     id="hospital"
                                     className="form-select"
                                     value={formData.hospital}
-                                    onChange={handleHospitalChange}
+                                    onChange={(e) => handleHospitalChange(e, 'hospital')}
                                 >
                                     <option value="">Select a hospital</option>
                                     {hospitals.map(hospital => (
@@ -311,8 +357,18 @@ const Mapbox = () => {
                             </div>
                             <div className='car-selector mb-3'>
                                 <label htmlFor="car" className='form-label'>Select a car</label>
-                                <select id="car" className='form-select' value={formData.car} onChange={handleHospitalChange}>
-                                    <option  value={formData.car}>asassaas</option>
+                                <select
+                                    id="car"
+                                    className='form-select'
+                                    value={formData.car}
+                                    onChange={(e) => handleHospitalChange(e, 'car')}
+                                >
+                                    <option value="">Select a car</option>
+                                    {ambulances.map(ambulance => (
+                                        <option key={ambulance.id} value={ambulance.id}>
+                                            {ambulance.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                             <div className="form-group mb-3">

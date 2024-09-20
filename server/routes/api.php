@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AmbulanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmergencyRequestController;
 use App\Http\Controllers\HospitalController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\TextController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
+use App\Models\Ambulance;
 use App\Models\User;
 
 Route::get('/user', function (Request $request) {
@@ -32,7 +34,11 @@ Route::put('/update-driver/{id}', [UserController::class, 'updateDriver']); // C
 Route::delete('/delete-driver/{id}', [UserController::class, 'deleteDriver']); // Xóa tài xế
 
 // Call Ambulance
-Route::post('/store-call-ambulance', [EmergencyRequestController::class, 'store']); // Gọi xe cấp cứu
+Route::post('/store-call-ambulance', [EmergencyRequestController::class, 'store']);
+Route::post('/emergency-requests', [EmergencyRequestController::class, 'store']);
+
+// đổ dữ liệu theo id
+Route::get('/get-ambulance', [AmbulanceController::class, 'index']);
 
 Route::get('/get-text', [TextController::class, 'index']);
 
