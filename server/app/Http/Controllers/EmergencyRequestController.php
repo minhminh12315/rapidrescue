@@ -37,10 +37,12 @@ class EmergencyRequestController extends Controller
                 'phone' => 'required', // Số điện thoại
                 'type' => 'required', // 1: urgent, 2: non-urgent
                 'ambulance_id' => 'required', // ID xe của bệnh viện
+                'start_location' => 'nullable', // Không bắt buộc, vị trí người dùng
+                'destination' => 'nullable', // Không bắt buộc, tọa độ bệnh viện
             ]);
-    
+
             $emergencyRequest = EmergencyRequest::create($fields);
-    
+
             return response($emergencyRequest, 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -50,7 +52,13 @@ class EmergencyRequestController extends Controller
             ], 500);
         }
     }
-    
+
+    public function getRequestsByAmbulance($ambulance_id)
+    {
+        $requests = EmergencyRequest::where('ambulance_id', $ambulance_id)->get();
+        return response()->json($requests);
+    }
+
 
     /**
      * Display the specified resource.

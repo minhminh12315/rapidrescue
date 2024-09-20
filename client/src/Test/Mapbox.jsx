@@ -5,6 +5,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import './Mapbox.scss'
 import * as turf from '@turf/turf';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import { useLocation } from 'react-router-dom';
+
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 const DIRECTIONS_API_KEY = import.meta.env.VITE_MAPBOX_DIRECTIONS_API_KEY;
@@ -14,6 +16,7 @@ const Mapbox = () => {
     const mapRef = useRef(null);
     const popupRef = useRef(null);
     const [userLocation, setUserLocation] = useState(null);
+    const location = useLocation();
     const [formData, setFormData] = useState({
         address: '',
         emergency: 'yes',
@@ -21,7 +24,10 @@ const Mapbox = () => {
         hospital: '',
         car: '',
         price: '',
-        textareaValue: ''
+        textareaValue: '',
+        start_location: '',
+        destination: ''
+
     });
     const [hospitals, setHospitals] = useState([]);
     const [ambulances, setAmbulances] = useState([]);
@@ -34,6 +40,9 @@ const Mapbox = () => {
     });
 
     useEffect(() => {
+        
+        
+
         const fetchHospitals = async () => {
             try {
                 const res = await axios.get("http://localhost:8000/api/get-hospitals");
@@ -271,6 +280,8 @@ const Mapbox = () => {
             phone: formData.phone,
             type: formData.emergency === 'yes' ? 'urgent' : 'non-urgent',
             ambulance_id: formData.car,
+            start_location: JSON.stringify(userLocation), 
+            destination: JSON.stringify(destination)
         };
 
         if (userLocation && destination) {
@@ -304,92 +315,94 @@ const Mapbox = () => {
                 <button onClick={() => changeMapStyle('mapbox://styles/mapbox/dark-v11')}>Dark</button>
                 <button onClick={() => changeMapStyle('mapbox://styles/mapbox/satellite-v9')}>Satellite</button>
             </div>
-            <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-md-6">
-                        <div className="emergency-form">
-                            <div className="mb-3">
-                                <label htmlFor="address" className="form-label">Address</label>
-                                <input
-                                    type="text"
-                                    id="address"
-                                    className="form-control"
-                                    value={formData.address}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="emergency" className="form-label">Emergency</label>
-                                <select
-                                    id="emergency"
-                                    className="form-select"
-                                    value={formData.emergency}
-                                    onChange={handleInputChange}
-                                >
-                                    <option value="yes">Emergency</option>
-                                    <option value="no">Not Emergency</option>
-                                </select>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="phone" className="form-label">Phone</label>
-                                <input
-                                    type="tel"
-                                    id="phone"
-                                    className="form-control"
-                                    value={formData.phone}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="hospital-selector mb-3">
-                                <label htmlFor="hospital">Hospital</label>
-                                <select
-                                    id="hospital"
-                                    className="form-select"
-                                    value={formData.hospital}
-                                    onChange={(e) => handleHospitalChange(e, 'hospital')}
-                                >
-                                    <option value="">Select a hospital</option>
-                                    {hospitals.map(hospital => (
-                                        <option key={hospital.id} value={hospital.name}>
-                                            {hospital.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className='car-selector mb-3'>
-                                <label htmlFor="car" className='form-label'>Select a car</label>
-                                <select
-                                    id="car"
-                                    className='form-select'
-                                    value={formData.car}
-                                    onChange={(e) => handleHospitalChange(e, 'car')}
-                                >
-                                    {ambulances.map(ambulance => (
-                                        <option key={ambulance.id} value={ambulance.id}>
-                                            {ambulance.name} {ambulance.price}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className="form-group mb-3">
-                                <label htmlFor="textareaValue">Text Area</label>
-                                <textarea
-                                    className="form-control"
-                                    id="textareaValue"
-                                    rows="5"
-                                    value={formData.textareaValue}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="route-display text-center">
-                                <button className="btn btn-primary" onClick={handleSubmit}>
-                                    Check
-                                </button>
+            {location.pathname !== '/driver' && (
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div className="col-md-6">
+                            <div className="emergency-form">
+                                <div className="mb-3">
+                                    <label htmlFor="address" className="form-label">Address</label>
+                                    <input
+                                        type="text"
+                                        id="address"
+                                        className="form-control"
+                                        value={formData.address}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="emergency" className="form-label">Emergency</label>
+                                    <select
+                                        id="emergency"
+                                        className="form-select"
+                                        value={formData.emergency}
+                                        onChange={handleInputChange}
+                                    >
+                                        <option value="yes">Emergency</option>
+                                        <option value="no">Not Emergency</option>
+                                    </select>
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="phone" className="form-label">Phone</label>
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        className="form-control"
+                                        value={formData.phone}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className="hospital-selector mb-3">
+                                    <label htmlFor="hospital">Hospital</label>
+                                    <select
+                                        id="hospital"
+                                        className="form-select"
+                                        value={formData.hospital}
+                                        onChange={(e) => handleHospitalChange(e, 'hospital')}
+                                    >
+                                        <option value="">Select a hospital</option>
+                                        {hospitals.map(hospital => (
+                                            <option key={hospital.id} value={hospital.name}>
+                                                {hospital.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className='car-selector mb-3'>
+                                    <label htmlFor="car" className='form-label'>Select a car</label>
+                                    <select
+                                        id="car"
+                                        className='form-select'
+                                        value={formData.car}
+                                        onChange={(e) => handleHospitalChange(e, 'car')}
+                                    >
+                                        {ambulances.map(ambulance => (
+                                            <option key={ambulance.id} value={ambulance.id}>
+                                                {ambulance.name} {ambulance.price}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="form-group mb-3">
+                                    <label htmlFor="textareaValue">Text Area</label>
+                                    <textarea
+                                        className="form-control"
+                                        id="textareaValue"
+                                        rows="5"
+                                        value={formData.textareaValue}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className="route-display text-center">
+                                    <button className="btn btn-primary" onClick={handleSubmit}>
+                                        Check
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

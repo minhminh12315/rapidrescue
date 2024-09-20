@@ -14,7 +14,9 @@ class EmergencyRequest extends Model
         'phone',
         'type',
         'status',
-        'ambulance_id'
+        'ambulance_id',
+        'start_location',
+        'destination'
     ];
 
     public function ambulance()
