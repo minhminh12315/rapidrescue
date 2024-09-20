@@ -16,10 +16,11 @@ const Mapbox = () => {
     const [userLocation, setUserLocation] = useState(null);
     const [formData, setFormData] = useState({
         address: '',
-        emergency: 'no',
+        emergency: 'yes',
         phone: '',
         hospital: '',
         car: '',
+        price: '',
         textareaValue: ''
     });
     const [hospitals, setHospitals] = useState([]);
@@ -363,10 +364,9 @@ const Mapbox = () => {
                                     value={formData.car}
                                     onChange={(e) => handleHospitalChange(e, 'car')}
                                 >
-                                    <option value="">Select a car</option>
                                     {ambulances.map(ambulance => (
                                         <option key={ambulance.id} value={ambulance.id}>
-                                            {ambulance.name}
+                                            {ambulance.name} {ambulance.price}
                                         </option>
                                     ))}
                                 </select>
