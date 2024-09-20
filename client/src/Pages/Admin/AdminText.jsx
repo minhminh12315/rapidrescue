@@ -98,9 +98,9 @@ const AdminText = () => {
     <div className="container mt-5">
       <div className="d-flex justify-content-between mb-3">
         <h2>Manage Texts</h2>
-        <Button variant="primary" onClick={() => setShowModal(true)}>
-          Add New Text
-        </Button>
+        <a className='btn-one' variant="primary" onClick={() => setShowModal(true)}>
+          <span className='txt text-light'>Add New Text</span>
+        </a>
       </div>
 
       <InputGroup className="mb-3">

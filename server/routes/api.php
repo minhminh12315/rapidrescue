@@ -49,3 +49,6 @@ Route::get('/get-video', [VideoController::class, 'index']);
 
 Route::post('/contact', [ContactController::class, 'store']);
 
+Route::get('/hospitals', [HospitalController::class, 'index'])->name('get.hospitals');
+
+Route::get('/ambulances', [AmbulanceController::class, 'index'])->name('get.ambulances');

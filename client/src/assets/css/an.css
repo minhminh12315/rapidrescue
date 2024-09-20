@@ -1,3 +1,6 @@
+a{
+    text-decoration: none !important;
+}
 .carousel_custom_container {
     position: relative;
 }

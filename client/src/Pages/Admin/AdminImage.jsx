@@ -146,9 +146,9 @@ const AdminImage = () => {
         />
       </InputGroup>
       {/* Create Image Button */}
-      <Button className="mb-3" onClick={() => setShowModal(true)}>
-        Create Image
-      </Button>
+      <a className="btn-one" onClick={() => setShowModal(true)}>
+        <span className="txt text-light">Create Image</span>
+      </a>
 
       {/* Data Table */}
       <DataTable
@@ -226,11 +226,11 @@ const AdminImage = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <button class="btn btn-outline-dark waves-effect waves-light" variant="secondary" onClick={() => setShowModal(false)}>
             Cancel
-          </Button>
-          <Button variant="primary" onClick={handleCreateImage}>
-            Save
+          </button>
+          <Button class="btn btn-primary btn-animation waves-effect waves-light" data-text="Save" variant="primary" onClick={handleCreateImage}>
+            <span>Save</span>
           </Button>
         </Modal.Footer>
       </Modal>

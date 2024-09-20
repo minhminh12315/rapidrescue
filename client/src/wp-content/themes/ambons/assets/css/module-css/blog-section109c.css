@@ -116,6 +116,11 @@
     line-height: 30px;
     font-weight: 700;
     margin-bottom: 13px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .single-blog-style1 .text-holder h3 a {

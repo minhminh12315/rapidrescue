@@ -25,7 +25,8 @@ import AdminUser from "./Pages/Admin/AdminUser";
 import AdminSidebar from "./Pages/Admin/AdminSidebar";
 import Map from "./Component/Map/Map";
 import Mapbox from "./Test/Mapbox";
-
+import HospitalUser from "./Pages/User/Hospital";
+import AllAmbulanceCar from "./Pages/User/AllAmbulanceCar";
 
 function App() {
   const navigate = useNavigate();
@@ -93,14 +94,14 @@ function App() {
   const isEMT = user && user.role === "emt";
 
   return (
-    <div className="App">
+    <div className="App" id={isAdmin ? 'layout-wrapper' : ''} >
       <VideoContext.Provider value={{ videos, setVideos }}>
         <ImageContext.Provider value={{ images, setImages }}>
           <TextContext.Provider value={{ texts, setTexts }}>
             <UserContext.Provider value={{ user, setUser }}>
               {isAdmin ? <AdminHeader /> : <Header />}
-              <div className={isAdmin ? "d-flex" : ""}>
-                {isAdmin && <AdminSidebar />}
+              {isAdmin && <AdminSidebar />}
+              <div className={isAdmin ? 'main-content overflow-hidden' : ''} >
                 <Routes>
                   {!user ? (
                     <>
@@ -148,9 +149,11 @@ function App() {
                   <Route path="/test" element={<Mapbox />} />
 
                   <Route path="/about" element={<About />} />
+                  <Route path="/hospital" element={<HospitalUser />} />
+                  <Route path="/ambulance-car" element={<AllAmbulanceCar />} />
                 </Routes>
               </div>
-              <Footer />
+              {isAdmin ? '' : <Footer />}
             </UserContext.Provider>
           </TextContext.Provider>
         </ImageContext.Provider>
