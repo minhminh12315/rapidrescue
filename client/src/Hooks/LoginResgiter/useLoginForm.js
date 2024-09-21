@@ -44,7 +44,7 @@ const useLoginForm = () => {
 
     const checkEmail = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/api/check-email', {
+            const response = await axios.post('https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/check-email', {
                 email: formData.email
             });
 

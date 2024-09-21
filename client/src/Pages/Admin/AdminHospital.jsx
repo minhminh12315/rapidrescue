@@ -70,7 +70,7 @@ const AdminHospital = () => {
   const fetchHospitals = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/get-hospitals"
+        "https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/get-hospitals"
       );
       setHospitals(response.data);
       setFilteredHospitals(response.data);
@@ -91,7 +91,7 @@ const AdminHospital = () => {
   const handleDelete = async (id) => {
     console.log('Delete')
     try {
-      await axios.delete(`http://localhost:8000/api/delete-hospital/${idToDelete}`);
+      await axios.delete(`https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/delete-hospital/${idToDelete}`);
       setIdToDelete(null);
       setShowDeleteModal(false);
       fetchHospitals(); // Refresh the data after deletion
@@ -102,7 +102,7 @@ const AdminHospital = () => {
 
   const handleCreateHospital = async () => {
     try {
-      await axios.post("http://localhost:8000/api/store-hospital", newHospital);
+      await axios.post("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/store-hospital", newHospital);
       setShowModal(false);
       setNewHospital({ name: "", address: "", phone: "" });
       fetchHospitals(); // Refresh the data after creating

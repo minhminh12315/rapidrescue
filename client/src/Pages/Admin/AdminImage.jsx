@@ -38,7 +38,7 @@ const AdminImage = () => {
       name: "Image",
       cell: (row) => (
         <img
-          src={`http://localhost:8000/storage/${row.path}`} // Đường dẫn đến ảnh
+          src={`https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/storage/${row.path}`} // Đường dẫn đến ảnh
           alt={row.title}
           style={{ width: '100px', height: 'auto' }} // Đặt kích thước ảnh
         />
@@ -82,7 +82,7 @@ const AdminImage = () => {
 
   const fetchImages = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get-image");
+      const response = await axios.get("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/get-image");
       setImages(response.data);
       setFilteredImages(response.data);
       setLoading(false);
@@ -101,7 +101,7 @@ const AdminImage = () => {
   // Handle Delete
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/delete-image/${idToDelete}`);
+      await axios.delete(`https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/delete-image/${idToDelete}`);
       setIdToDelete(null);
       setShowDeleteModal(false);
       fetchImages(); // Refresh the data after deletion
@@ -118,7 +118,7 @@ const AdminImage = () => {
     formData.append("path", newImage.path);
 
     try {
-      await axios.post("http://localhost:8000/api/store-image", formData, {
+      await axios.post("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/store-image", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

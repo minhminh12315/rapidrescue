@@ -15,7 +15,7 @@ const Driver = ({ ambulanceId }) => {
     useEffect(() => {
         const fetchRequests = async () => {
             try {
-                const res = await axios.get(`http://localhost:8000/api/emergency-requests/${ambulanceId}`);
+                const res = await axios.get(`https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/emergency-requests/${ambulanceId}`);
                 setRequests(res.data);
             } catch (error) {
                 console.error('Lỗi khi lấy yêu cầu:', error);

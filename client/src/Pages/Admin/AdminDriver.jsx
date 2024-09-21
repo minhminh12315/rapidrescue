@@ -79,7 +79,7 @@ const AdminDriver = () => {
 
   const fetchDrivers = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get-drivers");
+      const response = await axios.get("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/get-drivers");
       setDrivers(response.data);
       setFilteredDrivers(response.data);
       setLoading(false);
@@ -91,7 +91,7 @@ const AdminDriver = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/delete-driver/${idToDelete}`);
+      await axios.delete(`https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/delete-driver/${idToDelete}`);
       setIdToDelete(null);
       setShowDeleteModal(false);
       fetchDrivers(); // Refresh the data after deletion
@@ -102,7 +102,7 @@ const AdminDriver = () => {
 
   const handleCreateDriver = async () => {
     try {
-      await axios.post("http://localhost:8000/api/store-driver", newDriver);
+      await axios.post("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/store-driver", newDriver);
       setShowModal(false);
       setNewDriver({ first_name: "", last_name: "", email: "", phone: "" });
       fetchDrivers(); // Refresh the data after creating

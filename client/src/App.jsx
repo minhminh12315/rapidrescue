@@ -43,7 +43,7 @@ function App() {
 
   const fetchText = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get-text");
+      const response = await axios.get("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/get-text");
       setTexts(response.data);
     } catch (error) {
       setError(error);
@@ -52,7 +52,7 @@ function App() {
 
   const fetchImage = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get-image");
+      const response = await axios.get("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/get-image");
       setImages(response.data);
     } catch (error) {
       setError(error);

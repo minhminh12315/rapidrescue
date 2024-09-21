@@ -100,7 +100,7 @@ const AdminUser = () => {
 
   const handleRoleChange = async (id, newRole) => {
     try {
-      await axios.put(`http://localhost:8000/api/update-user/${id}`, {
+      await axios.put(`https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/update-user/${id}`, {
         role: newRole,
       });
       fetchUsers(); // Refresh data after role update
@@ -111,7 +111,7 @@ const AdminUser = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get-user");
+      const response = await axios.get("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/get-user");
       console.log("Response from API:", response.data); // Log dữ liệu trả về
 
       // Kiểm tra xem response.data có phải là một mảng hay không
@@ -131,7 +131,7 @@ const AdminUser = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/delete-user/${idToDelete}`);
+      await axios.delete(`https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/delete-user/${idToDelete}`);
       setIdToDelete(null);
       setShowDeleteModal(false);
       fetchUsers(); // Refresh the data after deletion
@@ -142,7 +142,7 @@ const AdminUser = () => {
 
   const handleCreateUser = async () => {
     try {
-      await axios.post("http://localhost:8000/api/store-user", newUser);
+      await axios.post("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/store-user", newUser);
       setShowModal(false);
       setNewUser({ first_name: "", last_name: "", email: "", phone: "" });
       fetchUsers(); // Refresh the data after creating
