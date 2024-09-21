@@ -6,6 +6,7 @@ import HostContext from '../../Context/HostContext';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const DriverPage = () => {
+    const { host } = useContext(HostContext);
     const mapContainerRef = useRef(null);
     const mapRef = useRef(null);
     const [userLocation, setUserLocation] = useState(null);

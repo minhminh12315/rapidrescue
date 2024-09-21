@@ -370,8 +370,8 @@ const Mapbox = () => {
                                         value={formData.emergency}
                                         onChange={handleInputChange}
                                     >
-                                        <option value="yes">Emergency</option>
-                                        <option value="no">Not Emergency</option>
+                                        <option value="yes">Urgent</option>
+                                        <option value="no">Not Urgent</option>
                                     </select>
                                 </div>
                                 <div className="mb-3">

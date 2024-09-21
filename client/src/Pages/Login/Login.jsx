@@ -7,8 +7,9 @@ import { IoMdClose } from "react-icons/io";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import UserContext from "../../Context/UserContext.js";
-
+import HostContext from "../../Context/HostContext.js";
 const Login = (props) => {
+  const { host } = useContext(HostContext);
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -41,7 +42,7 @@ const Login = (props) => {
   
     console.log("Sign In");
     axios
-      .post("http://127.0.0.1:8000/api/login", {
+      .post(`${host}api/login`, {
         email: formData.email,
         password: formData.password,
       })
@@ -51,14 +52,16 @@ const Login = (props) => {
         localStorage.setItem("token", response.data.token);
         
         // Lưu driver_id vào localStorage
+        if(response.data.user.role === "driver") {
         const { driver_id } = response.data; // Lấy driver_id từ phản hồi
         localStorage.setItem("driver_id", driver_id); // Lưu driver_id vào localStorage
-        console.log(driver_id)
-  
+        }
         if (response.data.user.role === "admin") {
           navigate("/admin-dashboard");
         } else if(response.data.user.role === "driver") {
           navigate("/driver-dashboard");
+        } else if(response.data.user.role === "emt") {
+          navigate("/emt");
         } else {
           navigate("/");
         }

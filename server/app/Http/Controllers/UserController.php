@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmergencyRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -9,6 +10,19 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
+    public function getEmt($id)
+    {
+        $emt = User::find($id);
+        if (!$emt || $emt->role !== 'emt') {
+            return response()->json(['message' => 'EMT not found'], 404);
+        }
+        $emergencyRequests = EmergencyRequest::where('emt_id', $id)->get();
+
+        return response()->json([
+            'emt' => $emt,
+            'emergencyRequests' => $emergencyRequests,
+        ]);
+    }
     public function getDrivers()
     {
         $drivers = User::where('role', 'driver')->get();

@@ -98,7 +98,7 @@ const Footer = () => {
                   <ul id="menu-services-sidebar-menu" className="menu">
                     <li id="menu-item-967"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-967">
-                      <Link to='/'>Ambulance Car</Link>
+                      <Link to='/ambulance-car'>Ambulance Car</Link>
                     </li>
                   </ul>
                 </div>

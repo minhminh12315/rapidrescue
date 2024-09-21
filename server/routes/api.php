@@ -49,6 +49,9 @@ Route::post('/emergency-requests', [EmergencyRequestController::class, 'store'])
 
 Route::get('/driver-requests/{driver_id}', [EmergencyRequestController::class, 'getDriverRequests']);
 
+// EMT
+Route::get('/get-emt/{id}', [UserController::class, 'getEmt']);         // Lấy danh sách EMT
+
 // đổ dữ liệu theo id
 Route::get('/get-ambulance', [AmbulanceController::class, 'index']);
 Route::get('/get-ambulance/{id}', [AmbulanceController::class, 'show']);
