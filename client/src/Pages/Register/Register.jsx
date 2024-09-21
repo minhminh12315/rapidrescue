@@ -59,9 +59,9 @@ const Register = () => {
       <div className="resgiter-form">
         <div className="form-header">
           <div className="form-title">
-            <h1>Create your RIMOWA account</h1>
+            <h1>Create your Rapidrescue account</h1>
             <p>
-              If you already have a RIMOWA account, please sign in. We’ll use
+              If you already have a Rapidrescue account, please sign in. We’ll use
               your existing details for a faster checkout.
             </p>
           </div>
@@ -168,7 +168,7 @@ const Register = () => {
               <strong>*Mandatory field.</strong>
             </p>
             <p>
-              Your personal data is processed by RIMOWA as data controller, for
+              Your personal data is processed by Rapidrescue as data controller, for
               your account creation or/and personalized marketing material if
               consented. For more information, please see our{" "}
               <a href="#">Privacy policy</a>.

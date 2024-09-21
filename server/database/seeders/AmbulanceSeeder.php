@@ -15,6 +15,7 @@ class AmbulanceSeeder extends Seeder
      */
     public function run(): void
     {
+        // Lấy tất cả các driver id từ 1 đến 10
         $drivers = User::where('role', 'driver')->pluck('id');
 
         // Tạo 10 ambulances
@@ -24,11 +25,9 @@ class AmbulanceSeeder extends Seeder
                 'image' => 'ambulance' . $i . '.jpg',
                 'address' => 'Address ' . $i,
                 'type' => 'Type ' . $i,
-                'driver_id' => $drivers->random(), // Gán ngẫu nhiên một driver
+                'driver_id' => $drivers[$i - 1] ?? null, // Gán driver_id từ 1 đến 10
                 'price' => rand(10000, 50000)
             ]);
         }
-        
-        
     }
 }

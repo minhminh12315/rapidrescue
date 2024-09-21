@@ -1,11 +1,17 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../Context/UserContext";
 
 const Header = () => {
   const navigate = useNavigate();
 
+  const location = useLocation();
+
+  const isLoginOrCallAmbulancePage = location.pathname === '/login' || location.pathname === '/call-ambulance' 
+                                                                    || location.pathname === '/register'
+                                                                    || location.pathname === '/driver'
+                                                                    || location.pathname === '/emt';
   const { user, setUser } = useContext(UserContext);
 
   const handleMobileMenuToggle = () => {
@@ -71,7 +77,7 @@ const Header = () => {
         </div>
       </div>
 
-      <div className="header">
+      <div className={`header ${isLoginOrCallAmbulancePage ? 'header-margin-0' : ''}`}>
         <div className="auto-container">
           <div className="d-flex flex-row justify-content-center align-items-center">
             <div className="header-left">

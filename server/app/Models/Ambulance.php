@@ -14,6 +14,9 @@ class Ambulance extends Model
         'address',
         'type',
         'price',
+        'driver_id',
+        'latitude',
+        'longitude',
     ];
 
     public function emergencyRequests()

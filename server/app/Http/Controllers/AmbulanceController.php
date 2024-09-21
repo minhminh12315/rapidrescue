@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Ambulance;
 use App\Http\Requests\StoreAmbulanceRequest;
 use App\Http\Requests\UpdateAmbulanceRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+
 
 class AmbulanceController extends Controller
 {
@@ -52,16 +54,29 @@ class AmbulanceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAmbulanceRequest $request, Ambulance $ambulance)
+    public function update(Request $request, Ambulance $ambulance)
     {
-        try {
-            $ambulance->update($request->validated());
-            return response()->json(['message' => 'Ambulance updated successfully', 'data' => $ambulance], 200);
-        } catch (\Exception $e) {
-            Log::error('Error updating ambulance: ' . $e->getMessage());
-            return response()->json(['message' => 'Error updating ambulance'], 500);
-        }
+        Log::info('Request data:', $request->all());
+    
+        $validated = $request->validate([
+            'driver_id' => 'required|exists:ambulances,id', 
+            'location' => 'required|json',
+        ]);
+    
+        // Giải mã vị trí
+        $location = json_decode($validated['location'], true);
+    
+        // Cập nhật vị trí tài xế
+        Ambulance::where('id', $validated['driver_id'])
+            ->update([
+                'latitude' => $location[1],
+                'longitude' => $location[0],
+                'updated_at' => now(),
+            ]);
+    
+        return response()->json(['message' => 'Location updated successfully']);
     }
+    
 
     /**
      * Remove the specified resource from storage.

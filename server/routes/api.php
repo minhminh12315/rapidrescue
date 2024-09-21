@@ -56,6 +56,11 @@ Route::post('/store-ambulance', [AmbulanceController::class, 'store']);
 Route::put('/update-ambulance/{id}', [AmbulanceController::class, 'update']);
 Route::delete('/delete-ambulance/{id}', [AmbulanceController::class, 'destroy']);
 
+//cap nhật vị trí
+
+Route::post('/update-driver-location', [AmbulanceController::class, 'update']);
+
+
 // Text
 Route::get('/get-text', [TextController::class, 'index']);
 

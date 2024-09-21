@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -93,7 +93,7 @@ const AdminDriver = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/delete-driver/${idToDelete}`);
+      await axios.delete(`${host}api/delete-driver/${idToDelete}`);
       setIdToDelete(null);
       setShowDeleteModal(false);
       fetchDrivers(); // Refresh the data after deletion
@@ -104,7 +104,7 @@ const AdminDriver = () => {
 
   const handleCreateDriver = async () => {
     try {
-      await axios.post("http://127.0.0.1:8000/api/store-driver", newDriver);
+      await axios.post(`${host}api/store-driver`, newDriver);
       setShowModal(false);
       setNewDriver({ first_name: "", last_name: "", email: "", phone: "" });
       fetchDrivers(); // Refresh the data after creating

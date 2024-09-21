@@ -1,15 +1,16 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Pagination from './Pagination';
 import PaginationCtxt from '../../Context/PaginationCtxt';
-
+import HostContext from '../../Context/HostContext';
 const AllAmbulanceCar = () => {
+    const { host } = useContext(HostContext);
     const [ambulanceCars, setAmbulanceCars] = useState([]);
     const [currentData, setCurrentData] = useState([]);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/ambulances')
+        axios.get(`${host}api/ambulances`)
             .then(response => {
                 setAmbulanceCars(response.data);
                 setCurrentData(response.data.slice(0, 9)); // Set initial page data

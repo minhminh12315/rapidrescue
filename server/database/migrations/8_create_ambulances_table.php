@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('type');
             $table->foreignId('driver_id')->nullable()->constrained('users')->nullOnDelete();
             $table->decimal('price', 10, 2);
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             $table->timestamps();
         });
     }
