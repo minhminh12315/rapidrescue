@@ -258,7 +258,7 @@ const About = () => {
                                             src="../wp-content/uploads/2022/02/team-v1-1.jpg"
                                             class="attachment-ambons_370x445 size-ambons_370x445 wp-post-image"
                                             alt=""
-                                            srcset="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-1.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-1-249x300.jpg 249w"
+                                            srcSet="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-1.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-1-249x300.jpg 249w"
                                             sizes="(max-width: 370px) 100vw, 370px" />
                                     </div>
 
@@ -299,7 +299,7 @@ const About = () => {
                                             src="../wp-content/uploads/2022/02/team-v1-2.jpg"
                                             class="attachment-ambons_370x445 size-ambons_370x445 wp-post-image"
                                             alt=""
-                                            srcset="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-2.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-2-249x300.jpg 249w"
+                                            srcSet="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-2.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-2-249x300.jpg 249w"
                                             sizes="(max-width: 370px) 100vw, 370px" />
                                     </div>
 
@@ -340,7 +340,7 @@ const About = () => {
                                             src="../wp-content/uploads/2022/02/team-v1-3.jpg"
                                             class="attachment-ambons_370x445 size-ambons_370x445 wp-post-image"
                                             alt=""
-                                            srcset="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-3.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-3-249x300.jpg 249w"
+                                            srcSet="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-3.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-3-249x300.jpg 249w"
                                             sizes="(max-width: 370px) 100vw, 370px" />
                                     </div>
 
@@ -381,7 +381,7 @@ const About = () => {
                                             src="../wp-content/uploads/2022/02/team-v1-4.jpg"
                                             class="attachment-ambons_370x445 size-ambons_370x445 wp-post-image"
                                             alt=""
-                                            srcset="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-4.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-4-249x300.jpg 249w"
+                                            srcSet="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-4.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/team-v1-4-249x300.jpg 249w"
                                             sizes="(max-width: 370px) 100vw, 370px" />
                                     </div>
 

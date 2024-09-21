@@ -47,6 +47,7 @@ const Mapbox = () => {
         const fetchHospitals = async () => {
             try {
                 const res = await axios.get(`${host}api/get-hospitals`);
+               
                 setHospitals(res.data);
             } catch (error) {
                 console.error('Lỗi khi fetch dữ liệu bệnh viện:', error);
@@ -56,7 +57,7 @@ const Mapbox = () => {
         const fetchAmbulances = async () => {
             try {
                 const res = await axios.get(`${host}api/get-ambulance`);
-                // console.log(res);
+                console.log(res);
                 setAmbulances(res.data);
             } catch (error) {
                 console.error('Lỗi khi fetch dữ liệu xe cứu thương:', error);
@@ -66,6 +67,7 @@ const Mapbox = () => {
         const fetchDrivers = async () => {
             try {
                 const res = await axios.get(`${host}api/get-drivers`);
+                console.log(res);
                 return res.data;
             } catch (error) {
                 console.error('Lỗi khi fetch dữ liệu tài xế:', error);
@@ -279,11 +281,7 @@ const Mapbox = () => {
     };
 
     const handleSubmit = async () => {
-        if (!formData.address) {
-            console.error('Please enter your address');
-            return;
-        }
-
+    
         if (!formData.phone) {
             console.error('Please enter your phone number');
             return;

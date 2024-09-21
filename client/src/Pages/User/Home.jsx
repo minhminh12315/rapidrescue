@@ -278,7 +278,7 @@ const Home = () => {
                   src="wp-content/uploads/2022/02/service-v1-1.jpg"
                   className="attachment-ambons_370x315 size-ambons_370x315 wp-post-image"
                   alt=""
-                  srcset="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-1.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-1-300x255.jpg 300w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-1-270x230.jpg 270w"
+                  srcSet="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-1.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-1-300x255.jpg 300w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-1-270x230.jpg 270w"
                   sizes="(max-width: 370px) 100vw, 370px" />
               </div>
 
@@ -304,7 +304,7 @@ const Home = () => {
                   src="wp-content/uploads/2022/02/service-v1-2.jpg"
                   className="attachment-ambons_370x315 size-ambons_370x315 wp-post-image"
                   alt=""
-                  srcset="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-2.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-2-300x255.jpg 300w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-2-270x230.jpg 270w"
+                  srcSet="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-2.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-2-300x255.jpg 300w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-2-270x230.jpg 270w"
                   sizes="(max-width: 370px) 100vw, 370px" />
               </div>
 
@@ -330,7 +330,7 @@ const Home = () => {
                   src="wp-content/uploads/2022/02/service-v1-3.jpg"
                   className="attachment-ambons_370x315 size-ambons_370x315 wp-post-image"
                   alt=""
-                  srcset="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-3.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-3-300x255.jpg 300w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-3-270x230.jpg 270w"
+                  srcSet="https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-3.jpg 370w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-3-300x255.jpg 300w, https://fastwpdemo.com/newwp/ambons/wp-content/uploads/2022/02/service-v1-3-270x230.jpg 270w"
                   sizes="(max-width: 370px) 100vw, 370px" />
               </div>
 
