@@ -36,6 +36,11 @@ Route::delete('/delete-driver/{id}', [UserController::class, 'deleteDriver']); /
 // Call Ambulance
 Route::post('/emergency-requests', [EmergencyRequestController::class, 'store']);
 
+
+// lấy vị trí tài xế
+Route::get('/get-driver-location/{driverId}', [AmbulanceController::class, 'getDriverLocation']);
+
+
 Route::get('/driver-requests/{driver_id}', [EmergencyRequestController::class, 'getDriverRequests']);
 
 

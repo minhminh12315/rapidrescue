@@ -15,6 +15,7 @@ const Mapbox = () => {
     const mapContainerRef = useRef(null);
     const mapRef = useRef(null);
     const popupRef = useRef(null);
+    const [driverId, setDriverId] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
     const location = useLocation();
     const [formData, setFormData] = useState({
@@ -31,18 +32,16 @@ const Mapbox = () => {
     const [hospitals, setHospitals] = useState([]);
     const [ambulances, setAmbulances] = useState([]);
     const [isChecked, setIsChecked] = useState(false);
-
-
+    const [driverLocation, setDriverLocation] = useState(null);
+    const driverMarkerRef = useRef(null);
     const [destination, setDestination] = useState(null);
+
     const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl
     });
 
     useEffect(() => {
-
-
-
         const fetchHospitals = async () => {
             try {
                 const res = await axios.get("http://localhost:8000/api/get-hospitals");
@@ -82,8 +81,6 @@ const Mapbox = () => {
 
         initializeData();
     }, []);
-
-
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -282,13 +279,13 @@ const Mapbox = () => {
             console.error('Vui lòng chọn bệnh viện và xe cứu thương trước');
             return;
         }
-
+    
         const selectedHospital = hospitals.find(h => h.name === formData.hospital);
         if (!selectedHospital) {
             console.error('Bệnh viện không hợp lệ');
             return;
         }
-
+    
         const requestData = {
             user_id: localStorage.getItem('user') || null,
             hospital_id: selectedHospital.id,
@@ -299,19 +296,20 @@ const Mapbox = () => {
             start_location: JSON.stringify(userLocation),
             destination: JSON.stringify(destination)
         };
-
+    
         if (userLocation && destination) {
             await drawRoute(userLocation, destination);
         }
-
+    
         try {
             const response = await axios.post('http://localhost:8000/api/emergency-requests', requestData);
             console.log('Dữ liệu đã được lưu:', response.data);
-
-            const driverId = formData.car;
+    
+            const driverId = formData.car; 
+            setDriverId(driverId); 
+    
             await axios.put(`http://localhost:8000/api/update-driver/${driverId}`, { status: 'busy' });
-
-            console.log(driverId);
+    
             setAmbulances(prevAmbulances =>
                 prevAmbulances.map(ambulance =>
                     ambulance.id === formData.car
@@ -319,17 +317,66 @@ const Mapbox = () => {
                         : ambulance
                 )
             );
-
+    
             setIsChecked(true);
-
+    
         } catch (error) {
             console.error('Lỗi khi gửi yêu cầu:', error.response?.data || error.message);
         }
-
-        console.log('Dữ liệu form:', formData);
     };
 
+    useEffect(() => {
+        if (!driverId) return;
+    
+        const fetchDriverLocation = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8000/api/get-driver-location/${driverId}`);
+                const { longitude, latitude } = response.data;
+                setDriverLocation([longitude, latitude]);
 
+                console.log(`Tài xế đã di chuyển đến vị trí: [Longitude: ${longitude}, Latitude: ${latitude}]`);
+    
+                const selectedHospital = hospitals.find(h => h.id === formData.hospital);
+                if (selectedHospital) {
+                    const [hospitalLat, hospitalLng] = selectedHospital.address.split(',').map(Number);
+                    const distanceToHospital = turf.distance(
+                        turf.point([longitude, latitude]),
+                        turf.point([hospitalLng, hospitalLat]),
+                        { units: 'kilometers' }
+                    );
+    
+                    // Nếu khoảng cách nhỏ hơn 100m thì coi như tài xế đã quay lại bệnh viện
+                    if (distanceToHospital < 0.1) {
+                        await axios.put(`http://localhost:8000/api/update-driver/${driverId}`, { status: 'free' });
+    
+                        setAmbulances(prevAmbulances =>
+                            prevAmbulances.map(ambulance =>
+                                ambulance.id === driverId ? { ...ambulance, status: 'free' } : ambulance
+                            )
+                        );
+    
+                        console.log('Tài xế đã quay lại bệnh viện và trạng thái được cập nhật thành free');
+                    }
+                }
+    
+                if (!driverMarkerRef.current) {
+                    driverMarkerRef.current = new mapboxgl.Marker({ color: 'red' })
+                        .setLngLat([longitude, latitude])
+                        .addTo(mapRef.current);
+                } else {
+                    driverMarkerRef.current.setLngLat([longitude, latitude]);
+                }
+            } catch (error) {
+                console.error('Lỗi khi lấy vị trí tài xế:', error);
+            }
+        };
+    
+        // Cập nhật vị trí tài xế mỗi 5 giây
+        const intervalId = setInterval(fetchDriverLocation, 5000);
+    
+        return () => clearInterval(intervalId);
+    }, [driverId, hospitals, formData.hospital]);
+    
     const changeMapStyle = (styleUrl) => {
         if (mapRef.current) {
             mapRef.current.setStyle(styleUrl);
@@ -408,7 +455,8 @@ const Mapbox = () => {
                                         value={formData.car}
                                         onChange={(e) => handleHospitalChange(e, 'car')}
                                         disabled={isChecked}
-                                    >
+                                    >   
+                                        <option value="">Select a car</option>
                                         {ambulances.filter(ambulance => ambulance.status !== 'busy').map(ambulance => (
                                             <option key={ambulance.id} value={ambulance.id}>
                                                 {ambulance.name} {ambulance.price}
