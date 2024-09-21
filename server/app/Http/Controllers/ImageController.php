@@ -40,10 +40,10 @@ class ImageController extends Controller
             'type' => 'required|string|max:50',
             'path' => 'required|file|mimes:jpg,jpeg,png,gif|max:2048', // Kích thước tối đa 2MB
         ]);
-    
+
         // Lưu file
         $path = $request->file('path')->store('images', 'public');
-    
+
         // Tạo bản ghi mới trong cơ sở dữ liệu
         $image = new Image();
         $image->title = $request->input('title');
@@ -51,7 +51,7 @@ class ImageController extends Controller
         $image->type = $request->input('type');
         $image->path = $path; // Lưu đường dẫn file
         $image->save();
-    
+
         return response()->json([
             'message' => 'Image created successfully.',
             'data' => $image,
@@ -69,27 +69,107 @@ class ImageController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Image $image)
+    public function edit($id)
     {
-        //
+        try {
+            $image = Image::findOrFail($id);
+
+            return response()->json([
+                'message' => 'Image data retrieved successfully.',
+                'data' => $image,
+            ], 200);
+
+        } catch (\Exception $e) {
+            Log::error('Error retrieving image with ID: ' . $id . '. Error: ' . $e->getMessage());
+            return response()->json(['message' => 'Error retrieving image data.'], 500);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateImageRequest $request, Image $image)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
     {
-        //
+        Log::info($request->all());
+        try {
+            $image = Image::findOrFail($id);
+
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'type' => 'required|string|max:50',
+                'path' => 'nullable|file|mimes:jpg,jpeg,png,gif|max:2048',
+            ]);
+
+            if ($request->hasFile('path')) {
+                $oldImagePath = public_path('storage/' . $image->path);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+
+                $path = $request->file('path')->store('images', 'public');
+                $image->path = $path; 
+            }
+
+            $image->title = $request->input('title');
+            $image->description = $request->input('description');
+            $image->type = $request->input('type');
+
+            $image->save();
+
+            return response()->json([
+                'message' => 'Image updated successfully.',
+                'data' => $image,
+            ], 200);
+
+        } catch (\Exception $e) {
+            Log::error('Error updating image with ID: ' . $id . '. Error: ' . $e->getMessage());
+            return response()->json(['message' => 'Error updating image.'], 500);
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Image $image)
+    public function destroy($id)
     {
-        //
+        Log::info("Attempting to delete image with ID: " . $id);
+
+        try {
+            // Tìm ảnh theo ID
+            $image = Image::findOrFail($id);
+
+            // Log thông tin ảnh
+            Log::info('Image found: ' . $image->path);
+
+            // Xóa ảnh khỏi thư mục lưu trữ nếu ảnh tồn tại
+            $imagePath = public_path('storage/' . $image->path);
+            if (file_exists($imagePath)) {
+                Log::info('Deleting file: ' . $imagePath);
+                unlink($imagePath);
+            } else {
+                Log::warning('File not found: ' . $imagePath);
+            }
+
+            // Xóa dữ liệu hình ảnh khỏi cơ sở dữ liệu
+            $image->delete();
+
+            Log::info('Image deleted successfully with ID: ' . $id);
+            return response()->json(['message' => 'Image deleted successfully.'], 200);
+
+        } catch (\Exception $e) {
+            // Log thông tin lỗi
+            Log::error('Error deleting image with ID: ' . $id . '. Error: ' . $e->getMessage());
+            return response()->json(['message' => 'Error deleting image.'], 500);
+        }
     }
-    public function deleteImage($id){
+
+    public function deleteImage($id)
+    {
         try {
             $image = Image::find($id);
             $image->delete();

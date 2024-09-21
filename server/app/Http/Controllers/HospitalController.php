@@ -18,9 +18,9 @@ class HospitalController extends Controller
         try {
             $hospitals = Hospital::all();
             Log::info($hospitals);
-            return response($hospitals, 200);
+            return response()->json($hospitals, 200);
         } catch (\Exception $e) {
-            return response([
+            return response()->json([
                 'error' => 'There was an error fetching the hospitals.',
                 'message' => $e->getMessage()
             ], 500);
@@ -28,36 +28,20 @@ class HospitalController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreHospitalRequest $request)
     {
         Log::info($request->all());
 
         try {
-            $fields = $request->validate([
-                'name' => 'required|string',
-                'address' => 'required|string',
-                'phone' => 'required|string',
-            ]);
+            $fields = $request->validated();
 
-            $hospital = Hospital::create([
-                'name' => $fields['name'],
-                'address' => $fields['address'],
-                'phone' => $fields['phone'],
-            ]);
+            $hospital = Hospital::create($fields);
 
-            return response($hospital, 201);
+            return response()->json($hospital, 201);
         } catch (\Exception $e) {
-            return response([
+            return response()->json([
                 'error' => 'There was an error creating the hospital.',
                 'message' => $e->getMessage()
             ], 500);
@@ -69,15 +53,7 @@ class HospitalController extends Controller
      */
     public function show(Hospital $hospital)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Hospital $hospital)
-    {
-        //
+        return response()->json($hospital, 200);
     }
 
     /**
@@ -85,24 +61,47 @@ class HospitalController extends Controller
      */
     public function update(UpdateHospitalRequest $request, Hospital $hospital)
     {
-        //
+        try {
+            $fields = $request->validated();
+            $hospital->update($fields);
+
+            return response()->json($hospital, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'There was an error updating the hospital.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Hospital $hospital)
+    public function destroy($id)
     {
-        
+        try {
+            $hospital = Hospital::findOrFail($id);
+            $hospital->delete();
+            return response()->json(['message' => 'Hospital deleted successfully.'], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'There was an error deleting the hospital.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
+
+    /**
+     * Delete hospital by ID.
+     */
     public function deleteHospital($id)
     {
         try {
-            $hospital = Hospital::find($id);
+            $hospital = Hospital::findOrFail($id);
             $hospital->delete();
-            return response(['message' => 'Hospital deleted successfully.'], 200);
+            return response()->json(['message' => 'Hospital deleted successfully.'], 200);
         } catch (\Exception $e) {
-            return response([
+            return response()->json([
                 'error' => 'There was an error deleting the hospital.',
                 'message' => $e->getMessage()
             ], 500);

@@ -1,8 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import axios from 'axios';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Swal from 'sweetalert2';
+import HostContext from '../../Context/HostContext';
 const Contact = () => {
+    const { host } = useContext(HostContext);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -64,7 +66,7 @@ const Contact = () => {
             captchaToken  // Bao gồm token reCAPTCHA
         };
 
-        axios.post('http://127.0.0.1:8000/api/contact', formData)
+        axios.post(`${host}api/contact`, formData)
             .then(response => {
                 
                 // Thông báo thành công bằng SweetAlert2

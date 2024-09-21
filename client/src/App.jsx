@@ -26,6 +26,7 @@ import HospitalUser from "./Pages/User/Hospital";
 import AllAmbulanceCar from "./Pages/User/AllAmbulanceCar";
 import Driver from "./Pages/Driver/Driver";
 import Emt from "./Pages/EMT/Emt";
+import HostContext from "./Context/HostContext";
 
 function App() {
   const navigate = useNavigate();
@@ -33,16 +34,21 @@ function App() {
   const [user, setUser] = useState(null);
   const [texts, setTexts] = useState([]);
   const [images, setImages] = useState([]);
+  const [host, setHost] = useState(
+    "http://127.0.0.1:8000/"
+  );
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [sideBarAdminOpen, setSideBarAdminOpen] = useState(true); 
+  const [sideBarAdminOpen, setSideBarAdminOpen] = useState(true);
 
   const fetchText = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get-text");
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/get-text"
+      );
       setTexts(response.data);
     } catch (error) {
       setError(error);
@@ -51,7 +57,9 @@ function App() {
 
   const fetchImage = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get-image");
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/get-image"
+      );
       setImages(response.data);
     } catch (error) {
       setError(error);
@@ -85,68 +93,85 @@ function App() {
 
   return (
     <div className="App" id={isAdmin ? "layout-wrapper" : ""}>
-      <ImageContext.Provider value={{ images, setImages }}>
-        <TextContext.Provider value={{ texts, setTexts }}>
-          <UserContext.Provider value={{ user, setUser }}>
-            {isAdmin ? <AdminHeader setSideBarAdminOpen={setSideBarAdminOpen} sideBarAdminOpen={sideBarAdminOpen} /> : <Header />}
-            {isAdmin && <AdminSidebar setSideBarAdminOpen={setSideBarAdminOpen} sideBarAdminOpen={sideBarAdminOpen} />}
-            <div className={isAdmin ? "main-content overflow-hidden" : ""}>
-              <Routes>
-                {!user ? ( // Route for Guest
-                  <>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
-                  </>
-                ) : isAdmin ? ( // Route for Admin
-                  <>
-                    <Route
-                      path="/admin-dashboard"
-                      element={<AdminDashboard />}
-                    />
-                    <Route path="/admin-driver" element={<AdminDriver />} />
-                    <Route path="/admin-image" element={<AdminImage />} />
-                    <Route path="/admin-hospital" element={<AdminHospital />} />
-                    <Route path="/admin-text" element={<AdminText />} />
-                    <Route path="/admin-user" element={<AdminUser />} />
-                    <Route
-                      path="/admin-ambulance-car"
-                      element={<AdminAmbulanceCar />}
-                    />
-                    <Route
-                      path="*"
-                      element={<Navigate to="/admin-dashboard" />}
-                    />
-                  </>
-                ) : isDriver ? ( // Route for Driver
-                  <>
-                    <Route path="/driver" element={<Driver />} />
-                  </>
-                ) : isEMT ? ( // Route for EMT
-                  <>
-                    <Route path="/emt" element={<Emt />} />
-                  </>
-                ) : ( // Route for Customer
-                  <>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
-                  </>
-                )}
-                <Route path="/map" element={<Map />} />
-                <Route path="/call-ambulance" element={<Mapbox />} />
-                <Route path="/test" element={<Mapbox />} />
-                
-                <Route path="/hospital" element={<HospitalUser />} />
-                <Route path="/ambulance-car" element={<AllAmbulanceCar />} />
-              </Routes>
-            </div>
-            {isAdmin ? "" : <Footer />}
-          </UserContext.Provider>
-        </TextContext.Provider>
-      </ImageContext.Provider>
+      <HostContext.Provider value={{ host, setHost }}>
+        <ImageContext.Provider value={{ images, setImages }}>
+          <TextContext.Provider value={{ texts, setTexts }}>
+            <UserContext.Provider value={{ user, setUser }}>
+              {isAdmin ? (
+                <AdminHeader
+                  setSideBarAdminOpen={setSideBarAdminOpen}
+                  sideBarAdminOpen={sideBarAdminOpen}
+                />
+              ) : (
+                <Header />
+              )}
+              {isAdmin && (
+                <AdminSidebar
+                  setSideBarAdminOpen={setSideBarAdminOpen}
+                  sideBarAdminOpen={sideBarAdminOpen}
+                />
+              )}
+              <div className={isAdmin ? "main-content overflow-hidden" : ""}>
+                <Routes>
+                  {!user ? ( // Route for Guest
+                    <>
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/register" element={<Register />} />
+                      <Route path="/" element={<Home />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/contact" element={<Contact />} />
+                    </>
+                  ) : isAdmin ? ( // Route for Admin
+                    <>
+                      <Route
+                        path="/admin-dashboard"
+                        element={<AdminDashboard />}
+                      />
+                      <Route path="/admin-driver" element={<AdminDriver />} />
+                      <Route path="/admin-image" element={<AdminImage />} />
+                      <Route
+                        path="/admin-hospital"
+                        element={<AdminHospital />}
+                      />
+                      <Route path="/admin-text" element={<AdminText />} />
+                      <Route path="/admin-user" element={<AdminUser />} />
+                      <Route
+                        path="/admin-ambulance-car"
+                        element={<AdminAmbulanceCar />}
+                      />
+                      <Route
+                        path="*"
+                        element={<Navigate to="/admin-dashboard" />}
+                      />
+                    </>
+                  ) : isDriver ? ( // Route for Driver
+                    <>
+                      <Route path="/driver" element={<Driver />} />
+                    </>
+                  ) : isEMT ? ( // Route for EMT
+                    <>
+                      <Route path="/emt" element={<Emt />} />
+                    </>
+                  ) : (
+                    // Route for Customer
+                    <>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/contact" element={<Contact />} />
+                    </>
+                  )}
+                  <Route path="/map" element={<Map />} />
+                  <Route path="/call-ambulance" element={<Mapbox />} />
+                  <Route path="/test" element={<Mapbox />} />
+                  <Route path="/hospital" element={<HospitalUser />} />
+                  <Route path="/ambulance-car" element={<AllAmbulanceCar />} />
+                </Routes>
+              </div>
+              {isAdmin ? "" : <Footer />}
+            </UserContext.Provider>
+          </TextContext.Provider>
+        </ImageContext.Provider>
+      </HostContext.Provider>
     </div>
   );
 }

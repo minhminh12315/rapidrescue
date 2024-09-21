@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form, FormControl, InputGroup } from "react-bootstrap";
-
+import HostContext from "../../Context/HostContext";
 const AdminUser = () => {
+  const { host } = useContext(HostContext);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -100,7 +101,7 @@ const AdminUser = () => {
 
   const handleRoleChange = async (id, newRole) => {
     try {
-      await axios.put(`http://localhost:8000/api/update-user/${id}`, {
+      await axios.put(`${host}api/update-user/${id}`, {
         role: newRole,
       });
       fetchUsers(); // Refresh data after role update
@@ -111,7 +112,7 @@ const AdminUser = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get-user");
+      const response = await axios.get(`${host}api/get-user`);
       console.log("Response from API:", response.data); // Log dữ liệu trả về
 
       // Kiểm tra xem response.data có phải là một mảng hay không
@@ -131,7 +132,7 @@ const AdminUser = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/delete-user/${idToDelete}`);
+      await axios.delete(`${host}api/delete-user/${idToDelete}`);
       setIdToDelete(null);
       setShowDeleteModal(false);
       fetchUsers(); // Refresh the data after deletion
@@ -142,7 +143,7 @@ const AdminUser = () => {
 
   const handleCreateUser = async () => {
     try {
-      await axios.post("http://localhost:8000/api/store-user", newUser);
+      await axios.post(`${host}api/store-user`, newUser);
       setShowModal(false);
       setNewUser({ first_name: "", last_name: "", email: "", phone: "" });
       fetchUsers(); // Refresh the data after creating

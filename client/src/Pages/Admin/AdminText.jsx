@@ -4,8 +4,10 @@ import DataTable from "react-data-table-component";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form, InputGroup } from "react-bootstrap";
 import axios from "axios";
+import HostContext from '../../Context/HostContext';
 
 const AdminText = () => {
+  const { host } = useContext(HostContext);
   const { texts, setTexts } = useContext(TextContext);
   const [showModal, setShowModal] = useState(false);
   const [newText, setNewText] = useState({
@@ -57,7 +59,7 @@ const AdminText = () => {
   const handleDelete = async (id) => {
     try {
       // Assume delete API is implemented in backend
-      await axios.delete(`http://localhost:8000/api/delete-text/${idToDelete}`);
+      await axios.delete(`${host}api/delete-text/${idToDelete}`);
       setIdToDelete(null);
       setShowDeleteModal(false);
       fetchTexts(); // Refresh the data after deletion
@@ -82,7 +84,7 @@ const AdminText = () => {
   const handleCreateText = async () => {
     try {
       // Assume store API is implemented in backend
-      await axios.post("http://localhost:8000/api/store-text", newText);
+      await axios.post(`${host}api/store-text`, newText);
       setTexts([...texts, newText]);
       setShowModal(false);
       setNewText({ content: "", type: "" });
@@ -93,7 +95,7 @@ const AdminText = () => {
   const fetchTexts = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/get-text"
+        `${host}api/get-text`
       );
       setTexts(response.data);
       setLoading(false);

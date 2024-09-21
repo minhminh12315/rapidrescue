@@ -1,22 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 import { Modal, Button, Form, FormControl, InputGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-
+import HostContext from "../../Context/HostContext";
 
 const AdminAmbulanceCar = () => {
-  const [ambulanceCars, setAmbulanceCars] = useState([]);
+  const { host } = useContext(HostContext);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [newAmbulanceCar, setNewAmbulanceCar] = useState({
     name: "",
     address: "",
     type: "",
+    driver_id: "",
     price: "",
     image: "",
   });
+
+  const [ambulanceCars, setAmbulanceCars] = useState([]);
+  useEffect(() => {
+    console.log("Ambulance Cars: ", ambulanceCars);
+  }, [ambulanceCars]);
+
+  const fetchAmbulanceCars = async () => {
+    try {
+      const response = await axios.get(
+        `${host}api/get-ambulance`
+      );
+      console.log("Full response: ", response.data);
+      setAmbulanceCars(response.data);
+      setFilteredAmbulanceCars(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching ambulance cars:", error);
+      setLoading(false);
+    }
+  };
   const [filteredAmbulanceCars, setFilteredAmbulanceCars] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -57,8 +77,20 @@ const AdminAmbulanceCar = () => {
       name: "Action",
       cell: (row) => (
         <div className="d-flex flex-row gap-2">
-          <button type="button" onClick={() => handleEdit(row.id)} class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-edit-line"></i></button>
-          <button type="button" onClick={() => handleShowDeleteModal(row.id)} class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>
+          <button
+            type="button"
+            onClick={() => handleEdit(row.id)}
+            class="btn btn-primary btn-icon waves-effect waves-light"
+          >
+            <i class="ri-edit-line"></i>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleShowDeleteModal(row.id)}
+            class="btn btn-danger btn-icon waves-effect waves-light"
+          >
+            <i class="ri-delete-bin-5-line"></i>
+          </button>
         </div>
       ),
     },
@@ -80,18 +112,6 @@ const AdminAmbulanceCar = () => {
     setSearch(event.target.value);
   };
 
-  const fetchAmbulanceCars = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/api/get-ambulance");
-      setAmbulanceCars(response.data);
-      setFilteredAmbulanceCars(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching ambulance cars:", error);
-      setLoading(false);
-    }
-  };
-
   // Handle Edit
   const handleEdit = (ambulanceCar) => {
     // Logic to edit the ambulance car (you can display a form for editing here)
@@ -100,9 +120,11 @@ const AdminAmbulanceCar = () => {
 
   // Handle Delete
   const handleDelete = async (id) => {
-    console.log('Delete')
+    console.log("Delete");
     try {
-      await axios.delete(`http://localhost:8000/api/delete-ambulance/${idToDelete}`);
+      await axios.delete(
+        `${host}api/delete-ambulance/${idToDelete}`
+      );
       setIdToDelete(null);
       setShowDeleteModal(false);
       fetchAmbulanceCars(); // Refresh the data after deletion
@@ -113,7 +135,10 @@ const AdminAmbulanceCar = () => {
 
   const handleCreateAmbulanceCar = async () => {
     try {
-      await axios.post("http://localhost:8000/api/store-ambulance", newAmbulanceCar);
+      await axios.post(
+        `${host}api/store-ambulance`,
+        newAmbulanceCar
+      );
       setShowModal(false);
       setNewAmbulanceCar({
         name: "",
@@ -131,7 +156,7 @@ const AdminAmbulanceCar = () => {
   const handleShowDeleteModal = (id) => {
     setShowDeleteModal(true);
     setIdToDelete(id);
-  }
+  };
 
   return (
     <div className="container mt-4">

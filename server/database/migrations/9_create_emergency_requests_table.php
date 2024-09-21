@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('hospital_id')->nullable()->constrained('hospitals')->nullOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('emt_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('phone');
             $table->string('type');
             $table->string('status')->default('pending');

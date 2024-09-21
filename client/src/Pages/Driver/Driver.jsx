@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
+import HostContext from '../../Context/HostContext';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const DriverPage = () => {
+    const { host } = useContext(HostContext);
     const mapContainerRef = useRef(null);
     const mapRef = useRef(null);
     const [userLocation, setUserLocation] = useState(null);
@@ -12,12 +14,11 @@ const DriverPage = () => {
     const driverId = localStorage.getItem('driver_id');
     const markerRef = useRef(null);
     const previousLocationRef = useRef(null); // Lưu vị trí trước đó để so sánh
-    // console.log(driverId);
 
     useEffect(() => {
         const fetchDriverRequests = async () => {
             try {
-                const res = await axios.get(`http://localhost:8000/api/driver-requests/${driverId}`);
+                const res = await axios.get(`${host}api/driver-requests/${driverId}`);
                 setDriverRequests(res.data);
             } catch (error) {
                 console.error('Lỗi khi lấy dữ liệu chuyến đi:', error);
@@ -66,7 +67,7 @@ const DriverPage = () => {
         try {
             console.log('Đang gửi yêu cầu cập nhật vị trí...');
             
-            const response = await axios.post(`http://localhost:8000/api/update-driver-location`, {
+            const response = await axios.post(`${host}api/update-driver-location`, {
                 driver_id: driverId,
                 location: JSON.stringify(location),
             });

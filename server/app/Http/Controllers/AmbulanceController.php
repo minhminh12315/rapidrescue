@@ -17,8 +17,8 @@ class AmbulanceController extends Controller
     public function index()
     {
         $ambulances = Ambulance::all();
-
-        return response()->json($ambulances, 200);
+        Log::info($ambulances);
+        return response() -> json($ambulances, 200);
     }
 
     /**
@@ -34,7 +34,13 @@ class AmbulanceController extends Controller
      */
     public function store(StoreAmbulanceRequest $request)
     {
-        //
+        try {
+            $ambulance = Ambulance::create($request->validated());
+            return response()->json(['message' => 'Ambulance created successfully', 'data' => $ambulance], 201);
+        } catch (\Exception $e) {
+            Log::error('Error creating ambulance: ' . $e->getMessage());
+            return response()->json(['message' => 'Error creating ambulance'], 500);
+        }
     }
 
     /**
@@ -42,15 +48,7 @@ class AmbulanceController extends Controller
      */
     public function show(Ambulance $ambulance)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ambulance $ambulance)
-    {
-        //
+        return response()->json($ambulance, 200);
     }
 
     /**
@@ -100,7 +98,13 @@ class AmbulanceController extends Controller
      */
     public function destroy(Ambulance $ambulance)
     {
-        //
+        try {
+            $ambulance->delete();
+            return response()->json(['message' => 'Ambulance deleted successfully'], 200);
+        } catch (\Exception $e) {
+            Log::error('Error deleting ambulance: ' . $e->getMessage());
+            return response()->json(['message' => 'Error deleting ambulance'], 500);
+        }
     }
 
     public function deleteAmbulance($id)

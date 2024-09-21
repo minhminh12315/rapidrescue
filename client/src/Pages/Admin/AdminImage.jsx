@@ -4,14 +4,15 @@ import DataTable from "react-data-table-component";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form, FormControl, InputGroup } from "react-bootstrap";
 import ImageContext from "../../Context/ImageContext";
-
-
+import HostContext from "../../Context/HostContext";
 
 const AdminImage = () => {
+  const { host } = useContext(HostContext);
   const { images, setImages } = useContext(ImageContext);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [newImage, setNewImage] = useState({
+    id: null, // Thêm trường này
     title: "",
     path: null,
     description: "",
@@ -38,7 +39,7 @@ const AdminImage = () => {
       name: "Image",
       cell: (row) => (
         <img
-          src={`http://localhost:8000/storage/${row.path}`} // Đường dẫn đến ảnh
+          src={`${host}storage/${row.path}`} // Đường dẫn đến ảnh
           alt={row.title}
           style={{ width: '100px', height: 'auto' }} // Đặt kích thước ảnh
         />
@@ -82,7 +83,7 @@ const AdminImage = () => {
 
   const fetchImages = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get-image");
+      const response = await axios.get(`${host}api/get-image`);
       setImages(response.data);
       setFilteredImages(response.data);
       setLoading(false);
@@ -92,16 +93,10 @@ const AdminImage = () => {
     }
   };
 
-  // Handle Edit
-  const handleEdit = (image) => {
-    // Logic to edit the image (you can display a form for editing here)
-    console.log("Editing image:", image);
-  };
-
-  // Handle Delete
-  const handleDelete = async (id) => {
+   // Handle Delete
+   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/delete-image/${idToDelete}`);
+      await axios.delete(`${host}api/delete-image/${idToDelete}`);
       setIdToDelete(null);
       setShowDeleteModal(false);
       fetchImages(); // Refresh the data after deletion
@@ -110,24 +105,56 @@ const AdminImage = () => {
     }
   };
 
+  // Handle Edit
+  const handleEdit = (imageId) => {
+    const imageToEdit = images.find(image => image.id === imageId);
+    if (imageToEdit) {
+      setNewImage({
+        id: imageToEdit.id, // Thêm id vào state
+        title: imageToEdit.title,
+        path: null, // Không lưu đường dẫn cũ, chỉ lấy file mới
+        description: imageToEdit.description,
+        type: imageToEdit.type,
+      });
+      setShowModal(true);
+    }
+  };
+
   const handleCreateImage = async () => {
     const formData = new FormData();
+    
+    // Kiểm tra giá trị trước khi thêm vào formData
+    if (!newImage.title || !newImage.type) {
+      console.error("Title and type are required.");
+      return; // Không gửi yêu cầu nếu các trường này không hợp lệ
+    }
+  
     formData.append("title", newImage.title);
     formData.append("description", newImage.description);
     formData.append("type", newImage.type);
-    formData.append("path", newImage.path);
-
+    if (newImage.path) {
+      formData.append("path", newImage.path);
+    }
+  
     try {
-      await axios.post("http://localhost:8000/api/store-image", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      if (newImage.id) {
+        await axios.put(`${host}api/update-image/${newImage.id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      } else {
+        await axios.post(`${host}api/store-image`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      }
       setShowModal(false);
       setNewImage({ title: "", path: null, description: "", type: "" });
       fetchImages();
     } catch (error) {
-      console.error("Error creating image:", error);
+      console.error("Error saving image:", error);
     }
   };
   const handleShowDeleteModal = (id) => {
@@ -178,7 +205,7 @@ const AdminImage = () => {
       {/* Modal for Create Image */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Create New Image</Modal.Title>
+        <Modal.Title>{newImage.id ? "Edit Image" : "Create New Image"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>

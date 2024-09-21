@@ -10,7 +10,7 @@ const HospitalUser = () => {
     const recordsPerPage = 9;
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/hospitals')
+        axios.get('http://127.0.0.1:8000/api/hospitals')
             .then(response => {
                 setHospitals(response.data);
                 setCurrentData(response.data.slice(0, recordsPerPage));

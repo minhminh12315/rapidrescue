@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -6,12 +6,13 @@ import './Mapbox.scss'
 import * as turf from '@turf/turf';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { useLocation } from 'react-router-dom';
-
+import HostContext from '../Context/HostContext';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 const DIRECTIONS_API_KEY = import.meta.env.VITE_MAPBOX_DIRECTIONS_API_KEY;
 
 const Mapbox = () => {
+    const { host } = useContext(HostContext);
     const mapContainerRef = useRef(null);
     const mapRef = useRef(null);
     const popupRef = useRef(null);
@@ -44,7 +45,7 @@ const Mapbox = () => {
     useEffect(() => {
         const fetchHospitals = async () => {
             try {
-                const res = await axios.get("http://localhost:8000/api/get-hospitals");
+                const res = await axios.get(`${host}api/get-hospitals`);
                 setHospitals(res.data);
             } catch (error) {
                 console.error('Lỗi khi fetch dữ liệu bệnh viện:', error);
@@ -53,7 +54,7 @@ const Mapbox = () => {
 
         const fetchAmbulances = async () => {
             try {
-                const res = await axios.get("http://localhost:8000/api/get-ambulance");
+                const res = await axios.get(`${host}api/get-ambulance`);
                 // console.log(res);
                 setAmbulances(res.data);
             } catch (error) {
@@ -63,7 +64,7 @@ const Mapbox = () => {
 
         const fetchDrivers = async () => {
             try {
-                const res = await axios.get('http://localhost:8000/api/get-drivers');
+                const res = await axios.get(`${host}api/get-drivers`);
                 return res.data;
             } catch (error) {
                 console.error('Lỗi khi fetch dữ liệu tài xế:', error);
@@ -276,15 +277,14 @@ const Mapbox = () => {
     };
 
     const handleSubmit = async () => {
-        e.preventDefault();
         if (!formData.hospital || !formData.car) {
-            console.error('Vui lòng chọn bệnh viện và xe cứu thương trước');
+            console.error('Please choose hospital and ambulance car first');
             return;
         }
     
         const selectedHospital = hospitals.find(h => h.name === formData.hospital);
         if (!selectedHospital) {
-            console.error('Bệnh viện không hợp lệ');
+            console.error('Hospital invalid');
             return;
         }
     
@@ -304,14 +304,13 @@ const Mapbox = () => {
         }
     
         try {
-            const response = await axios.post('http://localhost:8000/api/emergency-requests', requestData);
+            const response = await axios.post(`${host}api/emergency-requests`, requestData);
             console.log('Dữ liệu đã được lưu:', response.data);
-    
-            const driverId = formData.car; 
-            setDriverId(driverId); 
-    
+
+            const driverId = formData.car;
             await axios.put(`http://localhost:8000/api/update-driver/${driverId}`, { status: 'busy' });
-    
+
+            console.log(driverId);
             setAmbulances(prevAmbulances =>
                 prevAmbulances.map(ambulance =>
                     ambulance.id === formData.car
@@ -323,62 +322,13 @@ const Mapbox = () => {
             setIsChecked(true);
     
         } catch (error) {
-            console.error('Lỗi khi gửi yêu cầu:', error.response?.data || error.message);
+            console.error('Request error:', error.response?.data || error.message);
         }
+
+        console.log('Dữ liệu form:', formData);
     };
 
-    useEffect(() => {
-        if (!driverId) return;
-    
-        const fetchDriverLocation = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8000/api/get-driver-location/${driverId}`);
-                const { longitude, latitude } = response.data;
-                setDriverLocation([longitude, latitude]);
 
-                console.log(`Tài xế đã di chuyển đến vị trí: [Longitude: ${longitude}, Latitude: ${latitude}]`);
-    
-                const selectedHospital = hospitals.find(h => h.id === formData.hospital);
-                if (selectedHospital) {
-                    const [hospitalLat, hospitalLng] = selectedHospital.address.split(',').map(Number);
-                    const distanceToHospital = turf.distance(
-                        turf.point([longitude, latitude]),
-                        turf.point([hospitalLng, hospitalLat]),
-                        { units: 'kilometers' }
-                    );
-    
-                    // Nếu khoảng cách nhỏ hơn 100m thì coi như tài xế đã quay lại bệnh viện
-                    if (distanceToHospital < 0.1) {
-                        await axios.put(`http://localhost:8000/api/update-driver/${driverId}`, { status: 'free' });
-    
-                        setAmbulances(prevAmbulances =>
-                            prevAmbulances.map(ambulance =>
-                                ambulance.id === driverId ? { ...ambulance, status: 'free' } : ambulance
-                            )
-                        );
-    
-                        console.log('Tài xế đã quay lại bệnh viện và trạng thái được cập nhật thành free');
-                    }
-                }
-    
-                if (!driverMarkerRef.current) {
-                    driverMarkerRef.current = new mapboxgl.Marker({ color: 'red' })
-                        .setLngLat([longitude, latitude])
-                        .addTo(mapRef.current);
-                } else {
-                    driverMarkerRef.current.setLngLat([longitude, latitude]);
-                }
-            } catch (error) {
-                console.error('Lỗi khi lấy vị trí tài xế:', error);
-            }
-        };
-    
-        // Cập nhật vị trí tài xế mỗi 5 giây
-        const intervalId = setInterval(fetchDriverLocation, 5000);
-    
-        return () => clearInterval(intervalId);
-    }, [driverId, hospitals, formData.hospital]);
-    
     const changeMapStyle = (styleUrl) => {
         if (mapRef.current) {
             mapRef.current.setStyle(styleUrl);
@@ -457,8 +407,7 @@ const Mapbox = () => {
                                         value={formData.car}
                                         onChange={(e) => handleHospitalChange(e, 'car')}
                                         disabled={isChecked}
-                                    >   
-                                        <option value="">Select a car</option>
+                                    >
                                         {ambulances.filter(ambulance => ambulance.status !== 'busy').map(ambulance => (
                                             <option key={ambulance.id} value={ambulance.id}>
                                                 {ambulance.name} {ambulance.price}

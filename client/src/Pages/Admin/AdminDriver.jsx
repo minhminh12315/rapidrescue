@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form, FormControl, InputGroup } from "react-bootstrap";
+import HostContext from "../../Context/HostContext";
 
 const AdminDriver = () => {
+  const { host } = useContext(HostContext);
   const [drivers, setDrivers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -79,7 +81,7 @@ const AdminDriver = () => {
 
   const fetchDrivers = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get-drivers");
+      const response = await axios.get(`${host}api/get-drivers`);
       setDrivers(response.data);
       setFilteredDrivers(response.data);
       setLoading(false);
@@ -91,7 +93,7 @@ const AdminDriver = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/delete-driver/${idToDelete}`);
+      await axios.delete(`${host}api/delete-driver/${idToDelete}`);
       setIdToDelete(null);
       setShowDeleteModal(false);
       fetchDrivers(); // Refresh the data after deletion
@@ -102,7 +104,7 @@ const AdminDriver = () => {
 
   const handleCreateDriver = async () => {
     try {
-      await axios.post("http://localhost:8000/api/store-driver", newDriver);
+      await axios.post(`${host}api/store-driver`, newDriver);
       setShowModal(false);
       setNewDriver({ first_name: "", last_name: "", email: "", phone: "" });
       fetchDrivers(); // Refresh the data after creating

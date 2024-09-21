@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EmergencyRequest;
 use App\Http\Requests\StoreEmergencyRequestRequest;
 use App\Http\Requests\UpdateEmergencyRequestRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -41,6 +42,7 @@ class EmergencyRequestController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info($request->all());
         try {
             $fields = $request->validate([
                 'user_id' => '', // nếu có đăng nhập thì lấy user_id
@@ -52,6 +54,15 @@ class EmergencyRequestController extends Controller
                 'start_location' => 'nullable', // Không bắt buộc, vị trí người dùng
                 'destination' => 'nullable', // Không bắt buộc, tọa độ bệnh viện
             ]);
+
+            $emt_id = User::where([
+                ['role', '=', 'emt'],
+                ['status', '=', 'free']
+            ])->first()->id;
+
+            $fields['emt_id'] = $emt_id;
+
+            User::where('id', $emt_id)->update(['status' => 'busy']);
 
             $emergencyRequest = EmergencyRequest::create($fields);
 
@@ -78,7 +89,7 @@ class EmergencyRequestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(EmergencyRequest $emergencyRequest)
+    public function show(Request $emergencyRequest)
     {
         //
     }

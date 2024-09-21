@@ -24,7 +24,7 @@ const Register = () => {
 
     console.log("Register");
     axios
-      .post("http://localhost:8000/api/register", {
+      .post("http://127.0.0.1:8000/api/register", {
         first_name: formData.first_name,
         last_name: formData.last_name,
         email: formData.email,
