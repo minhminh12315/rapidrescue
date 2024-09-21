@@ -374,7 +374,7 @@ const Mapbox = () => {
                         <div className="container">
                             <div className="row justify-content-center">
                                 <div className="col-md-12">
-                                    <form className="emergency-form">
+                                    <div className="emergency-form">
                                         <div className="mb-3">
                                             <label htmlFor="address" className="form-label">Address</label>
                                             <input
@@ -457,13 +457,12 @@ const Mapbox = () => {
                                                 <span className='txt'>Check</span>
                                             </button>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     )}
                 </div>
-
             </div>
         </div>
 
