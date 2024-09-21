@@ -134,7 +134,7 @@ const Mapbox = () => {
                 ...prevState,
                 hospital: selectedValue,
             }));
-        } else if (type === 'car') {
+        } else if (type === 'car') { 
             setFormData(prevState => ({
                 ...prevState,
                 car: selectedValue,

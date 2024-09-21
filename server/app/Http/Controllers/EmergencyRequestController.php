@@ -6,6 +6,8 @@ use App\Models\EmergencyRequest;
 use App\Http\Requests\StoreEmergencyRequestRequest;
 use App\Http\Requests\UpdateEmergencyRequestRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 
 class EmergencyRequestController extends Controller
 {
@@ -14,12 +16,21 @@ class EmergencyRequestController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            // Lấy tất cả các yêu cầu khẩn cấp từ cơ sở dữ liệu
+            $emergencyRequests = EmergencyRequest::all();
+
+            return response()->json($emergencyRequests, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error fetching emergency requests',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         //
@@ -52,13 +63,6 @@ class EmergencyRequestController extends Controller
             ], 500);
         }
     }
-
-    public function getRequestsByAmbulance($ambulance_id)
-    {
-        $requests = EmergencyRequest::where('ambulance_id', $ambulance_id)->get();
-        return response()->json($requests);
-    }
-
 
     /**
      * Display the specified resource.

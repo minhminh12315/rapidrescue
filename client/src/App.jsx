@@ -5,7 +5,6 @@ import Header from "./Component/Header";
 import Footer from "./Component/Footer";
 import Home from "./Pages/User/Home";
 import Contact from "./Pages/User/Contact";
-import AmbulanceRouting from "./Component/AmbulanceRouting/AmbulanceRouting";
 import Register from "./Pages/Register/Register";
 import Login from "./Pages/Login/Login";
 import About from "./Pages/About/About";
@@ -21,7 +20,6 @@ import AdminAmbulanceCar from "./Pages/Admin/AdminAmbulanceCar";
 import AdminText from "./Pages/Admin/AdminText";
 import AdminUser from "./Pages/Admin/AdminUser";
 import AdminSidebar from "./Pages/Admin/AdminSidebar";
-import Map from "./Component/Map/Map";
 import Mapbox from "./Test/Mapbox";
 import HospitalUser from "./Pages/User/Hospital";
 import AllAmbulanceCar from "./Pages/User/AllAmbulanceCar";
@@ -134,8 +132,7 @@ function App() {
                     <Route path="/contact" element={<Contact />} />
                   </>
                 )}
-                <Route path="/map" element={<Map />} />
-                <Route path="/call-ambulance" element={<AmbulanceRouting />} />
+                <Route path="/call-ambulance" element={<Mapbox />} />
                 <Route path="/test" element={<Mapbox />} />
                 
                 <Route path="/hospital" element={<HospitalUser />} />
