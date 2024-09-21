@@ -15,4 +15,9 @@ class Ambulance extends Model
         'type',
         'price',
     ];
+
+    public function emergencyRequests()
+    {
+        return $this->hasMany(EmergencyRequest::class);
+    }
 }

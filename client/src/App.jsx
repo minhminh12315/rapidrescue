@@ -5,7 +5,6 @@ import Header from "./Component/Header";
 import Footer from "./Component/Footer";
 import Home from "./Pages/User/Home";
 import Contact from "./Pages/User/Contact";
-// import AmbulanceRouting from "./Component/AmbulanceRouting/AmbulanceRouting";
 import Register from "./Pages/Register/Register";
 import Login from "./Pages/Login/Login";
 import About from "./Pages/About/About";
@@ -137,7 +136,7 @@ function App() {
                   </>
                 )}
                 <Route path="/map" element={<Map />} />
-                {/* <Route path="/call-ambulance" element={<AmbulanceRouting />} /> */}
+                <Route path="/call-ambulance" element={<Mapbox />} />
                 <Route path="/test" element={<Mapbox />} />
                 
                 <Route path="/hospital" element={<HospitalUser />} />

@@ -18,7 +18,7 @@ class AuthController extends Controller
             'users' => $user,
         ]);
     }
-    
+
     public function register(Request $request)
     {
         try {
@@ -68,7 +68,8 @@ class AuthController extends Controller
 
             return response([
                 'user' => $user,
-                'token' => $token, 
+                'token' => $token,
+                'driver_id' => $user->id,
             ], 201);
         }
     }
