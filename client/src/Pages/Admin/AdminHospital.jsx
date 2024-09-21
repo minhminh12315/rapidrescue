@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form, FormControl, InputGroup } from "react-bootstrap";
-
+import HostContext from "../../Context/HostContext";
 
 
 const AdminHospital = () => {
+  const { host } = useContext(HostContext);
   const [hospitals, setHospitals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -69,9 +70,7 @@ const AdminHospital = () => {
 
   const fetchHospitals = async () => {
     try {
-      const response = await axios.get(
-        "https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/get-hospitals"
-      );
+      const response = await axios.get(`${host}api/get-hospitals`);
       setHospitals(response.data);
       setFilteredHospitals(response.data);
       setLoading(false);
@@ -80,18 +79,18 @@ const AdminHospital = () => {
       setLoading(false);
     }
   };
-
+  
   // Handle Edit
   const handleEdit = (hospital) => {
     // Logic to edit the hospital (you can display a form for editing here)
     console.log("Editing hospital:", hospital);
   };
-
+  
   // Handle Delete
   const handleDelete = async (id) => {
-    console.log('Delete')
+    console.log('Delete');
     try {
-      await axios.delete(`https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/delete-hospital/${idToDelete}`);
+      await axios.delete(`${host}api/delete-hospital/${idToDelete}`);
       setIdToDelete(null);
       setShowDeleteModal(false);
       fetchHospitals(); // Refresh the data after deletion
@@ -99,10 +98,10 @@ const AdminHospital = () => {
       console.error("Error deleting hospital:", error);
     }
   };
-
+  
   const handleCreateHospital = async () => {
     try {
-      await axios.post("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/store-hospital", newHospital);
+      await axios.post(`${host}api/store-hospital`, newHospital);
       setShowModal(false);
       setNewHospital({ name: "", address: "", phone: "" });
       fetchHospitals(); // Refresh the data after creating
@@ -110,6 +109,7 @@ const AdminHospital = () => {
       console.error("Error creating hospital:", error);
     }
   };
+  
 
   const handleShowDeleteModal = (id) => {
     setShowDeleteModal(true);

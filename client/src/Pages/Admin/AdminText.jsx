@@ -57,7 +57,7 @@ const AdminText = () => {
   const handleDelete = async (id) => {
     try {
       // Assume delete API is implemented in backend
-      await axios.delete(`https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/delete-text/${idToDelete}`);
+      await axios.delete(`http://127.0.0.1:8000/api/delete-text/${idToDelete}`);
       setIdToDelete(null);
       setShowDeleteModal(false);
       fetchTexts(); // Refresh the data after deletion
@@ -82,7 +82,7 @@ const AdminText = () => {
   const handleCreateText = async () => {
     try {
       // Assume store API is implemented in backend
-      await axios.post("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/store-text", newText);
+      await axios.post("http://127.0.0.1:8000/api/store-text", newText);
       setTexts([...texts, newText]);
       setShowModal(false);
       setNewText({ content: "", type: "" });
@@ -93,7 +93,7 @@ const AdminText = () => {
   const fetchTexts = async () => {
     try {
       const response = await axios.get(
-        "https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/get-text"
+        "http://127.0.0.1:8000/api/get-text"
       );
       setTexts(response.data);
       setLoading(false);

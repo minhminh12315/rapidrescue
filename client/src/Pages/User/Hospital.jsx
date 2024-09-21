@@ -10,7 +10,7 @@ const HospitalUser = () => {
     const recordsPerPage = 9;
 
     useEffect(() => {
-        axios.get('https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/hospitals')
+        axios.get('http://127.0.0.1:8000/api/hospitals')
             .then(response => {
                 setHospitals(response.data);
                 setCurrentData(response.data.slice(0, recordsPerPage));

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AmbulanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmergencyRequestController;
@@ -25,8 +26,18 @@ Route::get('/get-user', [AuthController::class, 'index'])->name('get.user');
 
 Route::post('/store-hospital', [HospitalController::class, 'store'])->name('store.hospital');
 Route::get('/get-hospitals', [HospitalController::class, 'index'])->name('get.hospitals');
-
+Route::get('/get-hospital/{id}', [HospitalController::class, 'show'])->name('get.hospital');
+Route::put('/update-hospital/{id}', [HospitalController::class, 'update'])->name('update.hospital');
+Route::delete('/delete-hospital/{id}', [HospitalController::class, 'destroy'])->name('delete.hospital');
+// User
+Route::post('/store-user', [UserController::class, 'store']);
 Route::put('/update-user/{id}', [UserController::class, 'updateRole']);
+Route::get('/get-users', [UserController::class, 'index']);
+Route::get('/get-user/{id}', [UserController::class, 'show']);
+Route::put('/update-user/{id}', [UserController::class, 'update']);
+Route::delete('/delete-user/{id}', [UserController::class, 'destroy']);
+
+
 // Admin Driver
 Route::get('/get-drivers', [UserController::class, 'getDrivers']);         // Lấy danh sách tài xế
 Route::post('/store-driver', [UserController::class, 'storeDriver']);      // Tạo tài xế mới
@@ -38,22 +49,25 @@ Route::post('/emergency-requests', [EmergencyRequestController::class, 'store'])
 
 Route::get('/driver-requests/{driver_id}', [EmergencyRequestController::class, 'getDriverRequests']);
 
-
-
-
-
-
 // đổ dữ liệu theo id
 Route::get('/get-ambulance', [AmbulanceController::class, 'index']);
+Route::get('/get-ambulance/{id}', [AmbulanceController::class, 'show']);
+Route::post('/store-ambulance', [AmbulanceController::class, 'store']);
+Route::put('/update-ambulance/{id}', [AmbulanceController::class, 'update']);
+Route::delete('/delete-ambulance/{id}', [AmbulanceController::class, 'destroy']);
 
 // Text
 Route::get('/get-text', [TextController::class, 'index']);
 
 Route::get('/get-image', [ImageController::class, 'index']);
 Route::post('/store-image', [ImageController::class, 'store']);
+Route::delete('delete-image/{id}', [ImageController::class, 'destroy']);  
+Route::put('/update-image/{id}', [ImageController::class, 'update']);
 
 Route::post('/contact', [ContactController::class, 'store']);
 
 Route::get('/hospitals', [HospitalController::class, 'index'])->name('get.hospitals');
 
 Route::get('/ambulances', [AmbulanceController::class, 'index'])->name('get.ambulances');
+
+Route::get('/dashboard-stats', [AdminController::class, 'dashboardStats'])->name('dashboard.stats');

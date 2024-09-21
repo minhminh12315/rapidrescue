@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
+import HostContext from '../../Context/HostContext';
 
 const useLoginForm = () => {
+    const { host } = useContext(HostContext);
     const [formData, setFormData] = useState({
         name: '',
         password: '',
@@ -44,7 +46,7 @@ const useLoginForm = () => {
 
     const checkEmail = async () => {
         try {
-            const response = await axios.post('https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/check-email', {
+            const response = await axios.post(`${host}api/check-email`, {
                 email: formData.email
             });
 

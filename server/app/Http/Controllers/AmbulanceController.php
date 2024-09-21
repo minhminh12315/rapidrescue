@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ambulance;
 use App\Http\Requests\StoreAmbulanceRequest;
 use App\Http\Requests\UpdateAmbulanceRequest;
+use Illuminate\Support\Facades\Log;
 
 class AmbulanceController extends Controller
 {
@@ -14,7 +15,7 @@ class AmbulanceController extends Controller
     public function index()
     {
         $ambulances = Ambulance::all();
-
+        Log::info($ambulances);
         return response() -> json($ambulances, 200);
     }
 
@@ -31,7 +32,13 @@ class AmbulanceController extends Controller
      */
     public function store(StoreAmbulanceRequest $request)
     {
-        //
+        try {
+            $ambulance = Ambulance::create($request->validated());
+            return response()->json(['message' => 'Ambulance created successfully', 'data' => $ambulance], 201);
+        } catch (\Exception $e) {
+            Log::error('Error creating ambulance: ' . $e->getMessage());
+            return response()->json(['message' => 'Error creating ambulance'], 500);
+        }
     }
 
     /**
@@ -39,15 +46,7 @@ class AmbulanceController extends Controller
      */
     public function show(Ambulance $ambulance)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ambulance $ambulance)
-    {
-        //
+        return response()->json($ambulance, 200);
     }
 
     /**
@@ -55,7 +54,13 @@ class AmbulanceController extends Controller
      */
     public function update(UpdateAmbulanceRequest $request, Ambulance $ambulance)
     {
-        //
+        try {
+            $ambulance->update($request->validated());
+            return response()->json(['message' => 'Ambulance updated successfully', 'data' => $ambulance], 200);
+        } catch (\Exception $e) {
+            Log::error('Error updating ambulance: ' . $e->getMessage());
+            return response()->json(['message' => 'Error updating ambulance'], 500);
+        }
     }
 
     /**
@@ -63,7 +68,13 @@ class AmbulanceController extends Controller
      */
     public function destroy(Ambulance $ambulance)
     {
-        //
+        try {
+            $ambulance->delete();
+            return response()->json(['message' => 'Ambulance deleted successfully'], 200);
+        } catch (\Exception $e) {
+            Log::error('Error deleting ambulance: ' . $e->getMessage());
+            return response()->json(['message' => 'Error deleting ambulance'], 500);
+        }
     }
     
     public function deleteAmbulance($id){

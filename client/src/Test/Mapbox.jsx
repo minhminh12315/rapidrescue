@@ -45,7 +45,7 @@ const Mapbox = () => {
 
         const fetchHospitals = async () => {
             try {
-                const res = await axios.get("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/get-hospitals");
+                const res = await axios.get("http://127.0.0.1:8000/api/get-hospitals");
                 setHospitals(res.data);
             } catch (error) {
                 console.error('Lỗi khi fetch dữ liệu bệnh viện:', error);
@@ -54,7 +54,7 @@ const Mapbox = () => {
 
         const fetchAmbulances = async () => {
             try {
-                const res = await axios.get("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/get-ambulance");
+                const res = await axios.get("http://127.0.0.1:8000/api/get-ambulance");
                 // console.log(res);
                 setAmbulances(res.data);
             } catch (error) {
@@ -289,7 +289,7 @@ const Mapbox = () => {
         }
 
         try {
-            const response = await axios.post('https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/emergency-requests', requestData);
+            const response = await axios.post('http://127.0.0.1:8000/api/emergency-requests', requestData);
             console.log('Dữ liệu đã được lưu:', response.data);
         } catch (error) {
             console.error('Lỗi khi gửi yêu cầu:', error.response?.data || error.message);

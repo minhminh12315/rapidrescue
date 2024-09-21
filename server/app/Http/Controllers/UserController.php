@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
@@ -104,6 +105,80 @@ class UserController extends Controller
                'message' => 'User not found',
                 'error' => $e->getMessage(),
             ], 404);
+        }
+    }
+
+    public function index()
+    {
+        try {
+            $users = User::all();
+            return response()->json(['users' => $users], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Unable to fetch users.', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Store a newly created user in storage.
+     */
+    public function store(Request $request)
+    {
+        Log::info($request->all());
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'required|string|max:20',
+        ]);
+
+        try {
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'role' => 'customer',
+                'password' => Hash::make('password'), // Mã hóa mật khẩu
+            ]);
+    
+            return response()->json($user, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Unable to create user.', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Update the specified user in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'role' => 'required|string|in:admin,customer,driver,emt',
+        ]);
+
+        try {
+            $user = User::findOrFail($id);
+            $user->role = $request->role;
+            $user->save();
+
+            return response()->json($user, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Unable to update user.', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Remove the specified user from storage.
+     */
+    public function destroy($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+
+            return response()->json(['message' => 'User deleted successfully.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Unable to delete user.', 'message' => $e->getMessage()], 500);
         }
     }
 }

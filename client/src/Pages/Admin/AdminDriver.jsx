@@ -3,8 +3,10 @@ import axios from "axios";
 import DataTable from "react-data-table-component";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form, FormControl, InputGroup } from "react-bootstrap";
+import HostContext from "../../Context/HostContext";
 
 const AdminDriver = () => {
+  const { host } = useContext(HostContext);
   const [drivers, setDrivers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -79,7 +81,7 @@ const AdminDriver = () => {
 
   const fetchDrivers = async () => {
     try {
-      const response = await axios.get("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/get-drivers");
+      const response = await axios.get(`${host}api/get-drivers`);
       setDrivers(response.data);
       setFilteredDrivers(response.data);
       setLoading(false);
@@ -91,7 +93,7 @@ const AdminDriver = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/delete-driver/${idToDelete}`);
+      await axios.delete(`http://127.0.0.1:8000/api/delete-driver/${idToDelete}`);
       setIdToDelete(null);
       setShowDeleteModal(false);
       fetchDrivers(); // Refresh the data after deletion
@@ -102,7 +104,7 @@ const AdminDriver = () => {
 
   const handleCreateDriver = async () => {
     try {
-      await axios.post("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/store-driver", newDriver);
+      await axios.post("http://127.0.0.1:8000/api/store-driver", newDriver);
       setShowModal(false);
       setNewDriver({ first_name: "", last_name: "", email: "", phone: "" });
       fetchDrivers(); // Refresh the data after creating

@@ -24,7 +24,7 @@ const Register = () => {
 
     console.log("Register");
     axios
-      .post("https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/register", {
+      .post("http://127.0.0.1:8000/api/register", {
         first_name: formData.first_name,
         last_name: formData.last_name,
         email: formData.email,

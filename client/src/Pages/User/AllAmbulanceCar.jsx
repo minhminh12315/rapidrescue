@@ -9,7 +9,7 @@ const AllAmbulanceCar = () => {
     const [currentData, setCurrentData] = useState([]);
 
     useEffect(() => {
-        axios.get('https://6463-2405-4802-1d42-2030-3b-e46f-6a75-9c8b.ngrok-free.app/api/ambulances')
+        axios.get('http://127.0.0.1:8000/api/ambulances')
             .then(response => {
                 setAmbulanceCars(response.data);
                 setCurrentData(response.data.slice(0, 9)); // Set initial page data
