@@ -46,6 +46,11 @@ Route::get('/driver-requests/{driver_id}', [EmergencyRequestController::class, '
 // đổ dữ liệu theo id
 Route::get('/get-ambulance', [AmbulanceController::class, 'index']);
 
+//cap nhật vị trí
+
+Route::post('/update-driver-location', [AmbulanceController::class, 'update']);
+
+
 // Text
 Route::get('/get-text', [TextController::class, 'index']);
 
