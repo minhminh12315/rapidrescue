@@ -89,4 +89,16 @@ class ImageController extends Controller
     {
         //
     }
+    public function deleteImage($id){
+        try {
+            $image = Image::find($id);
+            $image->delete();
+            return response(['message' => 'Hospital deleted successfully.'], 200);
+        } catch (\Exception $e) {
+            return response([
+                'error' => 'There was an error deleting the hospital.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

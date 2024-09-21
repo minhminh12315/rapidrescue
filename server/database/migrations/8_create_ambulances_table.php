@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('image');
             $table->string('address');
             $table->string('type');
+            $table->foreignId('driver_id')->nullable()->constrained('users')->nullOnDelete();
             $table->decimal('price', 10, 2);
             $table->timestamps();
         });

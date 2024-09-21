@@ -550,9 +550,11 @@
     background: var(--vz-vertical-menu-bg);
     border-right: 1px solid var(--vz-vertical-menu-border);
     bottom: 0;
-    margin-top: 0;
+    margin-top: 70px;
     position: fixed;
     top: 0;
+    left: 0;
+    height: 100%;
     -webkit-box-shadow: var(--vz-vertical-menu-box-shadow);
     box-shadow: var(--vz-vertical-menu-box-shadow);
     padding: 0 0 calc(70px + 25px) 0;

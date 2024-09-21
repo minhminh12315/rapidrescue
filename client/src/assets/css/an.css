@@ -1,6 +1,7 @@
-a{
+a {
     text-decoration: none !important;
 }
+
 .carousel_custom_container {
     position: relative;
 }
@@ -331,7 +332,7 @@ a{
 .slider_home_container .carousel_custom_container .slider_contact_info_box {
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: -10px;
     right: 0;
     max-width: 1200px;
     width: 100%;
@@ -498,13 +499,22 @@ a{
 .rating-submit:hover {
     color: #fff
 }
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .carousel_custom_container .slider_custom_wrapper .image_info {
         gap: 18rem;
     }
 
     .carousel_custom_container .slider_custom_wrapper .image_info .big_title h2 {
-        font-size: 70px;
+        font-size: 4.25rem;
+    }
+
+    .slider_contact_info .text h2 {
+        font-size: 1.75rem;
+    }
+
+    .slider_contact_info {
+        padding: 35px 55px 25px;
     }
 }
 
@@ -514,11 +524,15 @@ a{
     }
 
     .carousel_custom_container .slider_custom_wrapper .image_info .big_title h2 {
-        font-size: 50px;
+        font-size: 3.75rem;
+    }
+
+    .slider_contact_info .text h2 {
+        font-size: 1.5rem;
     }
 }
 
-@media only screen and (min-width: 500px) and (max-width: 767px) {
+@media only screen and (min-width: 500px) and (max-width: 768px) {
 
     .carousel_custom_container .slider_custom_wrapper .carousel_custom_slide:hover .carousel_custom_controls {
         visibility: hidden;
@@ -526,9 +540,44 @@ a{
     }
 
     .carousel_custom_container .slider_custom_wrapper .image_info .big_title h2 {
-        font-size: 50px;
+        font-size: 3.25rem;
     }
 
+    .slider_contact_info .text h2 {
+        font-size: 1.25rem;
+    }
+
+    .slider_contact_info {
+        padding: 30px 70px 30px;
+        padding-bottom: 0;
+    }
+
+    .carousel_custom_container .slider_custom_wrapper .image_info {
+        max-width: 580px;
+    }
+    .app-menu.active{
+        margin: 0 !important;
+        z-index: 2000;
+    }
+    .overlay_sidebar{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.6);
+        z-index: 1999;
+        visibility: hidden;
+        opacity: 0;
+        transition: 0.3s ease-in-out;
+    }
+    
+    .overlay_sidebar.active{
+        visibility: visible;
+        opacity: 1;
+    }
 }
 
 @media only screen and (max-width: 499px) {
@@ -538,6 +587,46 @@ a{
     }
 
     .carousel_custom_container .slider_custom_wrapper .image_info .big_title h2 {
-        font-size: 40px;
+        font-size: 2.5rem;
+    }
+
+    .slider_contact_info .text h2 {
+        font-size: 1.25rem;
+    }
+
+    .slider_contact_info {
+        padding: 1.5rem;
+        padding-bottom: 0;
+    }
+
+    .slider_contact_info .icon .inner {
+        width: 80px;
+        height: 80px;
+    }
+    .carousel_custom_container .slider_custom_wrapper .image_info {
+        max-width: 350px;
+    }
+    .app-menu.active{
+        margin: 0 !important;
+        z-index: 2000;
+    }
+    .overlay_sidebar{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.6);
+        z-index: 1999;
+        visibility: hidden;
+        opacity: 0;
+        transition: 0.3s ease-in-out;
+    }
+    
+    .overlay_sidebar.active{
+        visibility: visible;
+        opacity: 1;
     }
 }

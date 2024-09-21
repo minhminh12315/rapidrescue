@@ -66,4 +66,17 @@ class TextController extends Controller
     {
         //
     }
+
+    public function deleteText($id){
+        try {
+            $text = Text::find($id);
+            $text->delete();
+            return response(['message' => 'Hospital deleted successfully.'], 200);
+        } catch (\Exception $e) {
+            return response([
+                'error' => 'There was an error deleting the hospital.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

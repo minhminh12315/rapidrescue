@@ -3,6 +3,7 @@ import TextContext from '../../Context/TextContext';
 import DataTable from "react-data-table-component";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form, InputGroup } from "react-bootstrap";
+import axios from "axios";
 
 const AdminText = () => {
   const { texts, setTexts } = useContext(TextContext);
@@ -13,6 +14,9 @@ const AdminText = () => {
   });
   const [filteredTexts, setFilteredTexts] = useState(texts);
   const [search, setSearch] = useState("");
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [idToDelete, setIdToDelete] = useState(null);
 
   const columns = [
     {
@@ -33,19 +37,9 @@ const AdminText = () => {
     {
       name: "Actions",
       cell: (row) => (
-        <div>
-          <button
-            className="btn btn-primary btn-sm me-2"
-            onClick={() => handleEdit(row)}
-          >
-            Edit
-          </button>
-          <button
-            className="btn btn-danger btn-sm"
-            onClick={() => handleDelete(row.id)}
-          >
-            Delete
-          </button>
+        <div className="d-flex flex-row gap-2">
+          <button type="button" onClick={() => handleEdit(row.id)} class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-edit-line"></i></button>
+          <button type="button" onClick={() => handleShowDeleteModal(row.id)} class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>
         </div>
       ),
     },
@@ -63,7 +57,10 @@ const AdminText = () => {
   const handleDelete = async (id) => {
     try {
       // Assume delete API is implemented in backend
-      await axios.delete(`http://localhost:8000/api/delete-text/${id}`);
+      await axios.delete(`http://localhost:8000/api/delete-text/${idToDelete}`);
+      setIdToDelete(null);
+      setShowDeleteModal(false);
+      fetchTexts(); // Refresh the data after deletion
       setTexts(texts.filter((text) => text.id !== id));
     } catch (error) {
       console.log(error);
@@ -93,6 +90,22 @@ const AdminText = () => {
       console.error("Error creating text:", error);
     }
   };
+  const fetchTexts = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8000/api/get-text"
+      );
+      setTexts(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching text:", error);
+      setLoading(false);
+    }
+  };
+  const handleShowDeleteModal = (id) => {
+    setShowDeleteModal(true);
+    setIdToDelete(id);
+  }
 
   return (
     <div className="container mt-5">
@@ -150,11 +163,27 @@ const AdminText = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
+          <button class="btn btn-outline-dark waves-effect waves-light" variant="secondary" onClick={() => setShowModal(false)}>
+            <span>Close</span>
+          </button>
+          <button class="btn btn-primary btn-animation waves-effect waves-light" data-text={newText.id ? 'Update' : 'Create'} variant="primary" onClick={handleCreateText}>
+            <span>{newText.id ? "Update Text" : "Create Text"}</span>
+          </button>
+        </Modal.Footer>
+      </Modal>
+      {/* Modal For Delete Driver */}
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+        <Modal.Header closeButton className="pb-3">
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete this TEXT?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Cancel
           </Button>
-          <Button variant="primary" onClick={handleCreateText}>
-            {newText.id ? "Update Text" : "Create Text"}
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>

@@ -1,17 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../../Context/UserContext";
-const AdminHeader = () => {
+const AdminHeader = ({ setSideBarAdminOpen, sideBarAdminOpen }) => {
 
   const { user, setUser } = useContext(UserContext);
 
+  const openSidebar = () => {
+    if (sideBarAdminOpen) {
+      setSideBarAdminOpen(false);
+    }
+    else {
+      setSideBarAdminOpen(true);
+    }
+  }
   return (
 
     <header id="page-topbar">
-      {/* <div className="d-flex justify-content-between">
-        <div>AdminHeader</div>
-        
-      </div> */}
       <div className="layout-width">
         <div className="navbar-header">
           <div className="d-flex">
@@ -33,8 +37,8 @@ const AdminHeader = () => {
             </div>
 
             <button type="button"
-              className=" btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
-              id="topnav-hamburger-icon">
+              className=" btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger d-md-none d-block"
+              id="topnav-hamburger-icon" onClick={openSidebar}>
               <span className="hamburger-icon">
                 <span></span>
                 <span></span>
@@ -51,8 +55,9 @@ const AdminHeader = () => {
                   {/* <img className="rounded-circle header-profile-user"
                     src="assets/images/users/avatar-1.jpg" alt="Header Avatar" /> */}
                   <span className="text-start ms-xl-2">
-                    <span className="d-none d-xl-inline-block ms-1 fw-semibold user-name-text">Anna
-                      Adame</span>
+                    <span className="d-none d-xl-inline-block ms-1 fw-semibold user-name-text">
+                      {user.first_name + " " + user.last_name}
+                    </span>
                     <span className="d-none d-xl-block ms-1 fs-13 user-name-sub-text">Founder</span>
                   </span>
                 </span>
@@ -82,7 +87,7 @@ const AdminHeader = () => {
                 <a className="dropdown-item" href="auth-lockscreen-basic.html"><i
                   className="mdi mdi-lock text-muted fs-16 align-middle me-1"></i> <span
                     className="align-middle">Lock screen</span></a> */}
-                
+
                 <Link
                   to="/login"
                   onClick={() => {
@@ -93,8 +98,8 @@ const AdminHeader = () => {
                   className="dropdown-item"
                 >
                   <i
-                  className="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
-                    className="align-middle" data-key="t-logout">Logout</span>
+                    className="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
+                      className="align-middle" data-key="t-logout">Logout</span>
                 </Link>
               </div>
             </div>

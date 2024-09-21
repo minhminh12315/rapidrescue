@@ -20,6 +20,7 @@ import AdminAmbulanceCar from "./Pages/Admin/AdminAmbulanceCar";
 import AdminText from "./Pages/Admin/AdminText";
 import AdminUser from "./Pages/Admin/AdminUser";
 import AdminSidebar from "./Pages/Admin/AdminSidebar";
+import Map from "./Component/Map/Map";
 import Mapbox from "./Test/Mapbox";
 import HospitalUser from "./Pages/User/Hospital";
 import AllAmbulanceCar from "./Pages/User/AllAmbulanceCar";
@@ -36,6 +37,8 @@ function App() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [sideBarAdminOpen, setSideBarAdminOpen] = useState(true); 
 
   const fetchText = async () => {
     try {
@@ -85,8 +88,8 @@ function App() {
       <ImageContext.Provider value={{ images, setImages }}>
         <TextContext.Provider value={{ texts, setTexts }}>
           <UserContext.Provider value={{ user, setUser }}>
-            {isAdmin ? <AdminHeader /> : <Header />}
-            {isAdmin && <AdminSidebar />}
+            {isAdmin ? <AdminHeader setSideBarAdminOpen={setSideBarAdminOpen} sideBarAdminOpen={sideBarAdminOpen} /> : <Header />}
+            {isAdmin && <AdminSidebar setSideBarAdminOpen={setSideBarAdminOpen} sideBarAdminOpen={sideBarAdminOpen} />}
             <div className={isAdmin ? "main-content overflow-hidden" : ""}>
               <Routes>
                 {!user ? ( // Route for Guest
@@ -132,7 +135,8 @@ function App() {
                     <Route path="/contact" element={<Contact />} />
                   </>
                 )}
-                <Route path="/call-ambulance" element={<Mapbox />} />
+                <Route path="/map" element={<Map />} />
+                <Route path="/call-ambulance" element={<AmbulanceRouting />} />
                 <Route path="/test" element={<Mapbox />} />
                 
                 <Route path="/hospital" element={<HospitalUser />} />
