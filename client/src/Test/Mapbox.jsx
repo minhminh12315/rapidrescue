@@ -279,18 +279,18 @@ const Mapbox = () => {
     };
 
     const handleSubmit = async () => {
-        if(!formData.address) {
+        if (!formData.address) {
             console.error('Please enter your address');
             return;
         }
 
-        if(!formData.phone) {
+        if (!formData.phone) {
             console.error('Please enter your phone number');
             return;
         }
 
         if (!formData.hospital || !formData.car) {
-            console.error('Please choose hospital and ambulance car first'); 
+            console.error('Please choose hospital and ambulance car first');
             return;
         }
 
@@ -435,6 +435,7 @@ const Mapbox = () => {
                                                 onChange={(e) => handleHospitalChange(e, 'car')}
                                                 disabled={isChecked}
                                             >
+                                                <option value="" selected disabled className=''>--Choose a car--</option>
                                                 {ambulances.filter(ambulance => ambulance.status !== 'busy').map(ambulance => (
                                                     <option key={ambulance.id} value={ambulance.id}>
                                                         {ambulance.name} {ambulance.price}

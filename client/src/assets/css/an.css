@@ -500,6 +500,13 @@ a {
     color: #fff
 }
 
+.card-emt{
+    width: 75%;
+}
+.card-emt .card-header{
+    background-color: #001789;
+}
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .carousel_custom_container .slider_custom_wrapper .image_info {
         gap: 18rem;
