@@ -64,6 +64,16 @@ class EmergencyRequestController extends Controller
         }
     }
 
+    public function getDriverRequests($driverId)
+    {
+        // Truy vấn yêu cầu khẩn cấp cho driver_id cụ thể
+        $requests = EmergencyRequest::where('ambulance_id', $driverId)->get();
+
+        return response()->json($requests);
+    }
+    
+
+
     /**
      * Display the specified resource.
      */

@@ -32,13 +32,13 @@ const Login = (props) => {
       console.error("Có lỗi trong biểu mẫu.");
       return;
     }
-
+  
     const isUsernameValid = await checkEmail();
     if (!isUsernameValid) {
       console.error("Tên tài khoản không tồn tại.");
       return;
     }
-
+  
     console.log("Sign In");
     axios
       .post("http://localhost:8000/api/login", {
@@ -49,6 +49,12 @@ const Login = (props) => {
         setUser(response.data.user);
         localStorage.setItem("user", JSON.stringify(response.data.user));
         localStorage.setItem("token", response.data.token);
+        
+        // Lưu driver_id vào localStorage
+        const { driver_id } = response.data; // Lấy driver_id từ phản hồi
+        localStorage.setItem("driver_id", driver_id); // Lưu driver_id vào localStorage
+        console.log(driver_id)
+  
         if (response.data.user.role === "admin") {
           navigate("/admin-dashboard");
         } else if(response.data.user.role === "driver") {
@@ -56,13 +62,14 @@ const Login = (props) => {
         } else {
           navigate("/");
         }
-
+  
         console.log("Login successful:", response.data);
       })
       .catch((error) => {
         console.error("There was an error logging in:", error);
       });
   };
+  
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

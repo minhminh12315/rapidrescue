@@ -36,6 +36,9 @@ Route::delete('/delete-driver/{id}', [UserController::class, 'deleteDriver']); /
 // Call Ambulance
 Route::post('/emergency-requests', [EmergencyRequestController::class, 'store']);
 
+Route::get('/driver-requests/{driver_id}', [EmergencyRequestController::class, 'getDriverRequests']);
+
+
 
 
 
@@ -54,13 +57,3 @@ Route::post('/contact', [ContactController::class, 'store']);
 Route::get('/hospitals', [HospitalController::class, 'index'])->name('get.hospitals');
 
 Route::get('/ambulances', [AmbulanceController::class, 'index'])->name('get.ambulances');
-
-Route::delete('/delete-hospital/{id}', [HospitalController::class, 'deleteHospital'])->name('delete.hospital');
-
-Route::delete('/delete-user/{id}', [UserController::class, 'deleteUser'])->name('delete.user');
-
-Route::delete('/delete-image/{id}', [ImageController::class, 'deleteImage'])->name('delete.image');
-
-Route::delete('/delete-text/{id}', [TextController::class, 'deleteText'])->name('delete.text');
-
-Route::delete('/delete-ambulance/{id}', [AmbulanceController::class, 'deleteAmbulance'])->name('delete.ambulance');;
