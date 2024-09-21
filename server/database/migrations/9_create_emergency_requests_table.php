@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('phone');
             $table->string('type');
             $table->string('status')->default('pending');
+            $table->text('textarea_value')->nullable();
             $table->string('start_location');
             $table->string('destination');
             $table->foreignId('ambulance_id')->nullable()->constrained('ambulances')->nullOnDelete();

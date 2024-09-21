@@ -1,8 +1,11 @@
 import React from 'react'
+import DriverPage from '../Driver/Driver'
 
 const Emt = () => {
   return (
-    <div>Emt</div>
+    <div>
+      <DriverPage/>
+    </div>
   )
 }
 

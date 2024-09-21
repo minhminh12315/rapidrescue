@@ -112,7 +112,7 @@ const Login = (props) => {
           <div className="form-title">
             <h1>Sign in to your account</h1>
             <p>
-              If you already have a RIMOWA account, please sign in. We’ll use
+              If you already have a Rapidrescue account, please sign in. We’ll use
               your existing details for a faster checkout.
             </p>
           </div>
@@ -195,7 +195,7 @@ const Login = (props) => {
             <div className="content-form">
               <h2>Forgot your password ?</h2>
               <p>
-                Enter the email address you registered with RIMOWA and <br />
+                Enter the email address you registered with Rapidrescue and <br />
                 well tell you how to reset your password.
               </p>
 

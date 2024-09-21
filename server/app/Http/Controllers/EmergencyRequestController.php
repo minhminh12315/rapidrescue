@@ -48,6 +48,7 @@ class EmergencyRequestController extends Controller
                 'phone' => 'required', // Số điện thoại
                 'type' => 'required', // 1: urgent, 2: non-urgent
                 'ambulance_id' => 'required', // ID xe của bệnh viện
+                'textarea_value' => 'nullable|string',
                 'start_location' => 'nullable', // Không bắt buộc, vị trí người dùng
                 'destination' => 'nullable', // Không bắt buộc, tọa độ bệnh viện
             ]);

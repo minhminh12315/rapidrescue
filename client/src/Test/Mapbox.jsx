@@ -26,11 +26,11 @@ const Mapbox = () => {
         price: '',
         textareaValue: '',
         start_location: '',
-        destination: ''
-
+        destination: '',
     });
     const [hospitals, setHospitals] = useState([]);
     const [ambulances, setAmbulances] = useState([]);
+    const [isChecked, setIsChecked] = useState(false);
 
 
     const [destination, setDestination] = useState(null);
@@ -40,8 +40,8 @@ const Mapbox = () => {
     });
 
     useEffect(() => {
-        
-        
+
+
 
         const fetchHospitals = async () => {
             try {
@@ -62,8 +62,25 @@ const Mapbox = () => {
             }
         };
 
-        fetchHospitals();
-        fetchAmbulances();
+        const fetchDrivers = async () => {
+            try {
+                const res = await axios.get('http://localhost:8000/api/get-drivers');
+                return res.data;
+            } catch (error) {
+                console.error('Lỗi khi fetch dữ liệu tài xế:', error);
+                return [];
+            }
+        };
+
+        const initializeData = async () => {
+            await Promise.all([fetchHospitals(), fetchAmbulances()]);
+            const drivers = await fetchDrivers();
+            const busyDriverIds = drivers.filter(driver => driver.status === 'busy').map(driver => driver.id);
+
+            setAmbulances(prevAmbulances => prevAmbulances.filter(ambulance => !busyDriverIds.includes(ambulance.id)));
+        };
+
+        initializeData();
     }, []);
 
 
@@ -134,7 +151,7 @@ const Mapbox = () => {
                 ...prevState,
                 hospital: selectedValue,
             }));
-        } else if (type === 'car') { 
+        } else if (type === 'car') {
             setFormData(prevState => ({
                 ...prevState,
                 car: selectedValue,
@@ -176,9 +193,8 @@ const Mapbox = () => {
             const routeData = await getRoute(start, end);
             if (routeData && routeData.geometry) {
                 const routeGeometry = routeData.geometry;
-                const duration = routeData.duration / 60; // convert to minutes
+                const duration = routeData.duration / 60;
 
-                // Tính toán quãng đường chính xác
                 const line = turf.lineString(routeGeometry.coordinates);
                 const totalDistance = turf.length(line, { units: 'kilometers' });
 
@@ -267,7 +283,6 @@ const Mapbox = () => {
             return;
         }
 
-        // Lấy ID bệnh viện đã chọn
         const selectedHospital = hospitals.find(h => h.name === formData.hospital);
         if (!selectedHospital) {
             console.error('Bệnh viện không hợp lệ');
@@ -280,7 +295,8 @@ const Mapbox = () => {
             phone: formData.phone,
             type: formData.emergency === 'yes' ? 'urgent' : 'non-urgent',
             ambulance_id: formData.car,
-            start_location: JSON.stringify(userLocation), 
+            textarea_value: formData.textareaValue,
+            start_location: JSON.stringify(userLocation),
             destination: JSON.stringify(destination)
         };
 
@@ -291,6 +307,21 @@ const Mapbox = () => {
         try {
             const response = await axios.post('http://localhost:8000/api/emergency-requests', requestData);
             console.log('Dữ liệu đã được lưu:', response.data);
+
+            const driverId = formData.car;
+            await axios.put(`http://localhost:8000/api/update-driver/${driverId}`, { status: 'busy' });
+
+            console.log(driverId);
+            setAmbulances(prevAmbulances =>
+                prevAmbulances.map(ambulance =>
+                    ambulance.id === formData.car
+                        ? { ...ambulance, status: 'busy' }
+                        : ambulance
+                )
+            );
+
+            setIsChecked(true);
+
         } catch (error) {
             console.error('Lỗi khi gửi yêu cầu:', error.response?.data || error.message);
         }
@@ -359,6 +390,7 @@ const Mapbox = () => {
                                         className="form-select"
                                         value={formData.hospital}
                                         onChange={(e) => handleHospitalChange(e, 'hospital')}
+                                        disabled={isChecked}
                                     >
                                         <option value="">Select a hospital</option>
                                         {hospitals.map(hospital => (
@@ -375,8 +407,9 @@ const Mapbox = () => {
                                         className='form-select'
                                         value={formData.car}
                                         onChange={(e) => handleHospitalChange(e, 'car')}
+                                        disabled={isChecked}
                                     >
-                                        {ambulances.map(ambulance => (
+                                        {ambulances.filter(ambulance => ambulance.status !== 'busy').map(ambulance => (
                                             <option key={ambulance.id} value={ambulance.id}>
                                                 {ambulance.name} {ambulance.price}
                                             </option>
@@ -394,7 +427,7 @@ const Mapbox = () => {
                                     />
                                 </div>
                                 <div className="route-display text-center">
-                                    <button className="btn btn-primary" onClick={handleSubmit}>
+                                    <button className="btn btn-primary" onClick={handleSubmit} disabled={isChecked}>
                                         Check
                                     </button>
                                 </div>
