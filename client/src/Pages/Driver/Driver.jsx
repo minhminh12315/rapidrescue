@@ -36,6 +36,7 @@ const DriverPage = () => {
                 setUserLocation(newLocation);
     
                 if (!previousLocationRef.current || previousLocationRef.current[0] !== newLocation[0] || previousLocationRef.current[1] !== newLocation[1]) {
+                    console.log('Bạn đã di chuyển!');
                     updateDriverLocation(newLocation);
                     previousLocationRef.current = newLocation; 
                 }
@@ -100,7 +101,7 @@ const DriverPage = () => {
         }
 
         if (userLocation && driverRequests.length > 0) {
-            const bounds = new mapboxgl.LngLatBounds(); // Tạo một bounding box
+            const bounds = new mapboxgl.LngLatBounds(); 
 
             driverRequests.forEach((request) => {
                 const [destLng, destLat] = JSON.parse(request.destination);
