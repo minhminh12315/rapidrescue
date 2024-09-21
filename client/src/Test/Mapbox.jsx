@@ -148,6 +148,7 @@ const Mapbox = () => {
                 ...prevState,
                 hospital: selectedValue,
             }));
+            
         } else if (type === 'car') {
             setFormData(prevState => ({
                 ...prevState,
@@ -275,6 +276,7 @@ const Mapbox = () => {
     };
 
     const handleSubmit = async () => {
+        e.preventDefault();
         if (!formData.hospital || !formData.car) {
             console.error('Vui lòng chọn bệnh viện và xe cứu thương trước');
             return;
