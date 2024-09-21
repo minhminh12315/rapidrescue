@@ -279,14 +279,24 @@ const Mapbox = () => {
     };
 
     const handleSubmit = async () => {
+        if(!formData.address) {
+            console.error('Please enter your address');
+            return;
+        }
+
+        if(!formData.phone) {
+            console.error('Please enter your phone number');
+            return;
+        }
+
         if (!formData.hospital || !formData.car) {
-            console.error('Vui lòng chọn bệnh viện và xe cứu thương trước');
+            console.error('Please choose hospital and ambulance car first'); 
             return;
         }
 
         const selectedHospital = hospitals.find(h => h.name === formData.hospital);
         if (!selectedHospital) {
-            console.error('Bệnh viện không hợp lệ');
+            console.error('Hospital invalid');
             return;
         }
 
@@ -324,10 +334,10 @@ const Mapbox = () => {
             setIsChecked(true);
 
         } catch (error) {
-            console.error('Lỗi khi gửi yêu cầu:', error.response?.data || error.message);
+            console.error('Request error:', error.response?.data || error.message);
         }
 
-        console.log('Dữ liệu form:', formData);
+        console.log('Form data:', formData);
     };
 
 
@@ -338,106 +348,125 @@ const Mapbox = () => {
     };
 
     return (
-        <div>
-            <div ref={mapContainerRef} style={{ width: '100%', height: '70vh', position: 'relative' }} />
-            <div className="map-controls">
-                <button onClick={() => changeMapStyle('mapbox://styles/mapbox/streets-v11')}>Streets</button>
-                <button onClick={() => changeMapStyle('mapbox://styles/mapbox/outdoors-v11')}>Outdoors</button>
-                <button onClick={() => changeMapStyle('mapbox://styles/mapbox/light-v11')}>Light</button>
-                <button onClick={() => changeMapStyle('mapbox://styles/mapbox/dark-v11')}>Dark</button>
-                <button onClick={() => changeMapStyle('mapbox://styles/mapbox/satellite-v9')}>Satellite</button>
-            </div>
-            {location.pathname !== '/driver' && (
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-md-6">
-                            <div className="emergency-form">
-                                <div className="mb-3">
-                                    <label htmlFor="address" className="form-label">Address</label>
-                                    <input
-                                        type="text"
-                                        id="address"
-                                        className="form-control"
-                                        value={formData.address}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="emergency" className="form-label">Emergency</label>
-                                    <select
-                                        id="emergency"
-                                        className="form-select"
-                                        value={formData.emergency}
-                                        onChange={handleInputChange}
-                                    >
-                                        <option value="yes">Urgent</option>
-                                        <option value="no">Not Urgent</option>
-                                    </select>
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="phone" className="form-label">Phone</label>
-                                    <input
-                                        type="tel"
-                                        id="phone"
-                                        className="form-control"
-                                        value={formData.phone}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                                <div className="hospital-selector mb-3">
-                                    <label htmlFor="hospital">Hospital</label>
-                                    <select
-                                        id="hospital"
-                                        className="form-select"
-                                        value={formData.hospital}
-                                        onChange={(e) => handleHospitalChange(e, 'hospital')}
-                                        disabled={isChecked}
-                                    >
-                                        <option value="">Select a hospital</option>
-                                        {hospitals.map(hospital => (
-                                            <option key={hospital.id} value={hospital.name}>
-                                                {hospital.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <div className='car-selector mb-3'>
-                                    <label htmlFor="car" className='form-label'>Select a car</label>
-                                    <select
-                                        id="car"
-                                        className='form-select'
-                                        value={formData.car}
-                                        onChange={(e) => handleHospitalChange(e, 'car')}
-                                        disabled={isChecked}
-                                    >
-                                        {ambulances.filter(ambulance => ambulance.status !== 'busy').map(ambulance => (
-                                            <option key={ambulance.id} value={ambulance.id}>
-                                                {ambulance.name} {ambulance.price}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label htmlFor="textareaValue">Text Area</label>
-                                    <textarea
-                                        className="form-control"
-                                        id="textareaValue"
-                                        rows="5"
-                                        value={formData.textareaValue}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                                <div className="route-display text-center">
-                                    <button className="btn btn-primary" onClick={handleSubmit} disabled={isChecked}>
-                                        Check
-                                    </button>
-                                </div>
-                            </div>
+        <div className='container'>
+            <div className='call-ambulance justify-content-center row row-cols-lg-2 row-cols-md-1'>
+                <div className='position-relative col-lg-8 col-md-12'>
+                    <div ref={mapContainerRef} style={{ width: '100%', height: '70vh', position: 'realtive' }} />
+                    <div className="map-controls">
+                        <div className='control-items'>
+                            <button onClick={() => changeMapStyle('mapbox://styles/mapbox/streets-v11')}><span className='txt'>Streets</span></button>
+                        </div>
+                        <div className='control-items'>
+                            <button onClick={() => changeMapStyle('mapbox://styles/mapbox/light-v11')}><span className='txt'>Light</span></button>
+                        </div>
+                        <div className='control-items'>
+                            <button onClick={() => changeMapStyle('mapbox://styles/mapbox/dark-v11')}><span className='txt'>Dark</span></button>
+                        </div>
+                        <div className='control-items'>
+                            <button onClick={() => changeMapStyle('mapbox://styles/mapbox/outdoors-v11')}><span className='txt'>Outdoors</span></button>
+                        </div>                        <div className='control-items'>
+                            <button onClick={() => changeMapStyle('mapbox://styles/mapbox/satellite-v9')}><span className='txt'>Satellite</span></button>
                         </div>
                     </div>
                 </div>
-            )}
+                <div className='col-lg-4 col-md-12'>
+                    {location.pathname !== '/driver' && (
+                        <div className="container">
+                            <div className="row justify-content-center">
+                                <div className="col-md-12">
+                                    <form className="emergency-form">
+                                        <div className="mb-3">
+                                            <label htmlFor="address" className="form-label">Address</label>
+                                            <input
+                                                type="text"
+                                                id="address"
+                                                className="form-control"
+                                                value={formData.address}
+                                                onChange={handleInputChange}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label htmlFor="emergency" className="form-label">Emergency</label>
+                                            <select
+                                                id="emergency"
+                                                className="form-select"
+                                                value={formData.emergency}
+                                                onChange={handleInputChange}
+                                            >
+                                                <option value="yes">Emergency</option>
+                                                <option value="no">Not Emergency</option>
+                                            </select>
+                                        </div>
+                                        <div className="mb-3">
+                                            <label htmlFor="phone" className="form-label">Phone</label>
+                                            <input
+                                                type="tel"
+                                                id="phone"
+                                                className="form-control"
+                                                value={formData.phone}
+                                                onChange={handleInputChange}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="hospital-selector mb-3">
+                                            <label htmlFor="hospital">Hospital</label>
+                                            <select
+                                                id="hospital"
+                                                className="form-select"
+                                                value={formData.hospital}
+                                                onChange={(e) => handleHospitalChange(e, 'hospital')}
+                                                disabled={isChecked}
+                                            >
+                                                <option value="">Select a hospital</option>
+                                                {hospitals.map(hospital => (
+                                                    <option key={hospital.id} value={hospital.name}>
+                                                        {hospital.name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div className='car-selector mb-3'>
+                                            <label htmlFor="car" className='form-label'>Select a car</label>
+                                            <select
+                                                id="car"
+                                                className='form-select'
+                                                value={formData.car}
+                                                onChange={(e) => handleHospitalChange(e, 'car')}
+                                                disabled={isChecked}
+                                            >
+                                                {ambulances.filter(ambulance => ambulance.status !== 'busy').map(ambulance => (
+                                                    <option key={ambulance.id} value={ambulance.id}>
+                                                        {ambulance.name} {ambulance.price}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div className="form-group mb-3">
+                                            <label htmlFor="textareaValue">Note</label>
+                                            <textarea
+                                                className="form-control"
+                                                id="textareaValue"
+                                                rows="5"
+                                                value={formData.textareaValue}
+                                                onChange={handleInputChange}
+                                            />
+                                        </div>
+                                        <div className="route-display text-center mb-3">
+                                            <button className="btn-one" onClick={handleSubmit} disabled={isChecked}>
+                                                <span className='txt'>Check</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+            </div>
         </div>
+
     );
 };
 

@@ -1,3 +1,8 @@
+.call-ambulance{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
 .map-controls {
     position: absolute;
     top: 70%;
@@ -9,20 +14,63 @@
     gap: 15px;
 }
 
-.map-controls button {
-    display: block;
-    margin-bottom: 5px;
-    padding: 8px 12px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
+.map-controls .control-items button {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #001789;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 50px;
+    font-weight: 700;
+    letter-spacing: normal;
+    text-transform: capitalize;
+    border-radius: 30px;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+    z-index: 1;
 }
 
-.map-controls button:hover {
-    background-color: #0056b3;
+.control-items button:before{
+    position: absolute;
+    top: 0px;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+    content: "";
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    border-radius: 30px;
+    webkit-transition-duration: 800ms;
+    transition-duration: 800ms;
+    background-color: #ee296a;
+    z-index: 2;
+}
+
+.control-items button:hover:before {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+}
+
+.control-items button .txt {
+    position: relative;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+}
+
+.control-items button:hover,
+.control-items button:focus {
+    color: #ffffff;
 }
 
 .mapboxgl-ctrl-attrib-inner {
     display: none;
+}
+
+.emergency-form label{
+    color: #001789;
 }

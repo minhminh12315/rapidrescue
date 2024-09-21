@@ -86,10 +86,10 @@ const About = () => {
                     <img src={teamv1} alt="human" />
                     <div>
                         <h2 className='icon-title'>Jessica Brown</h2>
-                        <p>Menber</p>
+                        <p>Member</p>
                         <div className='overlay-title'>
                             <h2><a href="#">Jessica Brown</a></h2>
-                            <p>Menber</p>
+                            <p>Member</p>
                             <ul className='social-links'>
                                 <li><FaFacebookF /></li>
                                 <li><BsTwitterX/></li>
@@ -103,10 +103,10 @@ const About = () => {
                     <img src={teamv2} alt="human" />
                     <div>
                         <h2 className='icon-title'>Kevin Martin</h2>
-                        <p>Menber</p>
+                        <p>Member</p>
                         <div className='overlay-title'>
                             <h2><a href="#">Kevin Martin</a></h2>
-                            <p>Menber</p>
+                            <p>Member</p>
                             <ul className='social-links'>
                                 <li><FaFacebookF /></li>
                                 <li><BsTwitterX/></li>
@@ -120,10 +120,10 @@ const About = () => {
                     <img src={teamv3} alt="human" />
                     <div>
                         <h2 className='icon-title'>Sarah Albert</h2>
-                        <p>Menber</p>
+                        <p>Member</p>
                         <div className='overlay-title'>
                             <h2><a href="#">Sarah Albert</a></h2>
-                            <p>Menber</p>
+                            <p>Member</p>
                             <ul className='social-links'>
                                 <li><FaFacebookF /></li>
                                 <li><BsTwitterX/></li>
@@ -137,10 +137,10 @@ const About = () => {
                     <img src={teamv4} alt="human" />
                     <div>
                         <h2 className='icon-title'>David Cooper</h2>
-                        <p>Menber</p>
+                        <p>Member</p>
                         <div className='overlay-title'>
                             <h2><a href="#">David Cooper</a></h2>
-                            <p>Menber</p>
+                            <p>Member</p>
                             <ul className='social-links'>
                                 <li><FaFacebookF /></li>
                                 <li><BsTwitterX/></li>
