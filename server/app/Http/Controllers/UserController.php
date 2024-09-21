@@ -37,16 +37,20 @@ class UserController extends Controller
         if (!$driver || $driver->role !== 'driver') {
             return response()->json(['message' => 'Driver not found'], 404);
         }
-
-        $driver->first_name = $request->first_name;
-        $driver->last_name = $request->last_name;
-        $driver->email = $request->email;
-        $driver->phone = $request->phone;
-        $driver->status = $request->status ?? $driver->status; // Cập nhật status nếu có
+    
+        // Cập nhật thông tin mà chỉ giữ lại status
+        $driver->first_name = $request->first_name ?? $driver->first_name;
+        $driver->last_name = $request->last_name ?? $driver->last_name;
+        $driver->email = $request->email ?? $driver->email;
+        $driver->phone = $request->phone ?? $driver->phone;
+        // Chỉ cập nhật status nếu có giá trị mới
+        $driver->status = $request->status ?? $driver->status;
+    
         $driver->save();
-
+    
         return response()->json(['message' => 'Driver updated successfully', 'driver' => $driver]);
     }
+    
 
     // Xóa tài xế
     public function deleteDriver($id)

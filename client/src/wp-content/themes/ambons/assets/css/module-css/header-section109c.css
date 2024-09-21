@@ -286,6 +286,10 @@
     margin-bottom: -75px;
 }
 
+.header-margin-0 {
+    margin: 0;
+}
+
 .header .outer-box {
     position: relative;
     display: flex;
