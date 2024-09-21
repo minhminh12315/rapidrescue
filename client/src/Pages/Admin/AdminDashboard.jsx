@@ -3,6 +3,7 @@ import axios from "axios";
 import { Card, Col, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HostContext from "../../Context/HostContext";
+import AdminMap from "./AdminMap";
 import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
@@ -86,7 +87,7 @@ const AdminDashboard = () => {
           </Card>
         </Col>
       </Row>
-      {/* Thêm các biểu đồ hoặc thông tin khác ở đây nếu cần */}
+      <AdminMap/>
     </div>
   );
 };

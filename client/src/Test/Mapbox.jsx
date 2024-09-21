@@ -435,7 +435,7 @@ const Mapbox = () => {
                                                 onChange={(e) => handleHospitalChange(e, 'car')}
                                                 disabled={isChecked}
                                             >
-                                                <option value="" selected disabled className=''>--Choose a car--</option>
+                                                <option value="">--Chosse a car--</option>
                                                 {ambulances.filter(ambulance => ambulance.status !== 'busy').map(ambulance => (
                                                     <option key={ambulance.id} value={ambulance.id}>
                                                         {ambulance.name} {ambulance.price}

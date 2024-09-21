@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
 import HostContext from '../../Context/HostContext';
