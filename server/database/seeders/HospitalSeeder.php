@@ -13,7 +13,7 @@ class HospitalSeeder extends Seeder
     public function run(): void
     {
         DB::table('hospitals')->insert([
-            ['name' => 'Bệnh viện Bạch Mai', 'address' => '21.0278, 105.8342', 'address_street' => '78 Đường Giải Phóng', 'phone' => '', 'image' => 'https://mehedi.asiandevelopers.com/ambons/assets/images/blog/blog-v1-3.jpg', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Bệnh viện Bạch Mai', 'address' => '21.002108110940842, 105.84033845091885', 'address_street' => '78 Đường Giải Phóng', 'phone' => '', 'image' => 'https://mehedi.asiandevelopers.com/ambons/assets/images/blog/blog-v1-3.jpg', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Bệnh viện Đa khoa Hà Nội', 'address' => '16.0471, 108.2068', 'address_street' => '29 Hàn Thuyên', 'phone' => '', 'image' => 'https://mehedi.asiandevelopers.com/ambons/assets/images/blog/blog-v1-1.jpg', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Bệnh viện 108', 'address' => '10.7626, 106.6602', 'address_street' => '1 Trần Hưng Đạo', 'phone' => '', 'image' => 'https://mehedi.asiandevelopers.com/ambons/assets/images/blog/blog-v1-2.jpg', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Bệnh viện Đại học Y Hà Nội', 'address' => '22.3996, 103.4669', 'address_street' => '1 Tôn Thất Tùng', 'phone' => '', 'image' => 'https://mehedi.asiandevelopers.com/ambons/assets/images/blog/blog-v1-5.jpg', 'created_at' => now(), 'updated_at' => now()],
